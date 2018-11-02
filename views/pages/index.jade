@@ -1,0 +1,96 @@
+extends ../layout
+block content
+	.container
+		ul.nav.nav-tabs(role="tablist")
+			li.active(role="presentation")
+				a(href="#categoryList", aria-controls="categoryList" role="tab" data-toggle="tab") 业态列表
+			li(role="presentation")
+				a(href="#message", aria-controls="message" role="tab" data-toggle="tab") 最近通知
+			li(role="presentation")
+				a(href="#download", aria-controls="download" role="tab" data-toggle="tab") 文件下载
+		.tab-content
+			.tab-pane.active.fade.in#categoryList(role='tabpanel')
+				if categories && categories.length > 0
+					.row(style="margin-left:0;margin-right:0")
+						each category in categories
+							if category.companies.length > 0
+								.panel.panel-success(style="border-radius:0")
+									.panel-heading(style="border-top-left-radius:0;border-top-right-radius:0;")
+										h3 #{category.name}
+									.panel-body(style="padding:0")
+									.list-group
+										each company in category.companies
+											if localUser && localUser.role === 7
+												.list-group-item.weintern-font-larger
+													span #{company.name}
+													if company.note
+														button.btn.btn-info(type='button', data-info="#{company.note}", data-toggle="modal") 查看模板说明
+													a.weintern-font-larger(href="/tsmsjtu/company/detail/#{company._id}")
+														i.pull-right.iconfont(style="color: #1296db") &#xe61b;
+											else if localUser && localUser.role === 6
+												if localUser.partDepartment.indexOf(category.name) > -1
+													.list-group-item.weintern-font-larger
+														span #{company.name}
+														if company.note
+															button.btn.btn-info(type='button', data-info="#{company.note}", data-toggle="modal") 查看模板说明
+														a.weintern-font-larger(href="/tsmsjtu/company/detail/#{company._id}")
+															i.pull-right.iconfont(style="color: #1296db") &#xe61b;
+												else
+													.list-group-item.weintern-font-larger #{company.name}
+											else if localUser && localUser.role === 4
+												if localUser.department === category.name
+													.list-group-item.weintern-font-larger
+														span #{company.name}
+														if company.note
+															button.btn.btn-info(type='button', data-info="#{company.note}", data-toggle="modal") 查看模板说明
+														a.weintern-font-larger(href="/tsmsjtu/company/detail/#{company._id}")
+															i.pull-right.iconfont(style="color: #1296db") &#xe61b;
+												else
+													.list-group-item.weintern-font-larger #{company.name}
+											else if localUser && localUser.role === 2
+												if localUser.company === company.name
+													.list-group-item.weintern-font-larger
+														span #{company.name}
+														if company.note
+															button.btn.btn-info(type='button', data-info="#{company.note}", data-toggle="modal") 查看模板说明
+														a.weintern-font-larger(href="/tsmsjtu/company/detail/#{company._id}")
+															i.pull-right.iconfont(style="color: #1296db") &#xe61b;
+												else
+													.list-group-item.weintern-font-larger #{company.name}
+											else
+												.list-group-item.weintern-font-larger #{company.name}
+			.tab-pane.fade#message(role='tabpanel')
+				if messages && messages.length > 0
+					each message, index in messages
+						.panel-group#accordion(role="tablist" aria-multiselectable="true")
+							.panel.panel-default
+								.panel-heading(role="tab" id="heading_#{index}")
+									h4.panel-title
+										a(class="collapsed", style="color: #73b566", role="button", data-toggle="collapse", data-parent="#accordion", href="#collapse_#{index}", aria-expanded="false", aria-controls="collapse_#{index}") #{message.header}
+										if message.attachFile
+											a.pull-right(href="/uploads/#{message.attachFile}", style="color: #447ab2; font-size: 13px") 下载附件>>>
+								.panel-collapse.collapse(id="collapse_#{index}", role="tabpanel" aria-labelledby="heading_#{index}")
+									.panel-body
+										.row(style="margin-left:0; margin-right: 0") #{message.content}
+			.tab-pane.fade#download(role='tabpanel')
+				.row(style="margin-left:0;margin-right:0")
+					.list-group
+						.list-group-item
+							a(href='/downloads/tsmsjtu.apk', style="text-decoration: none;margin-left: 5px") 安卓App下载
+						.list-group-item
+							a(href='/downloads/instruction.pdf', style="text-decoration: none;margin-left: 5px") 风险管理培训会议材料(PPT)下载
+
+	#company-info-modal.modal.fade
+		.modal-dialog
+			.modal-container(style="background:#fff;border-radius: 6px;-webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);")
+				.modal-header
+					h4.modal-title 模板说明
+				.modal-body.info-container
+				.modal-footer
+					button.btn.btn-primary(type="button", data-dismiss="modal") 确定
+	script.
+		$('.btn-info').click(function () {
+			$("#company-info-modal").modal();
+			var info = $(this).data('info');
+			$('.info-container').html('<h5>' + info + '</h5>')
+		});

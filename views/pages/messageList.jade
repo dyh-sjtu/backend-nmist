@@ -1,0 +1,64 @@
+extends ../layout
+block content
+	.container
+		.row
+			.col-md-12
+				table.table.table-bordered.table-hover(style="table-layout:fixed;")
+					thead
+						tr
+							th(style="text-align:center;width:60px;") 序号
+							th(style="text-align:center;") 标题
+							th(style="text-align:center;") 通知内容
+							th(style="text-align:center;") 附件
+							th(style="text-align:center;") 修改
+							th(style="text-align:center;") 删除
+					tbody
+						each message, index in messages
+							tr
+								td(style="vertical-align: middle;text-align:center;") #{index + 1}
+								td.text-over(style="vertical-align: middle;") #{message.header}
+								td.text-over(style="vertical-align: middle;") #{message.content}
+								td(style="text-align:center;vertical-align: middle;")
+									a(href='/uploads/#{message.attachFile}') #{message.attachFile}
+								td(style="vertical-align: middle;text-align:center;"): a(target="_blank", href="/tsmsjtu/message/update/#{message._id}") 更新
+								td(style="vertical-align: middle;text-align:center;")
+									button.btn.btn-danger.del-message(type="button", data-id="#{message._id}", data-toggle="modal") 删除
+				a(href="/tsmsjtu/message/new")
+					button.btn.btn-success.pull-right(type="button") 添加新通知
+				a(href="/")
+					button.btn.btn-primary(type="button") 返回首页
+
+	#del-message-modal.modal.fade
+		.modal-dialog
+			.modal-container(style="background:#fff;border-radius: 6px;-webkit-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);")
+				.modal-header
+					h4.modal-title 提示
+				.modal-body
+					h4(style="color:#c9302c") 确定删除该消息吗？
+				.modal-footer
+					button.btn.btn-default(type="button", data-dismiss="modal") 取消
+					button.btn.btn-del-message-success(type="button") 确定
+
+	script.
+		var messageId = null;
+		var tr = null;
+		$(".del-message").click(function () {
+			$("#del-message-modal").modal();
+			messageId = $(this).data("id");
+			tr = $(this).parents("tr");
+		})
+		$(".btn-del-message-success").click(function () {
+			if (messageId) {
+				$.ajax({
+					type: 'DELETE',
+					url: '/tsmsjtu/message/list/del' + "?id=" + messageId
+				}).done(function (res) {
+					if (res.success === 1) {
+						if (tr.length > 0) {
+							tr.remove();
+						}
+					}
+				})
+			}
+			$("#del-modal").modal('hide');
+		})
