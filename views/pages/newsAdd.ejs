@@ -1,0 +1,106 @@
+<% include ../includes/backend-head.ejs %>
+<body style="overflow-x: hidden;overflow-y: hidden;background-color: #eee;">
+<div class="backend-header flex-space">
+    <div>
+        <span class="admin"><i class="layui-icon layui-icon-set-fill" style="font-size: 18px;margin-left: -10px"></i><a
+                    href="/admin">天磁信息科技管理后台</a></span>
+    </div>
+    <div class="flex-cc pr-40">
+        <div class="user weintern-font-larger mr-20">欢迎您，<a href="javascript:;"
+                                                            class="font-italic"><%= localUser.name %></a>
+        </div>
+        <div class="logout"><a href="/admin/user/signIn">退出</a></div>
+    </div>
+</div>
+<div class="main">
+    <div class="backend-sidebar">
+        <ul class="layui-nav layui-nav-tree" lay-filter="">
+            <li class="layui-nav-item">
+                <a href="/admin/userList">
+                    <i class="layui-icon layui-icon-user"></i>
+                    <span class="ml-15">用户管理</span>
+                </a>
+            </li>
+            <li class="layui-nav-item layui-this">
+                <a href="/admin/newsList">
+                    <i class="layui-icon layui-icon-release"></i>
+                    <span class="ml-15">新闻列表</span>
+                </a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="/admin/applyList">
+                    <i class="layui-icon layui-icon-add-circle"></i>
+                    <span class="ml-15">申请列表</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="backend-container">
+        <div class="row pb-10" style="margin-right: 0;margin-left: 0">
+            <h2 class="w100 tc">新闻添加</h2>
+        </div>
+        <hr class="layui-bg-blue pt-5">
+        <div class="backend-content" style="background-color: #fff">
+            <form class="layui-form mt-20">
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="news_title">新闻标题</label>
+                    <div class="layui-input-block">
+                        <input type="text" required lay-verify="required" placeholder="请输入新闻标题"
+                               autocomplete="on" class="layui-input" id="news_title">
+                    </div>
+                </div>
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label" for="news_edit">新闻内容</label>
+                    <div class="layui-input-block">
+                        <textarea id="news_edit" style="display: none"
+                                  class="layui-textarea"></textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" type="button" id="save_newsContent">保存</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+	$(document).ready(function () {
+		layui.use('layedit', function () {
+			var layedit = layui.layedit;
+			layedit.set({
+				uploadImage: {
+					url: '/admin/news/image/upload',  // 富文本图片上传的url
+					type: 'post'
+				}
+			})
+
+			var index = layedit.build('news_edit', {
+				height: 300,
+			});
+
+			var btn = document.getElementById("save_newsContent");
+			btn.onclick = function () {
+				var news_title = document.getElementById('news_title').value;
+				var news_content = layedit.getContent(index);
+				$.ajax({
+					type: 'POST',
+					url: '/admin/news/add',
+					data: {
+						title: news_title,
+						content: news_content
+					}
+				}).done(function (res) {
+					if (res.success === 1) {
+						layer.msg("新闻保存成功!")
+						location.replace('/admin/newsList')
+                    }
+				})
+			}
+		});
+	})
+
+</script>
+</body>

@@ -10,28 +10,12 @@ let UserSchema = new mongoose.Schema({
 		type: String,
 		unique: true
 	},
-	// role: 1 访客 // 无任何权限，只能查看首页
-	// role: 2 公司权限  // 只能查看首页和自己公司的详情
-	// role: 4 部门行业权限 // 只能查看首页和本行业下所有的公司详情
-	// role: 6 部分行业权限，可观看部分行业下所有excel
+	// role: 1 访客 // 无任何权限
 	// role: 7 超级管理员权限
 	role: {
 		type: Number,
 		default: 1
 	},
-	company:String,  // 用户的公司
-	department: String,  // 用户的行业
-	partDepartment: [String],  // 只有当用户的权限为6时数组长度才不为0
-	sex: {
-		type: String,
-		default: '男'
-	},
-	img: {
-		type: String,
-		default: 'headpic.png'
-	},
-	email: String,
-	tel: Number,
 	firstSave: {
 		type: Boolean,
 		default: false

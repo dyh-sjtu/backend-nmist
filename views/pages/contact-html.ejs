@@ -1,0 +1,79 @@
+<div class="wrapper-box p-0">
+    <!-- page-title-area start -->
+    <div class="page-title-area pt-210 pb-210" data-background="img/bg/page-title.jpg"></div>
+    <!-- page-title-area end -->
+    <!-- blog-area start -->
+    <div class="contact-area pt-110 pb-20">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-5 col-lg-6">
+                    <div class="contact-info mb-20">
+                        <h2>联系方式</h2>
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="contact-meta mb-20">
+                                    <div class="contact-meta-info">
+                                        <h4>固定电话</h4>
+                                        <p>021-62933091</p>
+                                    </div>
+                                    <div class="contact-meta-info mt-20">
+                                        <h4>手机号码</h4>
+                                        <p>13817298675</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="contact-meta mb-20">
+                                    <div class="contact-meta-info mb-20">
+                                        <h4>邮箱</h4>
+                                        <p>huzhanshuo@sjtu.edu.cn</p>
+                                    </div>
+                                    <div class="contact-meta-info">
+                                        <h4>QQ技术交流群</h4>
+                                        <p>310291268</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="contact-meta">
+                                    <div class="contact-meta-info">
+                                        <h4>公司地址</h4>
+                                        <p>上海市虹桥路333号</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-7 col-lg-6">
+                    <div class="contact-form mb-30">
+                        <h3>我要咨询软件?</h3>
+                        <form id="contact-form" action="/api/admin/software/apply" method="POST" enctype="application/x-www-form-urlencoded">
+                            <div class="row">
+                                <div class="col-xl-6 focus-highlight">
+                                    <input required="required" name="nmist[name]" type="text" placeholder="您的真实姓名">
+                                </div>
+                                <div class="col-xl-6 focus-highlight">
+                                    <input required="required" maxlength="11" minlength="11" name="nmist[tel]" type="tel" placeholder="您的联系方式">
+                                </div>
+                                <div class="col-xl-12 focus-highlight">
+                                    <input name="nmist[email]" type="email" placeholder="您的邮箱">
+                                </div>
+                                <div class="col-xl-12 focus-highlight">
+                                    <textarea name="nmist[message]" id="mesage" cols="30" rows="10" placeholder="备注"></textarea>
+                                    <button class="btn brand-btn" type="submit">提交信息</button>
+                                </div>
+                            </div>
+                        </form>
+                        <p class="ajax-response"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- blog-area end -->
+    <div class="container">
+        <h2 class="fa-pull-left">公司地址</h2>
+        <div id="map" class="blog-thumb"><img src="img/team/map.jpg" alt=""></div>
+    </div>
+</div>

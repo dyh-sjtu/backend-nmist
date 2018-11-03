@@ -3,7 +3,7 @@ let fs = require('fs');
 
 exports.saveFile = (req, res, next) => {
 	try {
-		let posterData = req.files.uploadPic;
+		let posterData = req.files.file;
 		let filePath = posterData.path;
 		let originalFilename = posterData.originalFilename;
 		if (originalFilename) {
@@ -11,9 +11,9 @@ exports.saveFile = (req, res, next) => {
 				let timestamp = Date.now();
 				let type = posterData.type.split('/')[1];
 				let newImage = timestamp + '.' + type;
-				let newPath = path.join(__dirname, '../../', '/public/uploads/' + newImage)
+				let newPath = path.join(__dirname, '../../', '/public/uploads/' + newImage);
 				fs.writeFile(newPath, data, (err, data) => {
-					req.image = newImage;
+					req.image = "/uploads/" + newImage;
 					next();
 				})
 			})

@@ -1,8 +1,8 @@
 /*/node_modules
-/public/libs
+/public/fonts
 node_modules
 .idea
 /public/uploads/
-/public/userExcel/
 .DS_Store
-/public/downloads/
+/public/fonts/
+/public/img/

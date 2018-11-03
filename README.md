@@ -1,2 +1,2 @@
-# tsmsjtu
-the backend for tsmsjtu
+# nmist
+the front && backend system for nmist

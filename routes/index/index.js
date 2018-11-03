@@ -1,91 +1,63 @@
-let express = require('express');
-let router = express.Router();
-let Company = require('../../models/company');
-let Category = require('../../models/category');
-const Message = require('../../models/message');
+const express = require('express');
+const router = express.Router();
 
 
+// 所有静态页面
 router.get('/', (req, res) => {
-	let localUser = req.session.user;
-	Category.find({})
-		.populate('companies')
-		.exec((err, categories) => {
-			Message.fetch((err, messages) => {
-				res.render('index', {
-					title: '首页',
-					categories: categories,
-					localUser: localUser,
-					messages: messages
-				})
-			})
-		});
+	res.render("index")
 });
 
-// 公司详情
-router.get('/tsmsjtu/company/detail/:id', (req, res) => {
-	let localUser;
-	if (req.session.user) {
-		localUser = req.session.user;
-	}
-	let companyId = req.params.id;
-	Company.findOne({_id: companyId})
-		.populate("category")
-		.exec((err, company) => {
-			if (err) {
-				console.log(err);
-			}
-			res.render('companyDetail', {
-				title: '公司业态详情',
-				company: company,
-				localUser: localUser
-			})
-		})
+router.get('/index', (req, res) => {
+	res.render("index");
 });
 
-// 搜索业态公司名称或者行业名称
-router.get('/tsmsjtu/search', (req, res) => {
-	let localUser;
-	if (req.session.user) {
-		localUser = req.session.user;
+router.get('/about', (req, res) => {
+	res.render("about")
+})
+
+router.get('/example', (req, res) => {
+	res.render("example")
+})
+
+router.get('/contact', (req, res) => {
+	res.render("contact")
+})
+
+router.get('/news', (req, res) => {
+	res.render("news")
+})
+
+router.get('/download', (req, res) => {
+	res.render("download")
+})
+
+router.get('/product', (req, res) => {
+	res.render("product")
+})
+
+router.get('/useage', (req, res) => {
+	res.render("useage")
+})
+
+router.get('/NMCAD', (req, res) => {
+	res.render("nmcad")
+})
+
+router.get('/NMBIM', (req, res) => {
+	res.render("nmbim")
+})
+
+router.get('/NMGIS', (req, res) => {
+	res.render("nmgis")
+})
+
+// 查看新闻详情
+router.get('/news/:id', (req, res) => {
+	try {
+		let newsId = req.params.id;
+	}catch(err) {
+		console.log('err', err)
 	}
-	let totalSize = 0;
-	let query = req.query.query;
-	let reg = new RegExp(query + '.*', 'i');
-	Company.find({name: reg})
-		.populate('category', 'name')
-		.exec((err, companies) => {
-			if (companies.length <= 0) {
-				Category.find({name: reg})
-					.populate('companies')
-					.exec((err, categories) => {
-						if (categories && categories.length > 0) {
-							categories.forEach((item, index) => {
-								totalSize += item.companies.length;
-							});
-							res.render('search', {
-								title: '业态搜索',
-								number: totalSize,
-								categories: categories,
-								localUser: localUser,
-								keywords: query
-							})
-						} else {
-							res.render('search', {
-								title: '业态搜索',
-								empty: true
-							})
-						}
-					})
-			} else {
-				res.render('search', {
-					title: '业态搜索',
-					number: companies.length,
-					keywords: query,
-					localUser: localUser,
-					companies: companies
-				})
-			}
-		})
 });
 
 module.exports = router;
