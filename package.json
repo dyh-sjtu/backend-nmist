@@ -32,7 +32,8 @@
     "gulp-jshint": "^2.0.4",
     "gulp-nodemon": "^2.2.1",
     "jshint": "^2.9.5",
-    "layui-src": "^2.4.5"
+    "layui-src": "^2.4.5",
+    "nodemailer": "^4.6.8"
   },
   "bugs": {
     "url": "https://github.com/dyh-sjtu/backend-nmist/issues"

@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../../models/user');
-const Auth  = require('../middleware/auth');
+const Auth = require('../middleware/auth');
 const ApplyUser = require('../../models/applyUser');
+const ApplyEmail = require('../../models/applyEmail');
 
 
 // 所有静态页面
@@ -15,7 +16,7 @@ router.get('/admin', Auth.requiredLogin, Auth.requiredAdmin, (req, res) => {
 				users: users
 			})
 		})
-	}catch (err) {
+	} catch (err) {
 		console.log("err", err)
 	}
 });
@@ -23,16 +24,51 @@ router.get('/admin', Auth.requiredLogin, Auth.requiredAdmin, (req, res) => {
 router.get('/admin/applyList', Auth.requiredLogin, Auth.requiredAdmin, (req, res) => {
 	try {
 		let localUser = res.locals.user;
-		ApplyUser.fetch((err, applyUsers) => {
-			res.render('applyList', {
-				localUser: localUser,
-				applyUsers: applyUsers
+		ApplyEmail.fetch((err, applyEmail) => {
+			ApplyUser.fetch((err, applyUsers) => {
+				res.render('applyList', {
+					localUser: localUser,
+					applyUsers: applyUsers,
+					email: applyEmail && applyEmail[0]
+				})
 			})
 		})
-	}catch(err) {
+	} catch (err) {
 		console.log(err);
 	}
 });
+
+router.post('/admin/email/save', Auth.requiredLogin, Auth.requiredAdmin, (req, res) => {
+	try {
+		let emailId = req.body.emailId;
+		let email = req.body.email;
+		if (email) {
+			if (emailId) {
+				ApplyEmail.findById(emailId, (err, applyEmail) => {
+					applyEmail.email = email;
+					applyEmail.save((err, applyEmail) => {
+						if (err) console.log(err);
+						return res.json({
+							success: 1
+						})
+					})
+				})
+			}else {
+				let _emailObj = new ApplyEmail({
+					email: email
+				});
+				_emailObj.save((err, email) => {
+					if (err) console.log(err)
+					return res.json({
+						success: 1
+					})
+				})
+			}
+		}
+	} catch (err) {
+		console.log('err', err)
+	}
+})
 
 router.delete('/admin/applyList/del', Auth.requiredLogin, Auth.requiredAdmin, (req, res) => {
 	try {
@@ -45,7 +81,7 @@ router.delete('/admin/applyList/del', Auth.requiredLogin, Auth.requiredAdmin, (r
 				})
 			})
 		}
-	}catch(err) {
+	} catch (err) {
 		console.log(err);
 	}
 });
@@ -64,7 +100,7 @@ router.post('/admin/applyList/changeStatus', Auth.requiredLogin, Auth.requiredAd
 				})
 			})
 		}
-	}catch(err) {
+	} catch (err) {
 		console.log('err', err);
 	}
 });

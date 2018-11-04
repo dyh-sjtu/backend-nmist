@@ -1,16 +1,6 @@
 let mongoose = require('mongoose');
-let ApplyUserSchema = new mongoose.Schema({
-	tel: {
-		type: Number,
-		unique: true
-	},
-	name: String,
-	message: String,
+let ApplyEmailSchema = new mongoose.Schema({
 	email: String,
-	dealStatus: {
-		type: Boolean,
-		default: false
-	},
 	meta: {
 		createAt: {
 			type: Date,
@@ -24,7 +14,7 @@ let ApplyUserSchema = new mongoose.Schema({
 });
 
 // 保存用户
-ApplyUserSchema.pre('save', function (next) {
+ApplyEmailSchema.pre('save', function (next) {
 	if (this.isNew) {
 		this.meta.createAt = this.meta.updateAt = Date.now();
 	} else {
@@ -34,7 +24,7 @@ ApplyUserSchema.pre('save', function (next) {
 });
 
 // 静态方法
-ApplyUserSchema.statics = {
+ApplyEmailSchema.statics = {
 	fetch: function (cb) {
 		return this
 			.find({})
@@ -48,4 +38,4 @@ ApplyUserSchema.statics = {
 	}
 };
 
-module.exports = mongoose.model("ApplyUser", ApplyUserSchema);
+module.exports = mongoose.model("ApplyEmail", ApplyEmailSchema);
