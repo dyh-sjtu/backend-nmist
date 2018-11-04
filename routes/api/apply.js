@@ -31,13 +31,13 @@ router.post('/admin/software/apply', (req, res) => {
 								let transporter = nodeEmailer.createTransport({
 									service: '163',
 									auth: {
-										user: "dyh_sjtu@163.com",
-										pass: "dyh0317"
+										user: "tccdtest2@163.com",
+										pass: "bim123"
 									}
 								});
 								
 								let mailOptions = {
-									from: "dyh_sjtu@163.com",
+									from: "tccdtest2@163.com",
 									to: email,
 									subject: '软件申请',
 									text: "软件申请新通知",
