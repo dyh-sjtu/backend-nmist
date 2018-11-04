@@ -1,66 +1,31 @@
-<!-- page-title-area start -->
-<div class="page-title-area pt-210 pb-210" data-background="img/bg/page-title.jpg"></div>
-<!-- page-title-area end -->
-
-<div class="promotion-area mt-50">
-    <div class="container gray-bg">
-        <div class="pt-15 pb-15 blog-post-items">
-            <div class="blog-wrapper mb-40">
-                <div class="card-title text-center mt-30 mb-30">
-                    <h4>上海交大BIM研究中心于成立叁周年之际发布“天磁NMBIM 3.0” ——暨2018中国路桥隧BIM技术应用峰会成功举行</h4>
-                </div>
-                <div class="meta-info">
-                    <div class="card-title text-center mt-30 mb-30">
-                        <h6 style="color:#9e9e9e;">2018年9月19-20日</h6>
+<% include ../includes/head.ejs %>
+<body>
+<% include ../includes/header.ejs %>
+<div class="wrapper-box p-0">
+    <div class="promotion-area mt-50">
+        <div class="container gray-bg">
+            <div class="pt-20 pb-15 blog-post-items">
+                <div class="blog-wrapper mb-40">
+                    <div class="card-title text-center mt-20 mb-15">
+                        <h4 class="mt-20">
+                            <%= newsItem.title %>
+                        </h4>
+                    </div>
+                    <hr style="margin: 10px 0"/>
+                    <div class="meta-info">
+                        <div class="card-title text-center mt-10 mb-10">
+                            <h6 style="color:#9e9e9e;">
+                                <%= moment(newsItem.meta.updateAt).format("YYYY-MM-DD") %>
+                            </h6>
+                        </div>
+                    </div>
+                    <div class="news-container">
+                        <%- newsItem.content %>
                     </div>
                 </div>
-                <p class="p-30 flex-cc suojin">
-                    2018年9月19-20日，上海交大BIM研究中心成立叁周年暨2018中国路桥隧BIM技术应用峰会在上海建国宾馆顺利召开。
-                    来自全国多所高校、勘察设计行业业主、设计、施工、制造、运维、软硬件等百余家企业代表近300人共聚一堂，
-                    共同交流和分享BIM研究与应用的最新成果与经验。上海交大BIM研究中心在会上介绍了最新成果——“天磁NMBIM 3.0”。
-                </p>
-                <div class="blog-thumb p-30 flex-cc">
-                    <img src="img/blog/02.jpg" alt="" style="width: 50%"/>
-                </div>
-                <p class="suojin">中国工程院院士、上海交大BIM研究中心专家委员会委员江欢成，上海市土木工程学会秘书长叶国强，上海市土木工
-                    程学会计算机应用专业委员会秘书沈串，上海交大产研院副院长粟莹，上海交大BIM研究中心主任刘西拉，执行主任邓雪原，
-                    副主任杨健，上海交通大学交通研究中心主任陆林军等主办方代表出席了本次峰会。出席本次峰会企业特邀嘉宾
-                    有上海复星高科技（集团）有限公司复星科技创新中心总经理何春艳、腾讯云行业产品二部智慧城市高级产品经
-                    理罗晓晓、上海建工集团股份有限公司副总工程师王美华、上海核工程研究设计院建筑所副所长李彦锋、上海江
-                    欢成建筑设计有限公司总建筑师程之春、旭辉集团商业地产管理部总监黄涛、上海济邦投资咨询有限公司董事长张
-                    燎、中铁第四勘察设计院副总工程师冯光东、中国市政西北设计研究院有限公司武汉分院院长崔铁万等。本次峰
-                    会除对外介绍上海交大BIM研究中心最新研究成果外，还邀请了20余位全国各地勘察、设计专家，中交、中铁、
-                    中建相关负责人，路桥隧运营管理等单位领导及设备商、信息技术供应商、方案提供商等单位优秀代表做主题报告，
-                    分享BIM技术在路桥隧工程中的应用经验，探讨应用过程中存在的共性问题，进一步增进交通市政行业各组织间交流，
-                    推动行业技术进步。</p>
-                <p class="suojin">19日上午，刘西拉首先进行嘉宾致辞。刘西拉指出，在信息化时代，只有模型三维化是不够的，工程师的思维也要实现三维化、
-                    计算机化，才能从根本上促进BIM落地，真正实现建筑工程和路桥隧工程的信息化。</p>
-                <p class="suojin">随后，邓雪原汇报了广域网下多种BIM软件融合的云协同平台解决方案。邓雪原指出，上海交大BIM研究中心成立贰周年（2017年）
-                    发布的天磁NMBIM2.0基于不同BIM专业软件生成的IFC数据，解决了局域网内设计院建筑、结构、水暖电等多专业BIM软件之间数据
-                    共享与交换的核心问题。但是广域网下多单位之间数据共享与交换则是更难以解决的问题，如何让建筑产业链上的各单位专业人员
-                    真正参与到BIM应用中，和项目各专业设计人员直接进行沟通与交流是当前的研究重点。邓雪原进一步通过视频展示了上海交大BIM
-                    研究中心最新研究成果——天磁NMBIM 3.0版本的各项功能。在广域网下，各单位包括设计院、业主、审图公司、施工方、运营方等
-                    直接通过腾讯天磁NMBIM云协同平台便利地在云端对同一个示范项目进行多种BIM软件融合的查看、提资、审核、反提资、碰撞检查、
-                    规范检查、审阅批注、材质修改，快速沟通高效解决疑难问题，而无需多次召集项目会。会上还展示了天磁NMBIM3.0对其他多种主
-                    流数据标准格式（DXF、OBJ、FBX、OSG、IVE等）的支持。
-                </p>
-                <p class="suojin">天磁NMBIM 3.0协同平台的发布受到了与会者的热烈响应与高度赞扬。旭辉集团商业地产管理部总监黄涛评价天磁NMBIM3.0
-                    可大幅提高工程项目各方对设计成果的准确把控，减少错漏碰缺和未来施工返工及改造的成本，提升未来商户对工程条件的对接。
-                </p>
-                <p class="suojin">上海江欢成建筑设计有限公司总建筑师程之春也对广域网下多种BIM软件融合的云协同平台解决方案表示认同，通过案例展
-                    示了上海江欢成建筑设计有限公司通过天磁CAD、天磁BIM平台在多个公共建筑多专业协同设计的应用经验和探索过程。</p>
-                <p class="suojin">冯光东通过杭黄天目山隧道BIM技术应用的案例介绍了中铁第四勘察设计院高速铁路工程BIM设计技术路线与方案；崔铁
-                    万分享了中国市政工程西北设计研究院有限公司基于Bentley进行二次开发，实现市政道路、公路、桥隧、综合管廊等专
-                    业的BIM正向协同设计研发成果；辛佐先介绍了上海市隧道工程轨道交通设计研究院代表上海申通地铁业主方BIM应用的解决
-                    方案，包括构建BIM应用标准体系、建立企业级数字资产库和一体化管理平台。
-                </p>
-                <p class="suojin">达索析统上海信息技术有限公司、北京城建集团、北京天佑天宝科技有限公司、上海城建设计研究院、西南交通大学等
-                    二十家国内以路桥隧为主营业务的特邀嘉宾就BIM技术应用做专题报告，分享了BIM技术在路桥隧工程中的应用现状与展望，
-                    包括正向设计、快速建模、协同平台、施工管理、运维管理等，展示了BIM技术在我国路桥隧工程应用中取得的进步与成果。
-                </p>
-                <p class="suojin">最后，上海市政设计研究总院数字工程设计中心资深总工程师张吕伟讲解了《中国市政设计行业BIM技术丛书》的编写思路，
-                    为BIM在中国市政设计行业的规范化应用提供了重要参考。</p>
             </div>
         </div>
     </div>
 </div>
+<% include ../includes/footer.ejs %>
+</body>

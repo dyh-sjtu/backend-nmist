@@ -2451,8 +2451,15 @@ a#scrollUp:hover{background:  #2154CF;color: #fff}
 	text-align: center;
 }
 
-.media-body:hover {
-	background: deepskyblue;
+.media-body h5 {
+	color: #666
+}
+.media-body a:hover {
+	text-decoration: underline;
+}
+
+.media-body h5:hover {
+	color: #065083;
 }
 
 .list-group-item:hover {

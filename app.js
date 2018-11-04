@@ -74,7 +74,6 @@ let userList = require('./routes/user/userList');
 let news = require('./routes/news/news');
 
 // api相关
-let getNews = require('./routes/api/news');
 let apply = require('./routes/api/apply');
 
 let status = require('./routes/status/status');
@@ -96,7 +95,6 @@ app.use('/', userList);
 app.use('/', news);
 
 //api接口
-app.use('/api', getNews);
 app.use('/api', apply);
 
 app.use('/', status);

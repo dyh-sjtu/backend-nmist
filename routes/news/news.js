@@ -56,16 +56,28 @@ router.post('/admin/news/add', Auth.requiredLogin, Auth.requiredAdmin, (req, res
 	try {
 		let newsObj = req.body;
 		if (newsObj.title) {
-			let _newsObj = new News({
-				title: newsObj.title,
-				content: newsObj.content
-			});
-			_newsObj.save((err, news) => {
-				if (err) console.log(err);
-				return res.json({
-					success: 1
+			if (newsObj.newsId) {
+				News.findById(newsObj.newsId, (err, news) => {
+					let _newsObj = Object.assign(news, newsObj);
+					_newsObj.save((err, news) => {
+						if (err) console.log(err);
+						return res.json({
+							success: 1
+						})
+					})
 				})
-			})
+			}else {
+				let _newsObj = new News({
+					title: newsObj.title,
+					content: newsObj.content
+				});
+				_newsObj.save((err, news) => {
+					if (err) console.log(err);
+					return res.json({
+						success: 1
+					})
+				})
+			}
 		}
 	}catch(err) {
 		console.log('err', err);

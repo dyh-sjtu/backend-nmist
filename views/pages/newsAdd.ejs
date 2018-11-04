@@ -46,7 +46,14 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label" for="news_title">新闻标题</label>
                     <div class="layui-input-block">
-                        <input type="text" required lay-verify="required" placeholder="请输入新闻标题"
+                        <input type="hidden" value="<%= news&&news._id %>" class="layui-input" id="news_id">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="news_title">新闻标题</label>
+                    <div class="layui-input-block">
+                        <input type="text" required lay-verify="required" value="<%= news&&news.title %>"
+                               placeholder="请输入新闻标题"
                                autocomplete="on" class="layui-input" id="news_title">
                     </div>
                 </div>
@@ -54,7 +61,11 @@
                     <label class="layui-form-label" for="news_edit">新闻内容</label>
                     <div class="layui-input-block">
                         <textarea id="news_edit" style="display: none"
-                                  class="layui-textarea"></textarea>
+                                  class="layui-textarea">
+                            <% if (!!news) { %>
+                            <%- news.content %>
+                            <% } %>
+                        </textarea>
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -84,11 +95,13 @@
 			var btn = document.getElementById("save_newsContent");
 			btn.onclick = function () {
 				var news_title = document.getElementById('news_title').value;
+				var news_id = document.getElementById('news_id').value;
 				var news_content = layedit.getContent(index);
 				$.ajax({
 					type: 'POST',
 					url: '/admin/news/add',
 					data: {
+						newsId: news_id,
 						title: news_title,
 						content: news_content
 					}
@@ -96,7 +109,7 @@
 					if (res.success === 1) {
 						layer.msg("新闻保存成功!")
 						location.replace('/admin/newsList')
-                    }
+					}
 				})
 			}
 		});

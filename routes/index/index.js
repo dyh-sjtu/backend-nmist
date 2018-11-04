@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const News = require('../../models/news');
 
 
 // 所有静态页面
@@ -21,10 +22,6 @@ router.get('/example', (req, res) => {
 
 router.get('/contact', (req, res) => {
 	res.render("contact")
-})
-
-router.get('/news', (req, res) => {
-	res.render("news")
 })
 
 router.get('/download', (req, res) => {
@@ -49,12 +46,29 @@ router.get('/NMBIM', (req, res) => {
 
 router.get('/NMGIS', (req, res) => {
 	res.render("nmgis")
-})
+});
 
-// 查看新闻详情
+
+router.get('/news', (req, res) => {
+	try {
+		News.fetch((err, news) => {
+			res.render('news', {
+				news: news
+			})
+		})
+	}catch(err) {
+		console.log('err', err)
+	}
+});
+
 router.get('/news/:id', (req, res) => {
 	try {
 		let newsId = req.params.id;
+		News.findById(newsId, (err, newsItem) => {
+			res.render('newsItem', {
+				newsItem: newsItem
+			})
+		})
 	}catch(err) {
 		console.log('err', err)
 	}
