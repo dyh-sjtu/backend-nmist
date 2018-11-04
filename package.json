@@ -25,11 +25,11 @@
     "mongoose": "^4.10.2",
     "morgan": "^1.9.0",
     "nodemailer": "^4.6.8",
-    "layui-src": "^2.4.5"
+    "layui-src": "^2.4.5",
+    "ejs": "^2.6.1"
   },
   "devDependencies": {
     "browser-sync": "^2.18.12",
-    "ejs": "^2.6.1",
     "gulp": "^3.9.1",
     "gulp-jshint": "^2.0.4",
     "gulp-nodemon": "^2.2.1",
