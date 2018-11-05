@@ -12,6 +12,7 @@ router.get('/admin', Auth.requiredLogin, Auth.requiredAdmin, (req, res) => {
 		let localUser = res.locals.user;
 		User.fetch((err, users) => {
 			res.render("userList", {
+				title: '用户管理',
 				localUser: localUser,
 				users: users
 			})
@@ -27,6 +28,7 @@ router.get('/admin/applyList', Auth.requiredLogin, Auth.requiredAdmin, (req, res
 		ApplyEmail.fetch((err, applyEmail) => {
 			ApplyUser.fetch((err, applyUsers) => {
 				res.render('applyList', {
+					title: '软件申请',
 					localUser: localUser,
 					applyUsers: applyUsers,
 					email: applyEmail && applyEmail[0]

@@ -3,7 +3,7 @@ exports.requiredLogin = (req, res, next) => {
 	let _user = res.locals.user;
 	if (!_user) {
 		res.locals.admin = false;
-		return res.redirect('/admin/user/signIn');
+		return res.redirect('/admin/status?return_url=/admin/user/signIn&code=0&tips=您还未登录,请先登录系统!');
 	}
 	next();
 };

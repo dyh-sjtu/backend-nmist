@@ -9,6 +9,7 @@ router.get('/admin/newsList', Auth.requiredLogin, Auth.requiredAdmin, (req, res)
 		let localUser = res.locals.user;
 		News.fetch((err, newsList) => {
 			res.render("newsList", {
+				title: '新闻列表',
 				localUser: localUser,
 				newsList: newsList
 			})
@@ -23,6 +24,7 @@ router.get('/admin/news/add', Auth.requiredLogin, Auth.requiredAdmin, (req, res)
 	try {
 		let localUser = res.locals.user;
 		res.render("newsAdd", {
+			title: '新闻列表',
 			localUser: localUser,
 			news: ''
 		})
@@ -108,6 +110,7 @@ router.get('/admin/news/detail/:id', Auth.requiredLogin, Auth.requiredAdmin, (re
 		if (newsId) {
 			News.findById(newsId, (err, news) => {
 				res.render('newsDetail', {
+					title:'新闻列表',
 					localUser: localUser,
 					news: news
 				})
@@ -125,6 +128,7 @@ router.get('/admin/news/update/:id', Auth.requiredLogin, Auth.requiredAdmin, (re
 		if (newsId) {
 			News.findById(newsId, (err, news) => {
 				res.render('newsAdd', {
+					title: '新闻列表',
 					localUser: localUser,
 					news: news
 				})

@@ -1,41 +1,8 @@
 <% include ../includes/backend-head.ejs %>
 <body style="overflow-x: hidden;background-color: #eee;">
-<div class="backend-header flex-space">
-    <div>
-        <span class="admin"><i class="layui-icon layui-icon-set-fill" style="font-size: 18px;margin-left: -10px"></i><a
-                    href="/admin">天磁信息科技管理后台</a></span>
-    </div>
-    <div class="flex-cc pr-40">
-        <div class="user weintern-font-larger mr-20">欢迎您，<a href="javascript:;"
-                                                            class="font-italic"><%= localUser.name %></a>
-        </div>
-        <div class="logout"><a href="/admin/user/signIn">退出</a></div>
-    </div>
-</div>
+<% include ../includes/backend-header.ejs %>
 <div class="main">
-    <div class="backend-sidebar">
-        <ul class="layui-nav layui-nav-tree" lay-filter="">
-            <li class="layui-nav-item layui-this">
-                <a href="/admin/userList">
-                    <i class="layui-icon layui-icon-user"></i>
-                    <span class="ml-15">用户管理</span>
-                </a>
-            </li>
-            <li class="layui-nav-item">
-                <a href="/admin/newsList">
-                    <i class="layui-icon layui-icon-release"></i>
-                    <span class="ml-15">新闻管理</span>
-                </a>
-            </li>
-            <li class="layui-nav-item">
-                <a href="/admin/applyList">
-                    <i class="layui-icon layui-icon-add-circle"></i>
-                    <span class="ml-15">申请列表</span>
-                </a>
-            </li>
-        </ul>
-    </div>
-
+    <% include ../includes/backend-sidebar.ejs %>
     <div class="backend-container">
         <div class="row pb-10" style="margin-right: 0;margin-left: 0">
             <h2 class="w100 tc">用户管理</h2>

@@ -45,7 +45,6 @@
 	padding: 10px 0;
 	background-color: #e9eef1;
 	border-radius: 2px;
-	/*box-sizing: border-box!important;*/
 }
 .backend-sidebar ul li a {
 	height: 45px;
@@ -62,13 +61,11 @@
 
 .backend-content {
 	background-color: #eee;
-	overflow-x: scroll;
-	overflow-y: scroll;
 	margin: 20px;
 	border-radius: 10px;
 	border: 1px solid rgba(0,0,0,.3);
 	min-height: 560px;
-	box-shadow: 0px 10px 30px 0px rgba(205, 205, 205, 0.33);
+	box-shadow: 0 10px 30px 0 rgba(205, 205, 205, 0.33);
 }
 
 .scroll-content {

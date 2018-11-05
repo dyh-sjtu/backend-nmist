@@ -1,0 +1,22 @@
+<div class="backend-sidebar">
+    <ul class="layui-nav layui-nav-tree" lay-filter="">
+        <li class="layui-nav-item <%= title === "用户管理" ? 'layui-this' : ''%>">
+            <a href="/admin/userList">
+                <i class="layui-icon layui-icon-user"></i>
+                <span class="ml-15">用户管理</span>
+            </a>
+        </li>
+        <li class="layui-nav-item <%= title === "新闻列表" ? 'layui-this' : ''%>">
+            <a href="/admin/newsList">
+                <i class="layui-icon layui-icon-release"></i>
+                <span class="ml-15">新闻列表</span>
+            </a>
+        </li>
+        <li class="layui-nav-item <%= title === "软件申请" ? 'layui-this' : ''%>">
+            <a href="/admin/applyList">
+                <i class="layui-icon layui-icon-add-circle"></i>
+                <span class="ml-15">软件申请</span>
+            </a>
+        </li>
+    </ul>
+</div>

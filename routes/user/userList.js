@@ -11,6 +11,7 @@ router.get('/admin/userList', Auth.requiredLogin, Auth.requiredAdmin, (req, res)
 		User.fetch((err, users) => {
 			let localUser = res.locals.user;
 			res.render("userList", {
+				title: '用户管理',
 				localUser: localUser,
 				users: users
 			})
