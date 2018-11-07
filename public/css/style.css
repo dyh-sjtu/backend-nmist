@@ -399,7 +399,7 @@ header {
 .single-slider.height-100 {
 	background-position: center center;
 	background-size: cover;
-	height: 960px;
+	height: 400px;
 }
 .single-slider.slider-height {
 	height: 805px;
@@ -2470,3 +2470,14 @@ a#scrollUp:hover{background:  #2154CF;color: #fff}
 	color: #777;
 }
 
+
+.service-wrapper-2 {
+	padding: 50px 40px;
+	box-shadow: 0px 10px 30px 0px rgba(205, 205, 205, 0.33);
+	background-position: center center;
+	background-repeat: no-repeat;
+	transition: all .3s;
+}
+.service-wrapper-2:hover {
+	transform: translateY(-10px);
+}

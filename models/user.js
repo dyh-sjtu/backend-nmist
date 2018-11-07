@@ -11,6 +11,7 @@ let UserSchema = new mongoose.Schema({
 		unique: true
 	},
 	// role: 1 访客 // 无任何权限
+	// role: 4 普通管理员     // 拥有增删改查权限
 	// role: 7 超级管理员权限
 	role: {
 		type: Number,

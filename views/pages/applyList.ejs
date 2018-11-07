@@ -65,12 +65,11 @@
                         <%= moment(applyUser.meta.createAt).format("YYYY-MM-DD") %>
                     </td>
                     <td>
-                        <% if (localUser.role === 7) { %>
                         <button class="user-del layui-btn layui-btn-danger"
                                 data-id="<%= applyUser._id %>">删除<i class="layui-icon layui-icon-delete"
                                                                     style="position: relative;top: 1px"></i>
                         </button>
-                        <% } %>
+
                         <% if (!applyUser.dealStatus) { %>
                         <button class="deal-status layui-btn"
                                 data-id="<%= applyUser._id %>">未处理<span class="layui-badge-dot"></span>
@@ -168,9 +167,9 @@
 						layer.msg("保存失败，请重试！")
 					}
 				})
-			}else {
+			} else {
 				layer.msg("邮箱不符合规范!")
-            }
+			}
 		})
 	})
 </script>

@@ -47,26 +47,20 @@
                         <%= moment(news.meta.updateAt).format("YYYY-MM-DD") %>
                     </td>
                     <td>
-                        <% if (localUser.role === 7) { %>
                         <button class="news-del layui-btn layui-btn-danger"
                                 data-id="<%= news._id %>">删除<i class="layui-icon layui-icon-delete"
                                                                style="position: relative;top: 1px"></i>
                         </button>
-                        <% } %>
-                        <% if (localUser.role === 7) { %>
                         <a href="/admin/news/update/<%= news._id %>">
                             <button class="news-update layui-btn">更新<i class="layui-icon layui-icon-refresh"
                                                                    style="font-size: 14px"></i>
                             </button>
                         </a>
-                        <% } %>
-                        <% if (localUser.role === 7) { %>
                         <a href="/admin/news/detail/<%= news._id %>">
                             <button class="news-view layui-btn">查看<i class="layui-icon layui-icon-link"
                                                                    style="font-size: 14px"></i>
                             </button>
                         </a>
-                        <% } %>
                     </td>
                 </tr>
                 <% }) %>

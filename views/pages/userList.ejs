@@ -38,6 +38,9 @@
                         <% if (user.role === 1) { %>
                         <span>普通用户</span>
                         <% } %>
+                        <% if (user.role === 4) { %>
+                        <span>一般管理员</span>
+                        <% } %>
                         <% if (user.role === 7) { %>
                         <span>超级管理员</span>
                         <% } %>
@@ -46,14 +49,22 @@
                         <%= moment(user.meta.createAt).format("YYYY-MM-DD") %>
                     </td>
                     <td>
+                        <% if (localUser.role === 7) { %>
                         <% if (user._id == localUser._id) { %>
                         <button disabled="disabled" class="user-del layui-btn layui-btn-danger layui-btn-disabled"
-                                data-id="<%= user._id %>">删除<i class="layui-icon layui-icon-delete" style="position: relative;top: 1px"></i>
+                                data-id="<%= user._id %>">删除<i class="layui-icon layui-icon-delete"
+                                                               style="position: relative;top: 1px"></i>
                         </button>
                         <% } %>
                         <% if (user._id != localUser._id) { %>
                         <button class="user-del layui-btn layui-btn-danger"
-                                data-id="<%= user._id %>">删除<i class="layui-icon layui-icon-delete" style="position: relative;top: 1px"></i>
+                                data-id="<%= user._id %>">删除<i class="layui-icon layui-icon-delete"
+                                                               style="position: relative;top: 1px"></i>
+                        </button>
+                        <% } %>
+                        <button class="change-role layui-btn" data-id="<%= user._id %>" data-role="<%= user.role %>">
+                            更改权限
+                            <i class="layui-icon layui-icon-edit"></i>
                         </button>
                         <% } %>
                     </td>
@@ -61,6 +72,18 @@
                 <% }) %>
                 </tbody>
             </table>
+        </div>
+    </div>
+</div>
+<div class="layui-form" style="height: 250px" id="select-role">
+    <div class="layui-form-item" style="padding: 25px 50px">
+        <label class="layui-form-label" for="role">权限选择</label>
+        <div class="layui-input-block">
+            <select name="role" id="role">
+                <option value="1">普通用户</option>
+                <option value="4">一般管理员</option>
+                <option value="7">超级管理员</option>
+            </select>
         </div>
     </div>
 </div>
@@ -84,6 +107,45 @@
 								tr.remove();
 							} else {
 								layer.alert("删除失败，请重试！")
+							}
+							layer.close(index);
+						})
+					},
+					btn2: function (index) {
+						layer.close(index)
+					}
+				})
+			}
+		})
+
+		// 更改用户权限
+		$(".change-role").bind("click", function () {
+			var userId = $(this).data("id");
+			var role = $(this).data("role");
+			$("#role").val(role);
+			layui.use('form', function () {
+				var form = layui.form;
+				form.render("select");
+			});
+			if (userId) {
+				layer.config({
+					title: "提示"
+				})
+				layer.open({
+					type: 1,
+					content: $("#select-role"),
+					btn: ['确认', '取消'],
+					btn1: function (index) {
+						var selected_role = $("#role").val();
+						$.ajax({
+							url: "/admin/user/role?userId=" + userId,
+							type: "POST",
+							data: {
+								role: selected_role
+							}
+						}).done(function (res) {
+							if (res.success === 1) {
+								location.reload();
 							}
 							layer.close(index);
 						})

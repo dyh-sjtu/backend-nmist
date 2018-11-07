@@ -48,6 +48,14 @@ router.get('/NMGIS', (req, res) => {
 	res.render("nmgis")
 });
 
+router.get('/recurit', (req, res) => {
+	res.render("recurit")
+});
+
+router.get('/agent', (req, res) => {
+	res.render("agent")
+});
+
 
 router.get('/news', (req, res) => {
 	try {

@@ -958,6 +958,13 @@
 	justify-content: center;
 }
 
+.flex-column-sp {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: flex-start;
+}
+
 .flex-startc {
 	display: flex;
 	align-items: center;
