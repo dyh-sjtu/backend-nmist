@@ -1,0 +1,104 @@
+<% include ../includes/backend-head.ejs %>
+<body style="overflow-x: hidden;background-color: #eee;">
+<% include ../includes/backend-header.ejs %>
+<div class="main">
+    <% include ../includes/backend-sidebar.ejs %>
+    <div class="backend-container">
+        <div class="row flex-space pb-10" style="margin-right: 0;margin-left: 0">
+            <h2 class="tc w100">个人中心</h2>
+        </div>
+        <hr class="layui-bg-blue pt-5">
+        <div class="backend-content">
+            <div class="layui-form" style="padding: 20px 25px">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">用户名</label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input" value="<%= localUser.name %>" disabled="disabled"
+                               style="cursor:not-allowed;">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">密码</label>
+                    <div class="layui-input-inline">
+                        <input type="password" class="layui-input" value="<%= localUser.password %>"
+                               style="cursor:not-allowed;padding: 0 5px" disabled="disabled">
+                    </div>
+                    <div class="layui-word-aux">
+                        <button type="button" class="layui-btn" id="modify-password-btn">修改密码</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="layui-form" style="height: 250px" id="modify-password">
+    <div class="layui-form-item" style="padding: 50px 50px 0 25px">
+        <label class="layui-form-label" for="password">新的密码</label>
+        <div class="layui-input-block">
+            <input type="password" name="password" id="password" required lay-verify="required" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item" style="padding: 25px 50px 0 25px">
+        <label class="layui-form-label" for="confirm_password">确认密码</label>
+        <div class="layui-input-block">
+            <input type="password" name="confirm_password" id="confirm_password" required lay-verify="required"
+                   class="layui-input">
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+	$(document).ready(function () {
+		layer.config({
+			title: '提示'
+		})
+		$("#modify-password-btn").bind("click", function () {
+			layui.use('form', function () {
+				var form = layui.form;
+				form.render();
+			});
+			layer.open({
+				type: 1,
+				content: $("#modify-password"),
+				btn: ['确认', '取消'],
+				btn1: function (index) {
+					var password = $("#password").val();
+					var confirm_password = $("#confirm_password").val();
+					if ((!password) || (!confirm_password)) {
+						layer.msg("密码不能为空!");
+						return;
+					}
+					if (password && confirm_password) {
+						if (password.trim().length < 6) {
+							layer.msg("密码长度不少于6位!");
+							return;
+						}
+						if (password.trim() !== confirm_password.trim()) {
+							layer.msg("密码前后不一致,请重新确认密码!");
+							return;
+						} else {
+							$.ajax({
+								type: 'POST',
+								url: "/admin/user/modifyPassword",
+								data: {
+									password: password.trim()
+								}
+							}).done(function (res) {
+								if (res.success === 1) {
+									layer.msg("密码修改成功,请重新登录!");
+									location.replace("/admin/user/signIn");
+								}else {
+									layer.msg("密码修改失败,请重试!")
+								}
+								layer.close(index);
+							})
+						}
+					}
+				},
+				btn2: function (index) {
+					layer.close(index);
+				}
+			})
+		})
+	})
+</script>
+</body>
