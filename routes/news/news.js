@@ -71,6 +71,7 @@ router.post('/admin/news/add', Auth.requiredLogin, Auth.requiredAdmin, (req, res
 			}else {
 				let _newsObj = new News({
 					title: newsObj.title,
+					time: newsObj.time,
 					content: newsObj.content
 				});
 				_newsObj.save((err, news) => {

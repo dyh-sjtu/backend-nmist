@@ -29,8 +29,8 @@
         <div class="row mt-50 mb-50">
             <div class="media">
                 <div class="media-left media-middle tianci-data">
-                    <i><%= moment(item.meta.updateAt).get('year') %>年<%= moment(item.meta.updateAt).get('month')+1 %>月</i>
-                    <p><%= moment(item.meta.updateAt).get('date') %>日</p>
+                    <i><%= moment(item.time).get('year') %>年<%= moment(item.time).get('month')+1 %>月</i>
+                    <p><%= moment(item.time).get('date') %>日</p>
                 </div>
                 <div class="media-body">
                     <a href="/news/<%= item._id %>" target="_blank">

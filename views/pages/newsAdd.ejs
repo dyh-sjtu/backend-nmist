@@ -5,22 +5,29 @@
     <% include ../includes/backend-sidebar.ejs %>
     <div class="backend-container">
         <div class="row pb-10" style="margin-right: 0;margin-left: 0">
-            <h2 class="w100 tc"><%= news&&news._id ? "新闻更新" : "新闻添加" %></h2>
+            <h2 class="w100 tc"><%= news && news._id ? "新闻更新" : "新闻添加" %></h2>
         </div>
         <hr class="layui-bg-blue pt-5">
         <div class="backend-content" style="background-color: #fff">
             <form class="layui-form" style="padding: 0 15px">
                 <div class="layui-form-item">
                     <div class="layui-input-block">
-                        <input type="hidden" value="<%= news&&news._id %>" class="layui-input" id="news_id">
+                        <input type="hidden" value="<%= news && news._id %>" class="layui-input" id="news_id">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label" for="news_title">新闻标题</label>
                     <div class="layui-input-block">
-                        <input type="text" required lay-verify="required" value="<%= news&&news.title %>"
+                        <input type="text" required lay-verify="required" value="<%= news && news.title %>"
                                placeholder="请输入新闻标题"
                                autocomplete="on" class="layui-input" id="news_title">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="news_time">新闻时间</label>
+                    <div class="layui-input-block">
+                        <input type="text" required lay-verify="required" value="<%= news && news.time %>"
+                               placeholder="请输入新闻事件发生的时间" class="layui-input" id="news_time">
                     </div>
                 </div>
                 <div class="layui-form-item layui-form-text">
@@ -45,6 +52,12 @@
 </div>
 <script type="text/javascript">
 	$(document).ready(function () {
+		layui.use('laydate', function () {
+			var laydate = layui.laydate;
+			laydate.render({
+              elem: "#news_time"
+            })
+		})
 		layui.use('layedit', function () {
 			var layedit = layui.layedit;
 			layedit.set({
@@ -62,21 +75,28 @@
 			btn.onclick = function () {
 				var news_title = document.getElementById('news_title').value;
 				var news_id = document.getElementById('news_id').value;
+				var news_time = document.getElementById('news_time').value;
 				var news_content = layedit.getContent(index);
-				$.ajax({
-					type: 'POST',
-					url: '/admin/news/add',
-					data: {
-						newsId: news_id,
-						title: news_title,
-						content: news_content
-					}
-				}).done(function (res) {
-					if (res.success === 1) {
-						layer.msg("新闻保存成功!")
-						location.replace('/admin/newsList')
-					}
-				})
+				if (!news_title || !news_time || news_content) {
+					layer.msg("新闻标题、新闻时间或者新闻内容不能为空哦!")
+                }
+                if (news_title.trim() || news_time.trim() || news_content.trim()) {
+	                $.ajax({
+		                type: 'POST',
+		                url: '/admin/news/add',
+		                data: {
+			                newsId: news_id,
+			                title: news_title,
+			                time: news_time,
+			                content: news_content
+		                }
+	                }).done(function (res) {
+		                if (res.success === 1) {
+			                layer.msg("新闻保存成功!")
+			                location.replace('/admin/newsList')
+		                }
+	                })
+                }
 			}
 		});
 	})
