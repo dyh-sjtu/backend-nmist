@@ -77,7 +77,7 @@
 				var news_id = document.getElementById('news_id').value;
 				var news_time = document.getElementById('news_time').value;
 				var news_content = layedit.getContent(index);
-				if (!news_title || !news_time || news_content) {
+				if ((!news_title) || (!news_time) || (!news_content)) {
 					layer.msg("新闻标题、新闻时间或者新闻内容不能为空哦!");
 					return;
                 }
