@@ -78,9 +78,10 @@
 				var news_time = document.getElementById('news_time').value;
 				var news_content = layedit.getContent(index);
 				if (!news_title || !news_time || news_content) {
-					layer.msg("新闻标题、新闻时间或者新闻内容不能为空哦!")
+					layer.msg("新闻标题、新闻时间或者新闻内容不能为空哦!");
+					return;
                 }
-                if (news_title.trim() || news_time.trim() || news_content.trim()) {
+                if (news_title.trim() && news_time.trim() && news_content.trim()) {
 	                $.ajax({
 		                type: 'POST',
 		                url: '/admin/news/add',
