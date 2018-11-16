@@ -1124,3 +1124,7 @@
 .font-italic {
 	font-style: italic;
 }
+
+.mr-10 {
+	margin-right: 10px
+}
