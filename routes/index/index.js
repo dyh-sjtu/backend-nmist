@@ -56,6 +56,19 @@ router.get('/agent', (req, res) => {
 	res.render("agent")
 });
 
+router.get('/resume', (req, res) => {
+	try {
+		let jobname = req.query.jobname;
+		console.log(jobname)
+		if (jobname) {
+			res.render('resume', {
+				jobname: jobname
+			})
+		}
+	}catch(err) {
+		console.log('err', err);
+	}
+});
 
 router.get('/news', (req, res) => {
 	try {

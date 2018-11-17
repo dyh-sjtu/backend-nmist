@@ -36,11 +36,11 @@ router.get('/admin/news/add', Auth.requiredLogin, Auth.requiredAdmin, (req, res)
 // 上传图片
 router.post('/admin/news/image/upload', Auth.requiredLogin, Auth.requiredAdmin, Upload.saveFile, (req, res) => {
 	try {
-		if (req.image) {
+		if (req.newFile) {
 			return res.json({
 				code: 0,
 				data: {
-					src: req.image
+					src: req.newFile
 				}
 			})
 		}else {

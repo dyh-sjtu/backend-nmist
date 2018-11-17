@@ -3,6 +3,7 @@ const router = express.Router();
 const ApplyUser = require('../../models/applyUser');
 const nodeEmailer = require('nodemailer');
 const ApplyEmail = require('../../models/applyEmail');
+const upload = require('../middleware/upload');
 
 router.post('/admin/software/apply', (req, res) => {
 	try {
@@ -60,6 +61,25 @@ router.post('/admin/software/apply', (req, res) => {
 		}
 	} catch (err) {
 		console.log('err', err)
+	}
+});
+
+
+router.post('/resume/upload', upload.saveFile, (req, res) => {
+	try {
+		let newFile = req.newFile;
+		if (newFile) {
+			return res.json({
+				code: 0,
+				msg: '文件上传成功',
+				data: {
+					src: newFile,
+					filename: req.filename
+				}
+			})
+		}
+	}catch(err) {
+		console.log('err', err);
 	}
 });
 

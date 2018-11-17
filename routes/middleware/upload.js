@@ -9,11 +9,13 @@ exports.saveFile = (req, res, next) => {
 		if (originalFilename) {
 			fs.readFile(filePath, (err, data) => {
 				let timestamp = Date.now();
-				let type = posterData.type.split('/')[1];
-				let newImage = timestamp + '.' + type;
-				let newPath = path.join(__dirname, '../../', '/public/uploads/' + newImage);
+				let typeArr = originalFilename.split('.');
+				let type = typeArr[typeArr.length-1];
+				let newFile = typeArr.slice(0, typeArr.length-1).join("") + "_" + timestamp + '.' + type;
+				let newPath = path.join(__dirname, '../../', '/public/uploads/' + newFile);
 				fs.writeFile(newPath, data, (err, data) => {
-					req.image = "/uploads/" + newImage;
+					req.newFile = "/uploads/" + newFile;
+					req.filename = originalFilename;
 					next();
 				})
 			})

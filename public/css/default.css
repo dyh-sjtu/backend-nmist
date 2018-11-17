@@ -1111,8 +1111,8 @@
 
 .border-1 {
 	transition: all .3s;
-	box-shadow: 0px 10px 30px 0px rgba(205, 205, 205, 0.33);
-	border: 1px solid #ccc;
+	box-shadow: 0 10px 30px 0 rgba(205, 205, 205, 0.33);
+	border: 1px solid #eee;
 	border-radius: 5px;
 }
 
