@@ -76,8 +76,13 @@ let news = require('./routes/news/news');
 // api相关
 let apply = require('./routes/api/apply');
 
+// 访问统计
+let viewAnalysis = require('./routes/viewAnalysis/viewAnalysis');
+
+// 状态跳转页
 let status = require('./routes/status/status');
 
+// 404页面
 let notfound = require('./routes/404/404');
 
 // 路由的切换页面
@@ -93,6 +98,9 @@ app.use('/', userList);
 
 // 新闻页
 app.use('/', news);
+
+// 访问统计
+app.use('/', viewAnalysis);
 
 //api接口
 app.use('/api', apply);
