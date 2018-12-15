@@ -732,7 +732,7 @@ header {
 	width: 100%;
 	z-index: 1;
 }
-.portfolio-wrapper:hover .portfolio-thumb::before{opacity: .85;visibility: visible;}
+.portfolio-wrapper:hover .portfolio-thumb::before{opacity: .8;visibility: visible;}
 .portfolio-thumb > img {
 	width: 100%;
 	transition: .3s;
