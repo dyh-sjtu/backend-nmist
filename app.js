@@ -52,7 +52,8 @@ app.use((req, res, next) => {
 // 访问统计
 app.use((req, res, next) => {
 	let ip = req.ip;
-	console.log("ip:" + ip);
+	let ips = req.ips;
+	console.log("ip:" + ip + "\r\n" + "ips:" + ips);
 	next();
 });
 
