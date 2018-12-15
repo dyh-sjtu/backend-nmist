@@ -51,9 +51,10 @@ app.use((req, res, next) => {
 
 // 访问统计
 app.use((req, res, next) => {
-	let ip = req.ip;
-	let ips = req.ips;
-	console.log("ip:" + ip + "\r\n" + "ips:" + ips);
+	let clientIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress ||
+		req.socket.remoteAddress || req.connection.socket.remoteAddress || '';
+	let ip = clientIp.match(/\d+.\d+.\d+.\d+/);
+	console.log(ip);
 	next();
 });
 
