@@ -49,6 +49,13 @@ app.use((req, res, next) => {
 	next();
 });
 
+// 访问统计
+app.use((req, res, next) => {
+	let ip = req.ip;
+	console.log("ip:" + ip);
+	next();
+});
+
 
 // 用于开发环境的调试堆栈信息
 if ('development' === app.get('env')) {
