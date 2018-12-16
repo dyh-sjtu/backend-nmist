@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 let pvSchema = new mongoose.Schema({
 	ip: String,  // 访问者的ip地址
-	
 	meta: {
 		createAt: {
 			type: Date,

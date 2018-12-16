@@ -1,65 +1,65 @@
 const express = require('express');
 const router = express.Router();
 const News = require('../../models/news');
+const upload = require('../middleware/upload');
 
 
 // 所有静态页面
-router.get('/', (req, res) => {
+router.get('/', upload.saveViewData, (req, res) => {
 	res.render("index")
 });
 
-router.get('/index', (req, res) => {
+router.get('/index', upload.saveViewData, (req, res) => {
 	res.render("index");
 });
 
-router.get('/about', (req, res) => {
+router.get('/about', upload.saveViewData, (req, res) => {
 	res.render("about")
 })
 
-router.get('/example', (req, res) => {
+router.get('/example', upload.saveViewData, (req, res) => {
 	res.render("example")
 })
 
-router.get('/contact', (req, res) => {
+router.get('/contact', upload.saveViewData, (req, res) => {
 	res.render("contact")
 })
 
-router.get('/download', (req, res) => {
+router.get('/download', upload.saveViewData, (req, res) => {
 	res.render("download")
 })
 
-router.get('/product', (req, res) => {
+router.get('/product', upload.saveViewData, (req, res) => {
 	res.render("product")
 })
 
-router.get('/useage', (req, res) => {
+router.get('/useage', upload.saveViewData, (req, res) => {
 	res.render("useage")
 })
 
-router.get('/NMCAD', (req, res) => {
+router.get('/NMCAD', upload.saveViewData, (req, res) => {
 	res.render("nmcad")
 })
 
-router.get('/NMBIM', (req, res) => {
+router.get('/NMBIM', upload.saveViewData, (req, res) => {
 	res.render("nmbim")
 })
 
-router.get('/NMGIS', (req, res) => {
+router.get('/NMGIS', upload.saveViewData, (req, res) => {
 	res.render("nmgis")
 });
 
-router.get('/recurit', (req, res) => {
+router.get('/recurit', upload.saveViewData, (req, res) => {
 	res.render("recurit")
 });
 
-router.get('/agent', (req, res) => {
+router.get('/agent', upload.saveViewData, (req, res) => {
 	res.render("agent")
 });
 
-router.get('/resume', (req, res) => {
+router.get('/resume', upload.saveViewData, (req, res) => {
 	try {
 		let jobname = req.query.jobname;
-		console.log(jobname)
 		if (jobname) {
 			res.render('resume', {
 				jobname: jobname
@@ -70,7 +70,7 @@ router.get('/resume', (req, res) => {
 	}
 });
 
-router.get('/news', (req, res) => {
+router.get('/news', upload.saveViewData, (req, res) => {
 	try {
 		News.fetch((err, news) => {
 			res.render('news', {
@@ -82,7 +82,7 @@ router.get('/news', (req, res) => {
 	}
 });
 
-router.get('/news/:id', (req, res) => {
+router.get('/news/:id', upload.saveViewData, (req, res) => {
 	try {
 		let newsId = req.params.id;
 		News.findById(newsId, (err, newsItem) => {

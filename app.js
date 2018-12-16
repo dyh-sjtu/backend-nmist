@@ -49,14 +49,6 @@ app.use((req, res, next) => {
 	next();
 });
 
-// 访问统计
-app.use((req, res, next) => {
-	let ip = req.headers['x-real-ip'] || req.headers['x-forward-for'] || req.headers['clientip'];
-	let realIp = ip.split(',')[0] || '';
-	console.log(realIp, req.session);
-	next();
-});
-
 
 // 用于开发环境的调试堆栈信息
 if ('development' === app.get('env')) {
