@@ -1,0 +1,192 @@
+<% include ../includes/backend-head.ejs %>
+<body style="overflow-x: hidden;background-color: #eee;">
+<% include ../includes/backend-header.ejs %>
+<div class="main">
+    <% include ../includes/backend-sidebar.ejs %>
+    <div class="backend-container">
+        <div class="row pb-10" style="margin-right: 0;margin-left: 0">
+            <h2 class="w100 tc"><%= software && software._id ? "软件更新" : "软件添加" %></h2>
+        </div>
+        <hr class="layui-bg-blue pt-5">
+        <div class="backend-content" style="background-color: #fff">
+            <div class="layui-form" style="padding: 0 15px">
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <input type="hidden" value="<%= software && software._id %>" class="layui-input"
+                               id="software_id">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="software_name">软件名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="<%= software && software.name %>"
+                               placeholder="请输入软件名称"
+                               autocomplete="on" class="layui-input" id="software_name">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="software_version">软件版本</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="<%= software && software.version %>"
+                               placeholder="请输入软件版本"
+                               autocomplete="on" class="layui-input" id="software_version">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="software_environment">硬件环境</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="<%= software && software.environment %>"
+                               placeholder="请输入硬件环境"
+                               autocomplete="on" class="layui-input" id="software_environment">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="software_lang">软件语言</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="<%= software && software.lang %>"
+                               placeholder="请输入软件语言"
+                               autocomplete="on" class="layui-input" id="software_lang">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="software_system">操作系统</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="<%= software && software.system %>"
+                               placeholder="请输入软件支持的操作系统"
+                               autocomplete="on" class="layui-input" id="software_system">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="software_figure">上传图片</label>
+                    <button type="button" class="layui-btn" id="software_figure">
+                        <i class="layui-icon">&#xe67c;</i>点击上传
+                    </button>
+                    <span style="margin-left: 10px">
+                        <a id="software_figure_desc" href="<%= software && software.figure %>" style='color:#469ff8;'
+                           target='_blank'>
+                            <%= software && software.figure %>
+                        </a>
+                    </span>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="software_linkUrl">上传软件</label>
+                    <button type="button" class="layui-btn" id="software_linkUrl">
+                        <i class="layui-icon">&#xe67c;</i>点击上传
+                    </button>
+                    <span style="margin-left: 10px">
+                        <a id="software_linkUrl_desc" href="<%= software && software.linkUrl %>" style='color:#469ff8;'
+                           target='_blank'>
+                            <%= software && software.linkUrl %>
+                        </a>
+                    </span>
+                </div>
+
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" type="button" id="save_software">保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+	$(document).ready(function () {
+		layer.config({
+			title: '提示'
+		})
+
+		$("#save_software").bind('click', function () {
+			var software_id = $('#software_id').val();
+			var software_name = $('#software_name').val();
+			var software_version = $('#software_version').val();
+			var software_environment = $('#software_environment').val();
+			var software_lang = $('#software_lang').val();
+			var software_system = $('#software_system').val();
+			var software_figure = $('#software_figure_desc').text();
+			console.log(software_figure, software_figure.length ,typeof software_figure, software_figure.trim());
+			var software_linkUrl = $('#software_linkUrl_desc').text();
+			if (!(software_name && software_version && software_environment && software_lang && software_system)) {
+				layer.msg("软件信息不能为空哦😯!");
+				return;
+			}
+			if (!software_figure.trim()) {
+				layer.msg("软件图片未上传!")
+				return;
+			}
+			if (!software_linkUrl.trim()) {
+				layer.msg('软件未上传!')
+				return;
+			}
+
+			$.ajax({
+				type: 'POST',
+				url: '/admin/software/save',
+				data: {
+					softwareId: software_id,
+					name: software_name,
+					version: software_version,
+					environment: software_environment,
+					lang: software_lang,
+					system: software_system,
+					figure: software_figure,
+					linkUrl: software_linkUrl
+				}
+			}).done(function (res) {
+				if (res.success === 1) {
+					layer.msg("软件信息保存成功!")
+					location.replace('/admin/softwareList')
+				}
+			})
+
+		})
+
+		layui.use('upload', function () {
+			var upload = layui.upload;
+
+			//执行实例
+			var uploadInst1 = upload.render({
+				elem: '#software_figure',
+				url: '/admin/software/image/upload', //上传接口
+				accept: 'images',
+				done: function (res) {
+					//上传完毕回调
+					if (res.code === 0) {
+						var ele = $("#software_figure_desc");
+						ele.text(res.data.src);
+						ele.attr('href', res.data.src);
+					} else {
+						layer.msg(res.msg)
+					}
+				},
+				error: function () {
+					//请求异常回调
+					layer.msg('上传失败，请检查网络!')
+				}
+			});
+
+			//执行实例
+			var uploadInst2 = upload.render({
+				elem: '#software_linkUrl', //绑定元素
+				url: '/admin/software/file/upload', //上传接口
+				accept: 'file',
+				done: function (res) {
+					//上传完毕回调
+					if (res.code === 0) {
+						var ele = $("#software_linkUrl_desc");
+						ele.text(res.data.src);
+						ele.attr('href', res.data.src);
+					} else {
+						layer.msg(res.msg)
+					}
+				},
+				error: function () {
+					//请求异常回调
+					layer.msg('上传失败，请检查网络!')
+				}
+			});
+		});
+	})
+</script>
+</body>

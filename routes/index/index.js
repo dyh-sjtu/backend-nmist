@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const News = require('../../models/news');
 const upload = require('../middleware/upload');
+const Software = require('../../models/software');
 
 
 // 所有静态页面
@@ -26,7 +27,11 @@ router.get('/contact', upload.saveViewData, (req, res) => {
 })
 
 router.get('/download', upload.saveViewData, (req, res) => {
-	res.render("download")
+	Software.fetch((err, softwares) => {
+		res.render("download", {
+			softwares: softwares
+		})
+	})
 })
 
 router.get('/product', upload.saveViewData, (req, res) => {
