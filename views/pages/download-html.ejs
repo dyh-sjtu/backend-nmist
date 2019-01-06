@@ -74,7 +74,7 @@
                     <h5 style="color: #777777"><%= software.system %></h5>
                 </div>
                 <div class="flex-sc mt-40">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" id="selectDownloadWay"
+                    <button type="button" class="btn btn-primary selectDownloadWay" data-toggle="modal"
                             data-target="#selectDownloadWayModal" data-url1="<%= software.linkUrl %>"
                             data-url2="<%= software.baiduyunUrl %>">
                         立即下载
@@ -120,9 +120,10 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-      $("#selectDownloadWay").bind('click', function () {
-        var url1 = $(this).data('url1');
-        var url2 = $(this).data('url2');
+    	var url1, url2;
+      $(".selectDownloadWay").bind('click', function () {
+        url1 = $(this).data('url1');
+        url2 = $(this).data('url2');
         $("#linkUrl").attr('href',url1);
         $("#baiduyunUrl").attr('href', url2);
       })
