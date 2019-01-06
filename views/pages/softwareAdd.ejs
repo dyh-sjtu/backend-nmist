@@ -57,6 +57,14 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
+                    <label class="layui-form-label" for="software_system">百度云下载地址</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="<%= software && software.baiduyunUrl %>"
+                               placeholder="请输入软件百度云地址"
+                               autocomplete="on" class="layui-input" id="software_baiduyunUrl">
+                    </div>
+                </div>
+                <div class="layui-form-item">
                     <label class="layui-form-label" for="software_figure">上传图片</label>
                     <button type="button" class="layui-btn" id="software_figure">
                         <i class="layui-icon">&#xe67c;</i>点击上传
@@ -68,7 +76,8 @@
                         </a>
                     </span>
                 </div>
-                <div class="layui-form-item">
+
+                <div class="layui-form-item mt-30">
                     <label class="layui-form-label" for="software_linkUrl">上传软件</label>
                     <button type="button" class="layui-btn" id="software_linkUrl">
                         <i class="layui-icon">&#xe67c;</i>点击上传
@@ -79,9 +88,13 @@
                             <%= software && software.linkUrl %>
                         </a>
                     </span>
+                    <!--<div id="uploadFileProgress" style="display: none" class="layui-progress layui-progress mt-15"-->
+                    <!--lay-showpercent="true" lay-filter="upload-progress">-->
+                    <!--<div class="layui-progress-bar layui-bg-blue" lay-percent="0%"></div>-->
+                    <!--</div>-->
                 </div>
 
-                <div class="layui-form-item">
+                <div class="layui-form-item mt-30 pb-30">
                     <div class="layui-input-block">
                         <button class="layui-btn" type="button" id="save_software">保存</button>
                     </div>
@@ -104,11 +117,15 @@
 			var software_environment = $('#software_environment').val();
 			var software_lang = $('#software_lang').val();
 			var software_system = $('#software_system').val();
+			var software_baiduyunUrl = $("#software_baiduyunUrl").val();
 			var software_figure = $('#software_figure_desc').text();
-			console.log(software_figure, software_figure.length ,typeof software_figure, software_figure.trim());
 			var software_linkUrl = $('#software_linkUrl_desc').text();
 			if (!(software_name && software_version && software_environment && software_lang && software_system)) {
 				layer.msg("软件信息不能为空哦😯!");
+				return;
+			}
+			if (!software_baiduyunUrl) {
+				layer.msg("软件百度云地址未填写!")
 				return;
 			}
 			if (!software_figure.trim()) {
@@ -131,7 +148,8 @@
 					lang: software_lang,
 					system: software_system,
 					figure: software_figure,
-					linkUrl: software_linkUrl
+					linkUrl: software_linkUrl,
+					baiduyunUrl: software_baiduyunUrl
 				}
 			}).done(function (res) {
 				if (res.success === 1) {
@@ -144,18 +162,24 @@
 
 		layui.use('upload', function () {
 			var upload = layui.upload;
+			var index1, index2;
 
 			//执行实例
 			var uploadInst1 = upload.render({
 				elem: '#software_figure',
 				url: '/admin/software/image/upload', //上传接口
 				accept: 'images',
+				choose: function () {
+					index1 = layer.load(1);
+				},
 				done: function (res) {
 					//上传完毕回调
 					if (res.code === 0) {
+						layer.close(index1);
 						var ele = $("#software_figure_desc");
 						ele.text(res.data.src);
 						ele.attr('href', res.data.src);
+						layer.msg("图片上传成功")
 					} else {
 						layer.msg(res.msg)
 					}
@@ -171,12 +195,17 @@
 				elem: '#software_linkUrl', //绑定元素
 				url: '/admin/software/file/upload', //上传接口
 				accept: 'file',
+				choose: function () {
+					index2 = layer.load(2);
+				},
 				done: function (res) {
 					//上传完毕回调
 					if (res.code === 0) {
+						layer.close(index2);
 						var ele = $("#software_linkUrl_desc");
 						ele.text(res.data.src);
 						ele.attr('href', res.data.src);
+						layer.msg("软件上传成功")
 					} else {
 						layer.msg(res.msg)
 					}

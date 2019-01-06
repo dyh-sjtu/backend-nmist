@@ -14,7 +14,7 @@
             </a>
         </div>
         <hr class="layui-bg-blue pt-5">
-        <div class="backend-content">
+        <div class="backend-content" style="overflow: scroll">
             <table class="layui-table">
                 <thead>
                 <tr>
@@ -25,8 +25,6 @@
                     <th style="width: 80px">语言</th>
                     <th style="width: 80px">操作系统</th>
                     <th style="width: 80px">软件图片</th>
-                    <th style="width: 80px">下载地址</th>
-                    <th style="width: 80px">演示视频</th>
                     <th style="width: 80px">操作</th>
                 </tr>
                 </thead>
@@ -55,15 +53,9 @@
                         <a href="<%= software.figure %>" target="_blank" style="color:#469ff8;"><%= software.figure %></a>
                     </td>
                     <td>
-                        <a href="<%= software.linkUrl %>" target="_blank" style="color:#469ff8;"><%= software.linkUrl %></a>
-                    </td>
-                    <td>
-                        <a href="<%= software.video %>" target="_blank" style="color:#469ff8;"><%= software.video %></a>
-                    </td>
-                    <td>
                         <a href="/admin/software/update/<%= software._id %>">
                             <button class="news-update layui-btn">更新<i class="layui-icon layui-icon-refresh"
-                                                                       style="font-size: 14px"></i>
+                                                                       style="font-size: 14px;margin-left: 4px"></i>
                             </button>
                         </a>
                         <button class="software-del layui-btn layui-btn-danger"

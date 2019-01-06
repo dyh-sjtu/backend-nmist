@@ -148,7 +148,6 @@ label {
 }
 .btn {
 	-moz-user-select: none;
-	background: #2f3440 none repeat scroll 0 0;
 	border: 1px solid transparent;
 	border-radius: 0;
 	color: #fff;
@@ -180,7 +179,6 @@ label {
 	margin-left: 5px;
 	display: inline-block;
 }
-.btn:hover{color: #2154CF}
 .btn:hover:before{width:100%;color: #444}
 .btn.brand-btn {
 	background: #2154CF;
@@ -225,9 +223,7 @@ label {
 	text-indent: -10000px;
 	width: 12px;
 }
-.wrapper-box {
-	padding: 0 70px;
-}
+
 .pos-relative{position: relative;}
 /* 2. header */
 .header-call span {
@@ -279,9 +275,9 @@ header {
 	top: 0;
 	left: 0;
 	width: 100%;
-	z-index: 99999;
+	z-index: 1000;
 	position: fixed;
-	border: solid 1px #eee;
+	/*border: solid 1px #eee;*/
 	background-color: #fff;
 }
 
@@ -2394,7 +2390,7 @@ a#scrollUp:hover{background:  #2154CF;color: #fff}
 
 .divider {
 	width: 100%;
-	border-bottom: 1px solid deepskyblue;
+	border-bottom: 1px solid #1E88C7;
 }
 
 .zoomImage{
@@ -2461,7 +2457,7 @@ a#scrollUp:hover{background:  #2154CF;color: #fff}
 }
 
 .list-group-item:hover {
-	background: deepskyblue;
+	background: rgba(0,0,0,.05);
 }
 
 .list-group-item {

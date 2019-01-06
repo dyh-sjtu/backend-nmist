@@ -7,6 +7,7 @@ let SoftwareSchema = new mongoose.Schema({
 	system: String,
 	figure: String,
 	linkUrl: String,
+	baiduyunUrl: String,  // 百度云下载地址
 	video: String,
 	meta: {
 		createAt: {
