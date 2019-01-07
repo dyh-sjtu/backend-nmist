@@ -28,6 +28,29 @@ exports.saveFile = (req, res, next) => {
 	}
 };
 
+exports.saveFileWithNoTimestamp = (req, res, next) => {
+	try {
+		let posterData = req.files.file;
+		let filePath = posterData.path;
+		let originalFilename = posterData.originalFilename;
+		if (originalFilename) {
+			fs.readFile(filePath, (err, data) => {
+				let newPath = path.join(__dirname, '../../', '/public/uploads/' + originalFilename);
+				fs.writeFile(newPath, data, (err, data) => {
+					req.newFile = "/uploads/" + originalFilename;
+					req.filename = originalFilename;
+					next();
+				})
+			})
+		} else {
+			next();
+		}
+	} catch (err) {
+		console.log('err', err)
+	}
+};
+
+
 exports.saveViewData = (req, res, next) => {
 	try {
 		let ip = req.headers['x-real-ip'] || req.headers['x-forward-for'] || req.headers['clientip'] || '127.0.0.1';

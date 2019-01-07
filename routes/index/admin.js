@@ -204,7 +204,7 @@ router.delete('/admin/softwareList/del', Auth.requiredLogin, Auth.requiredAdmin,
 });
 
 // 上传图片
-router.post('/admin/software/image/upload', Auth.requiredLogin, Auth.requiredAdmin, Upload.saveFile, (req, res) => {
+router.post('/admin/software/image/upload', Auth.requiredLogin, Auth.requiredAdmin, Upload.saveFileWithNoTimestamp, (req, res) => {
 	try {
 		if (req.newFile) {
 			return res.json({
@@ -225,7 +225,7 @@ router.post('/admin/software/image/upload', Auth.requiredLogin, Auth.requiredAdm
 });
 
 // 上传软件
-router.post('/admin/software/file/upload', Auth.requiredLogin, Auth.requiredAdmin, Upload.saveFile, (req, res) => {
+router.post('/admin/software/file/upload', Auth.requiredLogin, Auth.requiredAdmin, Upload.saveFileWithNoTimestamp, (req, res) => {
 	try {
 		if (req.newFile) {
 			return res.json({
