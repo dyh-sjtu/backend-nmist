@@ -9,7 +9,7 @@ const Customer = require('../../models/customer');
 
 // 所有静态页面
 router.get('/', upload.saveViewData, (req, res) => {
-	News.find({}).limit(2).sort({'meta.createAt':1}).exec((err, news) => {
+	News.find({}).sort({'meta.createAt':1}).limit(2).exec((err, news) => {
 		Slider.fetch((err, sliders) => {
 			Customer.fetch((err, customers) => {
 				// 需要将客户案例类型分类成三种，1-战略合作 2-BIM咨询公司 3-研究中心合作单位
