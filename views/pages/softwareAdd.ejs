@@ -64,35 +64,52 @@
                                autocomplete="on" class="layui-input" id="software_baiduyunUrl">
                     </div>
                 </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label" for="software_figure">上传图片</label>
-                    <button type="button" class="layui-btn" id="software_figure">
-                        <i class="layui-icon">&#xe67c;</i>点击上传
-                    </button>
-                    <span style="margin-left: 10px">
-                        <a id="software_figure_desc" href="<%= software && software.figure %>" style='color:#469ff8;'
-                           target='_blank'>
-                            <%= software && software.figure %>
-                        </a>
-                    </span>
-                </div>
+				<div class="layui-form-item">
+					<label class="layui-form-label" for="software_system">软件封面地址</label>
+					<div class="layui-input-block">
+						<input type="text" value="<%= software && software.figure %>"
+							   placeholder="请输入软件图片地址"
+							   autocomplete="on" class="layui-input" id="software_figure">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label" for="software_system">软件下载地址</label>
+					<div class="layui-input-block">
+						<input type="text" value="<%= software && software.linkUrl %>"
+							   placeholder="请输入软件下载地址"
+							   autocomplete="on" class="layui-input" id="software_linkUrl">
+					</div>
+				</div>
 
-                <div class="layui-form-item mt-30">
-                    <label class="layui-form-label" for="software_linkUrl">上传软件</label>
-                    <button type="button" class="layui-btn" id="software_linkUrl">
-                        <i class="layui-icon">&#xe67c;</i>点击上传
-                    </button>
-                    <span style="margin-left: 10px">
-                        <a id="software_linkUrl_desc" href="<%= software && software.linkUrl %>" style='color:#469ff8;'
-                           target='_blank'>
-                            <%= software && software.linkUrl %>
-                        </a>
-                    </span>
-                    <!--<div id="uploadFileProgress" style="display: none" class="layui-progress layui-progress mt-15"-->
-                    <!--lay-showpercent="true" lay-filter="upload-progress">-->
-                    <!--<div class="layui-progress-bar layui-bg-blue" lay-percent="0%"></div>-->
-                    <!--</div>-->
-                </div>
+                <!--<div class="layui-form-item">-->
+                    <!--<label class="layui-form-label" for="software_figure">上传图片</label>-->
+                    <!--<button type="button" class="layui-btn" id="software_figure">-->
+                        <!--<i class="layui-icon">&#xe67c;</i>点击上传-->
+                    <!--</button>-->
+                    <!--<span style="margin-left: 10px">-->
+                        <!--<a id="software_figure_desc" href="" style='color:#469ff8;'-->
+                           <!--target='_blank'>-->
+                            <!---->
+                        <!--</a>-->
+                    <!--</span>-->
+                <!--</div>-->
+
+                <!--<div class="layui-form-item mt-30">-->
+                    <!--<label class="layui-form-label" for="software_linkUrl">上传软件</label>-->
+                    <!--<button type="button" class="layui-btn" id="software_linkUrl">-->
+                        <!--<i class="layui-icon">&#xe67c;</i>点击上传-->
+                    <!--</button>-->
+                    <!--<span style="margin-left: 10px">-->
+                        <!--<a id="software_linkUrl_desc" href="" style='color:#469ff8;'-->
+                           <!--target='_blank'>-->
+                            <!---->
+                        <!--</a>-->
+                    <!--</span>-->
+                    <!--&lt;!&ndash;<div id="uploadFileProgress" style="display: none" class="layui-progress layui-progress mt-15"&ndash;&gt;-->
+                    <!--&lt;!&ndash;lay-showpercent="true" lay-filter="upload-progress">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<div class="layui-progress-bar layui-bg-blue" lay-percent="0%"></div>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                <!--</div>-->
 
                 <div class="layui-form-item mt-30 pb-30">
                     <div class="layui-input-block">
@@ -118,22 +135,22 @@
 			var software_lang = $('#software_lang').val();
 			var software_system = $('#software_system').val();
 			var software_baiduyunUrl = $("#software_baiduyunUrl").val();
-			var software_figure = $('#software_figure_desc').text();
-			var software_linkUrl = $('#software_linkUrl_desc').text();
-			if (!(software_name && software_version && software_environment && software_lang && software_system)) {
+			var software_figure = $('#software_figure').val();
+			var software_linkUrl = $('#software_linkUrl').val();
+			if (!(software_name.trim() && software_version.trim() && software_environment.trim() && software_lang.trim() && software_system.trim())) {
 				layer.msg("软件信息不能为空哦😯!");
 				return;
 			}
-			if (!software_baiduyunUrl) {
+			if (!software_baiduyunUrl.trim()) {
 				layer.msg("软件百度云地址未填写!")
 				return;
 			}
 			if (!software_figure.trim()) {
-				layer.msg("软件图片未上传!")
+				layer.msg("软件封面图片未填写!")
 				return;
 			}
 			if (!software_linkUrl.trim()) {
-				layer.msg('软件未上传!')
+				layer.msg('软件下载地址未填写!')
 				return;
 			}
 
@@ -160,62 +177,62 @@
 
 		})
 
-		layui.use('upload', function () {
-			var upload = layui.upload;
-			var index1, index2;
-
-			//执行实例
-			var uploadInst1 = upload.render({
-				elem: '#software_figure',
-				url: '/admin/software/image/upload', //上传接口
-				accept: 'images',
-				choose: function () {
-					index1 = layer.load(1);
-				},
-				done: function (res) {
-					//上传完毕回调
-					if (res.code === 0) {
-						layer.close(index1);
-						var ele = $("#software_figure_desc");
-						ele.text(res.data.src);
-						ele.attr('href', res.data.src);
-						layer.msg("图片上传成功")
-					} else {
-						layer.msg(res.msg)
-					}
-				},
-				error: function () {
-					//请求异常回调
-					layer.msg('上传失败，请检查网络!')
-				}
-			});
-
-			//执行实例
-			var uploadInst2 = upload.render({
-				elem: '#software_linkUrl', //绑定元素
-				url: '/admin/software/file/upload', //上传接口
-				accept: 'file',
-				choose: function () {
-					index2 = layer.load(2);
-				},
-				done: function (res) {
-					//上传完毕回调
-					if (res.code === 0) {
-						layer.close(index2);
-						var ele = $("#software_linkUrl_desc");
-						ele.text(res.data.src);
-						ele.attr('href', res.data.src);
-						layer.msg("软件上传成功")
-					} else {
-						layer.msg(res.msg)
-					}
-				},
-				error: function () {
-					//请求异常回调
-					layer.msg('上传失败，请检查网络!')
-				}
-			});
-		});
+//		layui.use('upload', function () {
+//			var upload = layui.upload;
+//			var index1, index2;
+//
+//			//执行实例
+//			var uploadInst1 = upload.render({
+//				elem: '#software_figure',
+//				url: '/admin/software/image/upload', //上传接口
+//				accept: 'images',
+//				choose: function () {
+//					index1 = layer.load(1);
+//				},
+//				done: function (res) {
+//					//上传完毕回调
+//					if (res.code === 0) {
+//						layer.close(index1);
+//						var ele = $("#software_figure_desc");
+//						ele.text(res.data.src);
+//						ele.attr('href', res.data.src);
+//						layer.msg("图片上传成功")
+//					} else {
+//						layer.msg(res.msg)
+//					}
+//				},
+//				error: function () {
+//					//请求异常回调
+//					layer.msg('上传失败，请检查网络!')
+//				}
+//			});
+//
+//			//执行实例
+//			var uploadInst2 = upload.render({
+//				elem: '#software_linkUrl', //绑定元素
+//				url: '/admin/software/file/upload', //上传接口
+//				accept: 'file',
+//				choose: function () {
+//					index2 = layer.load(2);
+//				},
+//				done: function (res) {
+//					//上传完毕回调
+//					if (res.code === 0) {
+//						layer.close(index2);
+//						var ele = $("#software_linkUrl_desc");
+//						ele.text(res.data.src);
+//						ele.attr('href', res.data.src);
+//						layer.msg("软件上传成功")
+//					} else {
+//						layer.msg(res.msg)
+//					}
+//				},
+//				error: function () {
+//					//请求异常回调
+//					layer.msg('上传失败，请检查网络!')
+//				}
+//			});
+//		});
 	})
 </script>
 </body>

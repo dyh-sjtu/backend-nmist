@@ -204,46 +204,46 @@ router.delete('/admin/softwareList/del', Auth.requiredLogin, Auth.requiredAdmin,
 });
 
 // 上传图片
-router.post('/admin/software/image/upload', Auth.requiredLogin, Auth.requiredAdmin, Upload.saveFileWithNoTimestamp, (req, res) => {
-	try {
-		if (req.newFile) {
-			return res.json({
-				code: 0,
-				data: {
-					src: req.newFile
-				}
-			})
-		}else {
-			return res.json({
-				code: 1,
-				msg: "上传图片失败,请重试",
-			})
-		}
-	}catch (err) {
-		console.log('err', err);
-	}
-});
+// router.post('/admin/software/image/upload', Auth.requiredLogin, Auth.requiredAdmin, Upload.saveFileWithNoTimestamp, (req, res) => {
+// 	try {
+// 		if (req.newFile) {
+// 			return res.json({
+// 				code: 0,
+// 				data: {
+// 					src: req.newFile
+// 				}
+// 			})
+// 		}else {
+// 			return res.json({
+// 				code: 1,
+// 				msg: "上传图片失败,请重试",
+// 			})
+// 		}
+// 	}catch (err) {
+// 		console.log('err', err);
+// 	}
+// });
 
 // 上传软件
-router.post('/admin/software/file/upload', Auth.requiredLogin, Auth.requiredAdmin, Upload.saveFileWithNoTimestamp, (req, res) => {
-	try {
-		if (req.newFile) {
-			return res.json({
-				code: 0,
-				data: {
-					src: req.newFile
-				}
-			})
-		}else {
-			return res.json({
-				code: 1,
-				msg: "上传软件失败,请重试",
-			})
-		}
-	}catch (err) {
-		console.log('err', err);
-	}
-});
+// router.post('/admin/software/file/upload', Auth.requiredLogin, Auth.requiredAdmin, Upload.saveFileWithNoTimestamp, (req, res) => {
+// 	try {
+// 		if (req.newFile) {
+// 			return res.json({
+// 				code: 0,
+// 				data: {
+// 					src: req.newFile
+// 				}
+// 			})
+// 		}else {
+// 			return res.json({
+// 				code: 1,
+// 				msg: "上传软件失败,请重试",
+// 			})
+// 		}
+// 	}catch (err) {
+// 		console.log('err', err);
+// 	}
+// });
 
 
 module.exports = router;
