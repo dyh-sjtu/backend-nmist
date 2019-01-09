@@ -246,51 +246,31 @@
                 </div>
             </div>
             <div class="row">
+                <% news.forEach(function (newItem, index) { %>
                 <div class="col-lg-6 col-md-6 blog-item mb-40 test-thumb">
                     <div class="blog-wrapper blog-column">
                         <div class="blog-thumb">
-                            <a href="/news/5bdef9a40a5b4353775f85b9" target="_blank">
-                                <img src="/img/blog/01.jpg" alt=""/>
+                            <a href="/news/<%= newItem._id%>" target="_blank">
+                                <img src="<%= newItem.src %>"
+                                     alt=""/>
                             </a>
                         </div>
                         <div class="meta-info">
                             <ul>
-                                <li class="posts-time">2018年9月14日</li>
+                                <li class="posts-time"><%= newItem.time %></li>
                             </ul>
                         </div>
                         <div class="blog-content">
                             <h2 class="blog-title">
-                                <a href="/news/5bdef9a40a5b4353775f85b9" target="_blank">上海交大BIM研究中心及"天磁NMBIM"平台软件入选腾讯云合作伙伴</a>
+                                <a href="/news/<%= newItem._id%>" target="_blank"><%= newItem.title%></a>
                             </h2>
                         </div>
                         <div class="link-box">
-                            <a href="/news/5bdef9a40a5b4353775f85b9" target="_blank">查看详情</a>
+                            <a href="/news/<%= newItem._id%>" target="_blank">查看详情</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-6 blog-item mb-40 test-thumb">
-                    <div class="blog-wrapper blog-column">
-                        <div class="blog-thumb">
-                            <a href="/news/5bdef5e50a5b4353775f85b8" target="_blank">
-                                <img src="/img/blog/02.jpg" alt=""/>
-                            </a>
-                        </div>
-                        <div class="meta-info">
-                            <ul>
-                                <li class="posts-time">2018年9月19-20日</li>
-                            </ul>
-                        </div>
-                        <div class="blog-content">
-                            <h2 class="blog-title">
-                                <a href="/news/5bdef5e50a5b4353775f85b8" target="_blank">上海交大BIM研究中心于成立叁周年之际发布“天磁NMBIM3.0”—暨2018中国路桥隧BIM技术应用峰会
-                                </a>
-                            </h2>
-                        </div>
-                        <div class="link-box">
-                            <a href="/news/5bdef5e50a5b4353775f85b8" target="_blank">查看详情</a>
-                        </div>
-                    </div>
-                </div>
+                <% }) %>
             </div>
         </div>
     </div>
