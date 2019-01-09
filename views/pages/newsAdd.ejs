@@ -24,6 +24,14 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
+                    <label class="layui-form-label" for="news_src">新闻封面图片</label>
+                    <div class="layui-input-block">
+                        <input type="text" required lay-verify="required" value="<%= news && news.src %>"
+                               placeholder="请输入封面图片地址"
+                               autocomplete="on" class="layui-input" id="news_src">
+                    </div>
+                </div>
+                <div class="layui-form-item">
                     <label class="layui-form-label" for="news_time">新闻时间</label>
                     <div class="layui-input-block">
                         <input type="text" required lay-verify="required" value="<%= news && news.time %>"
@@ -55,8 +63,8 @@
 		layui.use('laydate', function () {
 			var laydate = layui.laydate;
 			laydate.render({
-              elem: "#news_time"
-            })
+				elem: "#news_time"
+			})
 		})
 		layui.use('layedit', function () {
 			var layedit = layui.layedit;
@@ -76,28 +84,30 @@
 				var news_title = document.getElementById('news_title').value;
 				var news_id = document.getElementById('news_id').value;
 				var news_time = document.getElementById('news_time').value;
+				var news_src = document.getElementById('news_src').value;
 				var news_content = layedit.getContent(index);
-				if ((!news_title) || (!news_time) || (!news_content)) {
+				if ((!news_title) || (!news_time) || (!news_content) || (!news_src)) {
 					layer.msg("新闻标题、新闻时间或者新闻内容不能为空哦!");
 					return;
-                }
-                if (news_title.trim() && news_time.trim() && news_content.trim()) {
-	                $.ajax({
-		                type: 'POST',
-		                url: '/admin/news/add',
-		                data: {
-			                newsId: news_id,
-			                title: news_title,
-			                time: news_time,
-			                content: news_content
-		                }
-	                }).done(function (res) {
-		                if (res.success === 1) {
-			                layer.msg("新闻保存成功!")
-			                location.replace('/admin/newsList')
-		                }
-	                })
-                }
+				}
+				if (news_title.trim() && news_time.trim() && news_content.trim() && news_src.trim()) {
+					$.ajax({
+						type: 'POST',
+						url: '/admin/news/add',
+						data: {
+							newsId: news_id,
+							title: news_title,
+							time: news_time,
+							src: news_src,
+							content: news_content
+						}
+					}).done(function (res) {
+						if (res.success === 1) {
+							layer.msg("新闻保存成功!")
+							location.replace('/admin/newsList')
+						}
+					})
+				}
 			}
 		});
 	})

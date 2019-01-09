@@ -3,6 +3,7 @@ let NewsSchema = new mongoose.Schema({
 	title: String,  // 新闻标题
 	content: String,  // 新闻内容，为html字符串
 	time: String, // 新闻事件发生时间
+	src: String,
 	meta: {
 		createAt: {
 			type: Date,
