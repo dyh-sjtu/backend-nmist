@@ -6,10 +6,28 @@
                 <span class="ml-15">用户管理</span>
             </a>
         </li>
-        <li class="layui-nav-item <%= title === "新闻列表" ? 'layui-this' : ''%>">
-            <a href="/admin/newsList">
-                <i class="layui-icon layui-icon-release"></i>
-                <span class="ml-15">新闻列表</span>
+        <li class="layui-nav-item <%= title === "轮播组图" ? 'layui-this' : ''%>">
+            <a href="/admin/sliderList">
+                <i class="layui-icon layui-icon-carousel"></i>
+                <span class="ml-15">轮播组图</span>
+            </a>
+        </li>
+        <li class="layui-nav-item <%= title === "产品介绍" ? 'layui-this' : ''%>">
+            <a href="/admin/introductionList">
+                <i class="layui-icon layui-icon-list"></i>
+                <span class="ml-15">产品介绍</span>
+            </a>
+        </li>
+        <li class="layui-nav-item <%= title === "产品案例" ? 'layui-this' : ''%>">
+            <a href="/admin/productList">
+                <i class="layui-icon layui-icon-template"></i>
+                <span class="ml-15">产品案例</span>
+            </a>
+        </li>
+        <li class="layui-nav-item <%= title === "客户案例" ? 'layui-this' : ''%>">
+            <a href="/admin/customerList">
+                <i class="layui-icon layui-icon-senior"></i>
+                <span class="ml-15">客户案例</span>
             </a>
         </li>
         <li class="layui-nav-item <%= title === "软件申请" ? 'layui-this' : ''%>">
@@ -18,22 +36,28 @@
                 <span class="ml-15">软件申请</span>
             </a>
         </li>
-        <li class="layui-nav-item <%= title === "个人中心" ? 'layui-this' : ''%>">
-            <a href="/admin/userCenter">
-                <i class="layui-icon layui-icon-username"></i>
-                <span class="ml-15">个人中心</span>
-            </a>
-        </li>
         <li class="layui-nav-item <%= title === "软件列表" ? 'layui-this' : ''%>">
             <a href="/admin/softwareList">
                 <i class="layui-icon layui-icon-app"></i>
                 <span class="ml-15">软件列表</span>
             </a>
         </li>
+        <li class="layui-nav-item <%= title === "新闻列表" ? 'layui-this' : ''%>">
+            <a href="/admin/newsList">
+                <i class="layui-icon layui-icon-release"></i>
+                <span class="ml-15">新闻列表</span>
+            </a>
+        </li>
         <li class="layui-nav-item <%= title === "访问统计" ? 'layui-this' : ''%>">
             <a href="/admin/viewAnalysis">
                 <i class="layui-icon layui-icon-chart"></i>
                 <span class="ml-15">访问统计</span>
+            </a>
+        </li>
+        <li class="layui-nav-item <%= title === "个人中心" ? 'layui-this' : ''%>">
+            <a href="/admin/userCenter">
+                <i class="layui-icon layui-icon-username"></i>
+                <span class="ml-15">个人中心</span>
             </a>
         </li>
     </ul>

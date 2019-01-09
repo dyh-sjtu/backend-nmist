@@ -1,0 +1,106 @@
+<% include ../includes/backend-head.ejs %>
+<body style="overflow-x: hidden;background-color: #eee;">
+<% include ../includes/backend-header.ejs %>
+<div class="main">
+    <% include ../includes/backend-sidebar.ejs %>
+    <div class="backend-container">
+        <div class="row pb-10" style="margin-right: 0;margin-left: 0">
+            <h2 class="w100 tc"><%= customer && customer._id ? "客户案例更新" : "客户案例添加" %></h2>
+        </div>
+        <hr class="layui-bg-blue pt-5">
+        <div class="backend-content" style="background-color: #fff">
+            <div class="layui-form" style="padding: 0 15px">
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <input type="hidden" value="<%= customer && customer._id %>" class="layui-input"
+                               id="customer_id">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="customer_title">客户案例图片名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="<%= customer && customer.title %>"
+                               placeholder="请输入客户案例图片名称"
+                               autocomplete="on" class="layui-input" id="customer_title">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">客户案例类型</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="customer_type" value="1" title="战略合作" checked>
+                        <input type="radio" name="customer_type" value="2" title="BIM咨询公司">
+                        <input type="radio" name="customer_type" value="3" title="研究中心合作单位">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="slider_src">客户案例友情链接地址</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="<%= customer && customer.url %>"
+                               placeholder="请输入客户案例友情链接地址"
+                               autocomplete="on" class="layui-input" id="customer_url">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="slider_src">客户案例图片地址</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="<%= customer && customer.src %>"
+                               placeholder="请输入客户案例图片地址"
+                               autocomplete="on" class="layui-input" id="customer_src">
+                    </div>
+                </div>
+
+                <div class="layui-form-item mt-30 pb-30">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" type="button" id="save_customer">保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+	$(document).ready(function () {
+		layer.config({
+			title: '提示'
+		})
+
+		layui.use('form', function () {
+			var form = layui.form;
+		})
+
+		$("#save_customer").bind('click', function () {
+			var customer_id = $('#customer_id').val();
+			var customer_title = $('#customer_title').val();
+			var customer_type = $("input[name='customer_type']:checked").val();
+			var customer_src = $('#customer_src').val();
+			var customer_url = $('#customer_url').val();
+			if (!(customer_title.trim() && customer_src.trim() && customer_url.trim())) {
+				layer.msg("客户案例图片信息不能为空哦😯!");
+				return;
+			}
+
+			$.ajax({
+				type: 'POST',
+				url: '/admin/customer/save',
+				data: {
+					customerId: customer_id,
+					title: customer_title,
+					type: parseInt(customer_type),
+					src: customer_src,
+					url: customer_url
+				}
+			}).done(function (res) {
+				if (res.success === 1) {
+					layer.msg("客户案例图片信息保存成功!")
+					location.replace('/admin/customerList')
+				}
+			})
+
+		})
+	})
+</script>
+</body>

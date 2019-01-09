@@ -68,13 +68,21 @@ let admin = require('./routes/index/admin');
 // 用户相关页
 let user = require('./routes/user/user');
 let userList = require('./routes/user/userList');
-// app用户账号控制
+// 产品相关
+
+// 下载
+let download = require('./routes/software/download');
+let slider = require('./routes/software/slider');
+let product = require('./routes/software/product');
+let introduction = require('./routes/software/introduction');
+let customer = require('./routes/software/customer');
+let apply  = require('./routes/software/apply');
 
 // 行业相关页
 let news = require('./routes/news/news');
 
 // api相关
-let apply = require('./routes/api/apply');
+let applyApi = require('./routes/api/apply');
 
 // 访问统计
 let viewAnalysis = require('./routes/viewAnalysis/viewAnalysis');
@@ -92,9 +100,16 @@ app.use('/', admin);
 // 用户相关路由
 // 用户登录注册
 app.use('/', user);
-
 // 用户列表
 app.use('/', userList);
+
+// 软件相关
+app.use('/', apply)
+app.use('/', download);
+app.use('/', slider);
+app.use('/', product);
+app.use('/', introduction);
+app.use('/', customer);
 
 // 新闻页
 app.use('/', news);
@@ -103,8 +118,9 @@ app.use('/', news);
 app.use('/', viewAnalysis);
 
 //api接口
-app.use('/api', apply);
+app.use('/api', applyApi);
 
+// 状态提示路由
 app.use('/', status);
 
 // 404页面

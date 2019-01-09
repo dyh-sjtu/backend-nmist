@@ -1,0 +1,80 @@
+<% include ../includes/backend-head.ejs %>
+<body style="overflow-x: hidden;background-color: #eee;">
+<% include ../includes/backend-header.ejs %>
+<div class="main">
+    <% include ../includes/backend-sidebar.ejs %>
+    <div class="backend-container">
+        <div class="row pb-10" style="margin-right: 0;margin-left: 0">
+            <h2 class="w100 tc"><%= slider && slider._id ? "轮播图更新" : "轮播图添加" %></h2>
+        </div>
+        <hr class="layui-bg-blue pt-5">
+        <div class="backend-content" style="background-color: #fff">
+            <div class="layui-form" style="padding: 0 15px">
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <input type="hidden" value="<%= slider && slider._id %>" class="layui-input"
+                               id="slider_id">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="slider_title">轮播图名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="<%= slider && slider.title %>"
+                               placeholder="请输入轮播图名称"
+                               autocomplete="on" class="layui-input" id="slider_title">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="slider_src">轮播图地址</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="<%= slider && slider.src %>"
+                               placeholder="请输入软件下载地址"
+                               autocomplete="on" class="layui-input" id="slider_src">
+                    </div>
+                </div>
+
+                <div class="layui-form-item mt-30 pb-30">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" type="button" id="save_slider">保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+	$(document).ready(function () {
+		layer.config({
+			title: '提示'
+		})
+
+		$("#save_slider").bind('click', function () {
+			var slider_id = $('#slider_id').val();
+			var slider_title = $('#slider_title').val();
+			var slider_src = $('#slider_src').val();
+			if (!(slider_title.trim() && slider_src.trim())) {
+				layer.msg("轮播图信息不能为空哦😯!");
+				return;
+			}
+
+			$.ajax({
+				type: 'POST',
+				url: '/admin/slider/save',
+				data: {
+					sliderId: slider_id,
+					title: slider_title,
+					src: slider_src,
+				}
+			}).done(function (res) {
+				if (res.success === 1) {
+					layer.msg("轮播图信息保存成功!")
+					location.replace('/admin/sliderList')
+				}
+			})
+
+		})
+	})
+</script>
+</body>

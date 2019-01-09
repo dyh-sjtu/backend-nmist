@@ -3,15 +3,43 @@ const router = express.Router();
 const News = require('../../models/news');
 const upload = require('../middleware/upload');
 const Software = require('../../models/software');
+const Slider = require('../../models/slider');
+const Customer = require('../../models/customer');
 
 
 // 所有静态页面
 router.get('/', upload.saveViewData, (req, res) => {
-	res.render("index")
+	Slider.fetch((err, sliders) => {
+		Customer.fetch((err, customers) => {
+			// 需要将客户案例类型分类成三种，1-战略合作 2-BIM咨询公司 3-研究中心合作单位
+			let zhanlve_customers = customers.filter((customer, index) => customer.type === 1);
+			let BIM_customers = customers.filter((customer, index) => customer.type === 2);
+			let researchCenter_customers = customers.filter((customer, index) => customer.type === 3);
+			res.render("index", {
+				sliders: sliders,
+				zhanlve_customers: zhanlve_customers,
+				BIM_customers: BIM_customers,
+				researchCenter_customers: researchCenter_customers
+			})
+		})
+	})
 });
 
 router.get('/index', upload.saveViewData, (req, res) => {
-	res.render("index");
+	Slider.fetch((err, sliders) => {
+		Customer.fetch((err, customers) => {
+			// 需要将客户案例类型分类成三种，1-战略合作 2-BIM咨询公司 3-研究中心合作单位
+			let zhanlve_customers = customers.filter((customer, index) => customer.type === 1);
+			let BIM_customers = customers.filter((customer, index) => customer.type === 2);
+			let researchCenter_customers = customers.filter((customer, index) => customer.type === 3);
+			res.render("index", {
+				sliders: sliders,
+				zhanlve_customers: zhanlve_customers,
+				BIM_customers: BIM_customers,
+				researchCenter_customers: researchCenter_customers
+			})
+		})
+	})
 });
 
 router.get('/about', upload.saveViewData, (req, res) => {
@@ -70,7 +98,7 @@ router.get('/resume', upload.saveViewData, (req, res) => {
 				jobname: jobname
 			})
 		}
-	}catch(err) {
+	} catch (err) {
 		console.log('err', err);
 	}
 });
@@ -82,7 +110,7 @@ router.get('/news', upload.saveViewData, (req, res) => {
 				news: news
 			})
 		})
-	}catch(err) {
+	} catch (err) {
 		console.log('err', err)
 	}
 });
@@ -95,7 +123,7 @@ router.get('/news/:id', upload.saveViewData, (req, res) => {
 				newsItem: newsItem
 			})
 		})
-	}catch(err) {
+	} catch (err) {
 		console.log('err', err)
 	}
 });
