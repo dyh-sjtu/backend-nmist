@@ -16,12 +16,8 @@
                 <div class="col-xl-4 col-lg-4 col-md-4 mb-30">
                     <div class="footer-widget">
                         <h3>友情链接</h3>
-                        <ul class="footer-link">
-                            <li><a href="http://bim.sjtu.edu.cn" target="_blank">上海交通大学BIM研究中心</a></li>
-                            <li><a href="http://www.chinabim.com/" target="_blank">中国BIM门户</a></li>
-                            <li><a href="http://www.ifcwiki.org/index.php/Main_Page" target="_blank">IFC百科</a></li>
-                            <li><a href="http://www.buildingsmart.com/" target="_blank">智能建筑/buildingSMART</a></li>
-                            <li><a href="http://buildingsmart-tech.org/" target="_blank">智能建筑技术/buildingsmart-tech</a></li>
+                        <ul class="footer-link friendLink">
+
                         </ul>
                     </div>
                 </div>
@@ -44,7 +40,8 @@
             <div class="row">
                 <div class="col-lg-7 col-md-7">
                     <div class="copyright-text text-center text-lg-left">
-                        <p>Copyright ©2018 Natural Magnetism Info Sci & Tech Ltd. All Rights <a href="#">Reserved</a></p>
+                        <p>Copyright ©2018 Natural Magnetism Info Sci & Tech Ltd. All Rights <a href="#">Reserved</a>
+                        </p>
                     </div>
                 </div>
                 <div class="col-lg-5 col-md-5">
@@ -66,11 +63,28 @@
 <!-- All js here -->
 <!-- All js here -->
 <script type="text/javascript">
-    $(document).ready(function () {
-	    // 给轮播图设置初始margin
-	    var headerHeight = $("header").outerHeight();
-	    $(".wrapper-box").css("marginTop", headerHeight + "px");
-    })
+	$(document).ready(function () {
+		// 给轮播图设置初始margin
+		var headerHeight = $("header").outerHeight();
+		$(".wrapper-box").css("marginTop", headerHeight + "px");
+	})
+</script>
+<script type="text/javascript">
+	$(document).ready(function () {
+		$.ajax({
+			type: 'GET',
+			url: '/index/friendLink'
+		}).done(function (res) {
+			if (res.success === 1) {
+				var friendLinks = res.data.friendLinks;
+				var htmlStr = '';
+				friendLinks.forEach(function (friendLink, index) {
+					htmlStr += "<li><a href='" + friendLink.url + "' target='_blank'>" + friendLink.title + "</a></li>"
+				})
+				$(".friendLink").html(htmlStr);
+			}
+		})
+	})
 </script>
 <script src="/js/vendor/modernizr-3.5.0.min.js"></script>
 <script src="https://cdn.bootcss.com/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>

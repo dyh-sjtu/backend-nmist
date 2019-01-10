@@ -1,0 +1,92 @@
+<% include ../includes/backend-head.ejs %>
+<body style="overflow-x: hidden;background-color: #eee;">
+<% include ../includes/backend-header.ejs %>
+<div class="main">
+    <% include ../includes/backend-sidebar.ejs %>
+    <div class="backend-container">
+        <div class="row pb-10" style="margin-right: 0;margin-left: 0">
+            <h2 class="w100 tc">软件下载统计列表</h2>
+        </div>
+        <hr class="layui-bg-blue pt-5">
+        <div class="backend-content" style="overflow: scroll">
+            <table class="layui-table">
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>用户下载软件</th>
+                    <th>用户下载IP</th>
+                    <th>用户下载地</th>
+                    <th>用户下载方式</th>
+                    <th>用户下载时间</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% downloadInfos.forEach(function (downloadInfo, index) { %>
+                <tr>
+                    <td>
+                        <%= index + 1 %>
+                    </td>
+                    <td>
+                        <%= downloadInfo.softwareName %>
+                    </td>
+                    <td>
+                        <%= downloadInfo.ip %>
+                    </td>
+                    <td>
+                        <%= downloadInfo.address %>
+                    </td>
+                    <td>
+                        <%= downloadInfo.downloadWay === 1 ? '本地下载' : '百度云下载' %>
+                    </td>
+                    <td>
+                        <%= moment(downloadInfo.meta.createAt).format("YYYY-MM-DD HH:mm:ss") %>
+                    </td>
+                    <td>
+                        <button class="downloadInfo-del layui-btn layui-btn-danger"
+                                data-id="<%= downloadInfo._id %>">删除<i class="layui-icon layui-icon-delete"
+                                                                     style="position: relative;top: 1px"></i>
+                        </button>
+                    </td>
+                </tr>
+                <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+	$(document).ready(function () {
+		layer.config({
+			title: '提示'
+		})
+
+		// 删除软件
+		$('.downloadInfo-del').bind('click', function () {
+			let downloadInfoId = $(this).data("id");
+			let tr = $(this).parents("tr");
+			if (downloadInfoId) {
+				layer.confirm("确定删除该下载记录?删除后将不能恢复", {
+					btn: ['确认', '取消'],
+					btn1: function (index) {
+						$.ajax({
+							type: 'DELETE',
+							url: '/admin/downloadInfoList/del?downloadInfoId=' + downloadInfoId
+						}).done(function (res) {
+							if (res.success === 1) {
+								tr.remove();
+							} else {
+								layer.alert("删除失败，请重试！")
+							}
+							layer.close(index);
+						})
+					},
+					btn2: function (index) {
+						layer.close(index)
+					}
+				})
+			}
+		})
+	})
+</script>
+</body>

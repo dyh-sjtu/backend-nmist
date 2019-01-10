@@ -77,6 +77,8 @@ let product = require('./routes/software/product');
 let introduction = require('./routes/software/introduction');
 let customer = require('./routes/software/customer');
 let apply  = require('./routes/software/apply');
+let friendLink  = require('./routes/software/friendLink');
+
 
 // 行业相关页
 let news = require('./routes/news/news');
@@ -104,12 +106,13 @@ app.use('/', user);
 app.use('/', userList);
 
 // 软件相关
-app.use('/', apply)
+app.use('/', apply);
 app.use('/', download);
 app.use('/', slider);
 app.use('/', product);
 app.use('/', introduction);
 app.use('/', customer);
+app.use('/', friendLink);
 
 // 新闻页
 app.use('/', news);

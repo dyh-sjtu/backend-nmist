@@ -42,10 +42,22 @@
                 <span class="ml-15">软件列表</span>
             </a>
         </li>
+        <li class="layui-nav-item <%= title === "下载统计" ? 'layui-this' : ''%>">
+            <a href="/admin/downloadInfoList">
+                <i class="layui-icon layui-icon-download-circle"></i>
+                <span class="ml-15">下载统计</span>
+            </a>
+        </li>
         <li class="layui-nav-item <%= title === "新闻列表" ? 'layui-this' : ''%>">
             <a href="/admin/newsList">
                 <i class="layui-icon layui-icon-release"></i>
                 <span class="ml-15">新闻列表</span>
+            </a>
+        </li>
+        <li class="layui-nav-item <%= title === "友情链接" ? 'layui-this' : ''%>">
+            <a href="/admin/friendLinkList">
+                <i class="layui-icon layui-icon-link"></i>
+                <span class="ml-15">友情链接</span>
             </a>
         </li>
         <li class="layui-nav-item <%= title === "访问统计" ? 'layui-this' : ''%>">

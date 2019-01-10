@@ -1,0 +1,81 @@
+<% include ../includes/backend-head.ejs %>
+<body style="overflow-x: hidden;background-color: #eee;">
+<% include ../includes/backend-header.ejs %>
+<div class="main">
+    <% include ../includes/backend-sidebar.ejs %>
+    <div class="backend-container">
+        <div class="row pb-10" style="margin-right: 0;margin-left: 0">
+            <h2 class="w100 tc"><%= friendLink && friendLink._id ? "友情链接更新" : "友情链接添加" %></h2>
+        </div>
+        <hr class="layui-bg-blue pt-5">
+        <div class="backend-content" style="background-color: #fff">
+            <div class="layui-form" style="padding: 0 15px">
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <input type="hidden" value="<%= friendLink && friendLink._id %>" class="layui-input"
+                               id="friendLink_id">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="friendLink_title">友情链接名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="<%= friendLink && friendLink.title %>"
+                               placeholder="请输入友情链接名称"
+                               autocomplete="on" class="layui-input" id="friendLink_title">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="friendLink_url">友情链接地址</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="<%= friendLink && friendLink.url %>"
+                               placeholder="请输入友情链接地址"
+                               autocomplete="on" class="layui-input" id="friendLink_url">
+                    </div>
+                </div>
+
+
+                <div class="layui-form-item mt-30 pb-30">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" type="button" id="save_friendLink">保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+	$(document).ready(function () {
+		layer.config({
+			title: '提示'
+		})
+
+		$("#save_friendLink").bind('click', function () {
+			var friendLink_id = $('#friendLink_id').val();
+			var friendLink_title = $('#friendLink_title').val();
+			var friendLink_url = $('#friendLink_url').val();
+			if (!(friendLink_title.trim() && friendLink_url.trim())) {
+				layer.msg("友情链接信息不能为空哦😯!");
+				return;
+			}
+
+			$.ajax({
+				type: 'POST',
+				url: '/admin/friendLink/save',
+				data: {
+					friendLinkId: friendLink_id,
+					title: friendLink_title,
+					url: friendLink_url
+				}
+			}).done(function (res) {
+				if (res.success === 1) {
+					layer.msg("友情链接信息保存成功!")
+					location.replace('/admin/friendLinkList')
+				}
+			})
+
+		})
+	})
+</script>
+</body>

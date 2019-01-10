@@ -3,6 +3,7 @@ const router = express.Router();
 const Software = require('../../models/software');
 const Auth = require('../middleware/auth');
 const Upload = require('../middleware/upload');
+const DownloadInfo = require('../../models/downloadInfo');
 
 // 软件列表
 router.get('/admin/softwareList', Auth.requiredLogin, Auth.requiredAdmin, (req, res) => {
@@ -138,6 +139,61 @@ router.delete('/admin/softwareList/del', Auth.requiredLogin, Auth.requiredAdmin,
 // 		console.log('err', err);
 // 	}
 // });
+
+
+router.post('/admin/download/count', (req, res) => {
+	try {
+		let downloadInfo = req.body;
+		if (downloadInfo.ip && downloadInfo.address && downloadInfo.softwareName && Object.keys(downloadInfo).length === 4) {
+			let _downloadInfoObj = new DownloadInfo({
+				softwareName: downloadInfo.softwareName,
+				ip: downloadInfo.ip,
+				address: downloadInfo.address,
+				downloadWay: parseInt(downloadInfo.downloadWay),
+			});
+			_downloadInfoObj.save((err, downloadInfo) => {
+				if (err) console.log(err);
+				return res.json({
+					success: 1
+				})
+			})
+		}
+	}catch(err) {
+		console.log('err', err);
+	}
+});
+
+
+router.get('/admin/downloadInfoList', Auth.requiredLogin, Auth.requiredAdmin, (req, res) => {
+	try {
+		let localUser = res.locals.user;
+		DownloadInfo.fetch((err, downloadInfos) => {
+			res.render('downloadInfoList', {
+				title: '下载统计',
+				localUser: localUser,
+				downloadInfos: downloadInfos
+			})
+		});
+	} catch (err) {
+		console.log('err', err)
+	}
+});
+
+router.delete('/admin/downloadInfoList/del', Auth.requiredLogin, Auth.requiredAdmin, (req, res) => {
+	try {
+		let downloadInfoId = req.query.downloadInfoId;
+		if (downloadInfoId) {
+			DownloadInfo.remove({_id: downloadInfoId}, (err, downloadInfo) => {
+				if (err) console.log(err);
+				return res.json({
+					success: 1
+				})
+			})
+		}
+	} catch (err) {
+		console.log('err', err);
+	}
+});
 
 
 module.exports = router;
