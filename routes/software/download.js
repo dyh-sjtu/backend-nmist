@@ -203,7 +203,6 @@ router.get('/admin/downloadInfo/search', Auth.requiredLogin, Auth.requiredAdmin,
 		if (keyword) {
 			DownloadInfo.find({$or: [{softwareName: pattern}, {address: pattern}]}).exec((err, downloadInfos) => {
 				if (err) console.log(err);
-				console.log(downloadInfos);
 				res.render('downloadInfoList', {
 					title: '下载统计',
 					localUser: localUser,
