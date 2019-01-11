@@ -9,6 +9,13 @@
         </div>
         <hr class="layui-bg-blue pt-5">
         <div class="backend-content" style="overflow: scroll">
+            <div class="layui-form-item flex-cc mt-20">
+                <div class="layui-input-inline">
+                    <input type="text" id="search_keyword" placeholder="输入软件名称/下载地址搜索" autocomplete="on"
+                           class="layui-input">
+                </div>
+                <button type="button" class="layui-btn layui-btn-normal search-btn">点击搜索</button>
+            </div>
             <table class="layui-table">
                 <thead>
                 <tr>
@@ -45,7 +52,7 @@
                     <td>
                         <button class="downloadInfo-del layui-btn layui-btn-danger"
                                 data-id="<%= downloadInfo._id %>">删除<i class="layui-icon layui-icon-delete"
-                                                                     style="position: relative;top: 1px"></i>
+                                                                       style="position: relative;top: 1px"></i>
                         </button>
                     </td>
                 </tr>
@@ -86,6 +93,19 @@
 					}
 				})
 			}
+		})
+
+		// 关键词搜索
+		$('.search-btn').bind('click', function () {
+			var search_keyword = $("#search_keyword").val().trim();
+			if (!search_keyword) {
+				layer.msg("搜索关键词不能为空!");
+				return;
+            }
+            $.ajax({
+              type: 'GET',
+              url: '/admin/downloadInfo/search?keyword=' + search_keyword,
+            })
 		})
 	})
 </script>

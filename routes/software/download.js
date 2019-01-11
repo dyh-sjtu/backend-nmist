@@ -195,5 +195,26 @@ router.delete('/admin/downloadInfoList/del', Auth.requiredLogin, Auth.requiredAd
 	}
 });
 
+router.get('/admin/downloadInfo/search', Auth.requiredLogin, Auth.requiredAdmin, (req, res) => {
+	try {
+		let keyword = req.query.keyword;
+		let pattern = new RegExp(keyword, 'ig');
+		if (keyword) {
+			DownloadInfo.find({$or:[{softwareName: pattern},{address: pattern}]}, (err, downloadInfos) => {
+				if (err) console.log(err);
+				res.render('downloadInfoList', {
+					title: '下载统计',
+					localUser: localUser,
+					downloadInfos: downloadInfos
+				})
+			})
+		}
+	} catch (err) {
+		console.log('err', err);
+	}
+});
+
+
+
 
 module.exports = router;
