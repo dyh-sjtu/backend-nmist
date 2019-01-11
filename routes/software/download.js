@@ -171,6 +171,7 @@ router.get('/admin/downloadInfoList', Auth.requiredLogin, Auth.requiredAdmin, (r
 			res.render('downloadInfoList', {
 				title: '下载统计',
 				localUser: localUser,
+				keyword: '',
 				downloadInfos: downloadInfos
 			})
 		});
@@ -206,9 +207,19 @@ router.get('/admin/downloadInfo/search', Auth.requiredLogin, Auth.requiredAdmin,
 				res.render('downloadInfoList', {
 					title: '下载统计',
 					localUser: localUser,
+					keyword: keyword,
 					downloadInfos: downloadInfos
 				})
 			})
+		}else {
+			DownloadInfo.fetch((err, downloadInfos) => {
+				res.render('downloadInfoList', {
+					title: '下载统计',
+					localUser: localUser,
+					keyword: '',
+					downloadInfos: downloadInfos
+				})
+			});
 		}
 	} catch (err) {
 		console.log('err', err);

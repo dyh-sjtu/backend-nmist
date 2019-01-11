@@ -9,13 +9,20 @@
         </div>
         <hr class="layui-bg-blue pt-5">
         <div class="backend-content" style="overflow: scroll">
-            <div class="layui-form-item flex-cc mt-20">
-                <div class="layui-input-inline">
-                    <input type="text" id="search_keyword" placeholder="输入软件名称/下载地址搜索" autocomplete="on"
-                           class="layui-input">
+            <form action="/admin/downloadInfo/search" method="get">
+                <div class="layui-form-item flex-cc mt-20">
+                    <div class="layui-input-inline">
+                        <input type="text" name="keyword" value="<%= keyword %>" placeholder="输入软件名称/下载地址搜索" autocomplete="on"
+                               class="layui-input">
+                    </div>
+                    <button type="submit" class="layui-btn layui-btn-normal">点击搜索</button>
                 </div>
-                <button type="button" class="layui-btn layui-btn-normal search-btn">点击搜索</button>
+            </form>
+            <% if (keyword) { %>
+            <div class="layui-row ml-15">
+                <h4><%= keyword %>的搜索结果总计<span style="color:red"><%= downloadInfos.length %></span>条</h4>
             </div>
+            <% } %>
             <table class="layui-table">
                 <thead>
                 <tr>
@@ -29,6 +36,7 @@
                 </tr>
                 </thead>
                 <tbody>
+
                 <% downloadInfos.forEach(function (downloadInfo, index) { %>
                 <tr>
                     <td>
@@ -93,19 +101,6 @@
 					}
 				})
 			}
-		})
-
-		// 关键词搜索
-		$('.search-btn').bind('click', function () {
-			var search_keyword = $("#search_keyword").val().trim();
-			if (!search_keyword) {
-				layer.msg("搜索关键词不能为空!");
-				return;
-            }
-            $.ajax({
-              type: 'GET',
-              url: '/admin/downloadInfo/search?keyword=' + search_keyword,
-            })
 		})
 	})
 </script>
