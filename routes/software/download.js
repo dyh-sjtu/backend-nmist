@@ -67,7 +67,7 @@ router.post('/admin/software/save', Auth.requiredLogin, Auth.requiredAdmin, (req
 					})
 				})
 			})
-		}else {
+		} else {
 			let _softwareObj = new Software(softwareObj);
 			_softwareObj.save((err, software) => {
 				if (err) console.log(err);
@@ -158,7 +158,7 @@ router.post('/admin/download/count', (req, res) => {
 				})
 			})
 		}
-	}catch(err) {
+	} catch (err) {
 		console.log('err', err);
 	}
 });
@@ -197,11 +197,13 @@ router.delete('/admin/downloadInfoList/del', Auth.requiredLogin, Auth.requiredAd
 
 router.get('/admin/downloadInfo/search', Auth.requiredLogin, Auth.requiredAdmin, (req, res) => {
 	try {
+		let localUser = res.locals.user;
 		let keyword = req.query.keyword;
 		let pattern = new RegExp(keyword, 'ig');
 		if (keyword) {
-			DownloadInfo.find({$or:[{softwareName: pattern},{address: pattern}]}, (err, downloadInfos) => {
+			DownloadInfo.find({$or: [{softwareName: pattern}, {address: pattern}]}).exec((err, downloadInfos) => {
 				if (err) console.log(err);
+				console.log(downloadInfos);
 				res.render('downloadInfoList', {
 					title: '下载统计',
 					localUser: localUser,
@@ -213,8 +215,6 @@ router.get('/admin/downloadInfo/search', Auth.requiredLogin, Auth.requiredAdmin,
 		console.log('err', err);
 	}
 });
-
-
 
 
 module.exports = router;
