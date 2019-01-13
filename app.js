@@ -72,15 +72,27 @@ let userList = require('./routes/user/userList');
 
 // 下载
 let download = require('./routes/software/download');
+
+// 轮播图
 let slider = require('./routes/software/slider');
-let product = require('./routes/software/product');
-let introduction = require('./routes/software/introduction');
+
+// 合作客户
 let customer = require('./routes/software/customer');
+
+// 软件申请
 let apply  = require('./routes/software/apply');
+
+// 友情链接
 let friendLink  = require('./routes/software/friendLink');
 
+// 工程项目相关
+let project = require('./routes/project/project');
+let projectCategory = require('./routes/project/projectCategory');
 
-// 行业相关页
+// 产品介绍
+let product = require('./routes/software/product');
+
+// 新闻相关页
 let news = require('./routes/news/news');
 
 // api相关
@@ -107,12 +119,20 @@ app.use('/', userList);
 
 // 软件相关
 app.use('/', apply);
+
 app.use('/', download);
+
 app.use('/', slider);
+
 app.use('/', product);
-app.use('/', introduction);
+
 app.use('/', customer);
+
 app.use('/', friendLink);
+
+// 项目案例相关
+app.use('/', project);
+app.use('/', projectCategory);
 
 // 新闻页
 app.use('/', news);

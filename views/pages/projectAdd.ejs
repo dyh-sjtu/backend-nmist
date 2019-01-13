@@ -1,0 +1,137 @@
+<% include ../includes/backend-head.ejs %>
+<body style="overflow-x: hidden;background-color: #eee;">
+<% include ../includes/backend-header.ejs %>
+<div class="main">
+    <% include ../includes/backend-sidebar.ejs %>
+    <div class="backend-container">
+        <div class="row pb-10" style="margin-right: 0;margin-left: 0">
+            <h2 class="w100 tc"><%= project && project._id ? "产品案例更新" : "产品案例添加" %></h2>
+        </div>
+        <hr class="layui-bg-blue pt-5">
+        <div class="backend-content" style="background-color: #fff">
+            <div class="layui-form" style="padding: 0 15px">
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <input type="hidden" value="<%= project && project._id %>" class="layui-input"
+                               id="project_id">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="project_title">产品案例名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="<%= project && project.title %>"
+                               placeholder="请输入产品案例名称"
+                               autocomplete="on" class="layui-input" id="project_title">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">产品案例类型</label>
+                    <div class="layui-input-block">
+                        <% projectCategorys.forEach(function (projectCategory, index) { %>
+                        <% if (project && (projectCategory._id.toString() === project.category.toString())) { %>
+                        <input type="radio" name="project_category" value="<%= projectCategory._id %>"
+                               title="<%= projectCategory.name %>" checked>
+                        <% } else { %>
+                        <input type="radio" name="project_category" value="<%= projectCategory._id %>"
+                               title="<%= projectCategory.name %>">
+                        <% } %>
+                        <% }) %>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="project_imgUrl">产品案例图片地址</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="<%= project && project.imgUrl %>"
+                               placeholder="请输入产品案例图片的地址"
+                               autocomplete="on" class="layui-input" id="project_imgUrl">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="project_company">案例项目公司</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="<%= project && project.company %>"
+                               placeholder="请输入应用该案例项目的公司"
+                               autocomplete="on" class="layui-input" id="project_company">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="project_comment">案例评价</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="<%= project && project.comment %>"
+                               placeholder="请输入客户针对该项目的评价"
+                               autocomplete="on" class="layui-input" id="project_comment">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="project_commentFrom">评价客户</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="<%= project && project.commentFrom %>"
+                               placeholder="请输入对该案例进行评价的客户"
+                               autocomplete="on" class="layui-input" id="project_commentFrom">
+                    </div>
+                </div>
+
+                <div class="layui-form-item mt-30 pb-30">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" type="button" id="save_project">保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+	$(document).ready(function () {
+		layer.config({
+			title: '提示'
+		})
+
+		layui.use('form', function () {
+			var form = layui.form;
+		})
+
+		$("#save_project").bind('click', function () {
+			var project_id = $('#project_id').val();
+			var project_title = $('#project_title').val();
+			var project_imgUrl = $('#project_imgUrl').val();
+			var project_company = $('#project_company').val();
+			var project_comment = $('#project_comment').val();
+			var project_commentFrom = $('#project_commentFrom').val();
+			var project_category = $("input[name='project_category']:checked").val();
+			if (!(project_title.trim() && project_imgUrl.trim()
+					&& project_company.trim() && project_comment.trim()
+					&& project_commentFrom.trim() && project_category.trim())) {
+				layer.msg("案例信息不能为空哦😯!");
+				return;
+			}
+
+			$.ajax({
+				type: 'POST',
+				url: '/admin/project/save',
+				data: {
+					projectId: project_id,
+					title: project_title,
+					imgUrl: project_imgUrl,
+					company: project_company,
+					comment: project_comment,
+					commentFrom: project_commentFrom,
+					category: project_category
+				}
+			}).done(function (res) {
+				if (res.success === 1) {
+					layer.msg("案例保存成功!")
+					location.replace('/admin/projectList')
+				}
+			})
+
+		})
+	})
+</script>
+</body>

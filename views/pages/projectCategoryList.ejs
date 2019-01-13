@@ -1,0 +1,99 @@
+<% include ../includes/backend-head.ejs %>
+<body style="overflow-x: hidden;background-color: #eee;">
+<% include ../includes/backend-header.ejs %>
+<div class="main">
+    <% include ../includes/backend-sidebar.ejs %>
+    <div class="backend-container">
+        <div class="row pb-10" style="margin-right: 0;margin-left: 0">
+            <h2 class="w100 tc">产品案例类型列表</h2>
+            <a href="/admin/projectCategory/add">
+                <button class="layui-btn layui-btn-normal" style="position: absolute; right: 20px; top: 15px">
+                    <i class="layui-icon layui-icon-add-circle"></i>
+                    <span style="position: relative;top: -2px;">添加案例类型</span>
+                </button>
+            </a>
+        </div>
+        <hr class="layui-bg-blue pt-5">
+        <div class="backend-content" style="overflow: scroll">
+            <table class="layui-table">
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>案例类型名称</th>
+                    <th>案例类型描述</th>
+                    <th>案例类型图片</th>
+                    <th>该类型案例数</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% projectCategorys.forEach(function (projectCategory, index) { %>
+                <tr>
+                    <td>
+                        <%= index + 1 %>
+                    </td>
+                    <td>
+                        <%= projectCategory.name %>
+                    </td>
+                    <td class="text-over" style="max-width: 200px">
+                        <%= projectCategory.desc %>
+                    </td>
+                    <td class="text-over" style="max-width: 150px">
+                        <a href="<%= projectCategory.imgUrl %>" target="_blank" style="color:#469ff8;"><%= projectCategory.imgUrl %></a>
+                    </td>
+                    <td>
+                        <%= projectCategory.projects && projectCategory.projects.length %>
+                    </td>
+                    <td>
+                        <a href="/admin/projectCategory/update/<%= projectCategory._id %>">
+                            <button class="projectCategory-update layui-btn">更新<i class="layui-icon layui-icon-refresh"
+                                                                             style="font-size: 14px;margin-left: 4px"></i>
+                            </button>
+                        </a>
+                        <button class="projectCategory-del layui-btn layui-btn-danger"
+                                data-id="<%= projectCategory._id %>">删除<i class="layui-icon layui-icon-delete"
+                                                                     style="position: relative;top: 1px"></i>
+                        </button>
+                    </td>
+                </tr>
+                <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+	$(document).ready(function () {
+		layer.config({
+			title: '提示'
+		})
+
+		// 删除软件
+		$('.projectCategory-del').bind('click', function () {
+			let projectCategoryId = $(this).data("id");
+			let tr = $(this).parents("tr");
+			if (projectCategoryId) {
+				layer.confirm("确定删除该案例类型?删除后该类型下的所有案例也将删除!", {
+					btn: ['确认', '取消'],
+					btn1: function (index) {
+						$.ajax({
+							type: 'DELETE',
+							url: '/admin/projectCategoryList/del?projectCategoryId=' + projectCategoryId
+						}).done(function (res) {
+							if (res.success === 1) {
+								tr.remove();
+							} else {
+								layer.alert("删除失败，请重试！")
+							}
+							layer.close(index);
+						})
+					},
+					btn2: function (index) {
+						layer.close(index)
+					}
+				})
+			}
+		})
+	})
+</script>
+</body>

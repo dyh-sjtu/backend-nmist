@@ -1,0 +1,94 @@
+<% include ../includes/backend-head.ejs %>
+<body style="overflow-x: hidden;background-color: #eee;">
+<% include ../includes/backend-header.ejs %>
+<div class="main">
+    <% include ../includes/backend-sidebar.ejs %>
+    <div class="backend-container">
+        <div class="row pb-10" style="margin-right: 0;margin-left: 0">
+            <h2 class="w100 tc"><%= projectCategory && projectCategory._id ? "案例类型更新" : "案例类型添加" %></h2>
+        </div>
+        <hr class="layui-bg-blue pt-5">
+        <div class="backend-content" style="background-color: #fff">
+            <div class="layui-form" style="padding: 0 15px">
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <input type="hidden" value="<%= projectCategory && projectCategory._id %>" class="layui-input"
+                               id="projectCategory_id">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="projectCategory_name">案例类型名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="<%= projectCategory && projectCategory.name %>"
+                               placeholder="请输入案例类型名称"
+                               autocomplete="on" class="layui-input" id="projectCategory_name">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="projectCategory_desc">案例类型描述</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="<%= projectCategory && projectCategory.desc %>"
+                               placeholder="请输入案例类型的描述"
+                               autocomplete="on" class="layui-input" id="projectCategory_desc">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="projectCategory_imgUrl">案例类型图片</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="<%= projectCategory && projectCategory.imgUrl %>"
+                               placeholder="请输入案例类型的图片地址"
+                               autocomplete="on" class="layui-input" id="projectCategory_imgUrl">
+                    </div>
+                </div>
+
+                <div class="layui-form-item mt-30 pb-30">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" type="button" id="save_projectCategory">保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+	$(document).ready(function () {
+		layer.config({
+			title: '提示'
+		})
+
+		$("#save_projectCategory").bind('click', function () {
+			var projectCategory_id = $('#projectCategory_id').val();
+			var projectCategory_desc = $("#projectCategory_desc").val();
+			var projectCategory_name = $('#projectCategory_name').val();
+			var projectCategory_imgUrl = $("#projectCategory_imgUrl").val();
+			if (!(projectCategory_name.trim() && projectCategory_desc.trim() && projectCategory_imgUrl.trim())) {
+				layer.msg("案例类型信息不能为空哦😯!");
+				return;
+			}
+
+			$.ajax({
+				type: 'POST',
+				url: '/admin/projectCategory/save',
+				data: {
+					projectCategoryId: projectCategory_id,
+					name: projectCategory_name,
+					desc: projectCategory_desc,
+					imgUrl: projectCategory_imgUrl
+				}
+			}).done(function (res) {
+				if (res.success === 1) {
+					layer.msg("案例类型保存成功!")
+					location.replace('/admin/projectCategoryList')
+				}
+				if (res.success === 0) {
+					layer.msg(res.msg);
+				}
+			})
+
+		})
+	})
+</script>
+</body>

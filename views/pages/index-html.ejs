@@ -37,7 +37,7 @@
             <div class="row">
                 <div class="col-lg-6 offset-lg-3">
                     <div class="section-title text-center mb-50">
-                        <h2>产品介绍</h2>
+                        <h2><a href="/product">产品介绍</a></h2>
                     </div>
                 </div>
             </div>
@@ -98,100 +98,37 @@
             <div class="row">
                 <div class="col-lg-6 offset-lg-3">
                     <div class="section-title text-center mb-50">
-                        <h2>产品案例</h2>
+                        <h2><a href="/useage">产品案例</a></h2>
                     </div>
                 </div>
             </div>
         </div>
         <div class="container">
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="portfolio-menu mb-40 text-center">
-                        <button class="active" data-filter="*">全部</button>
-                        <button data-filter=".cat1">商办类</button>
-                        <button data-filter=".cat2">住宅类</button>
-                        <button data-filter=".cat3">公建类</button>
-                    </div>
-                </div>
-            </div>
+            <% projects.forEach(function (project, index) { %>
             <div class="row grid">
-                <div class="col-xl-4 col-lg-4 col-md-6 grid-item cat1">
+                <div class="col-xl-4 col-lg-4 col-md-4 grid-item cat1">
                     <div class="portfolio-wrapper mb-30">
-                        <a href="/example" target="_blank">
+                        <a href="/project/detail/<%= project._id %>" target="_blank">
                             <div class="portfolio-thumb">
-                                <img src="/img/portfolio/01.jpg" alt="">
+                                <img src="<%= project.imgUrl %>" alt="<%= project.title %>">
                             </div>
                             <div class="portfolio-content">
                                 <h3>
-                                    <span>上海苏河洲际中心118、119街坊</span>
-                                </h3>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-xl-4 col-lg-4 col-md-6 grid-item cat1">
-                    <div class="portfolio-wrapper mb-30">
-                        <a href="/example" target="_blank">
-                            <div class="portfolio-thumb">
-                                <img src="/img/portfolio/02.jpg" alt="">
-                            </div>
-                            <div class="portfolio-content">
-                                <h3>
-                                    <span>"元祖梦世界"国内首座儿童主题商场</span>
-                                </h3>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-xl-4 col-lg-4 col-md-6 grid-item cat1">
-                    <div class="portfolio-wrapper mb-30">
-                        <a href="/example" target="_blank">
-                            <div class="portfolio-thumb">
-                                <img src="/img/portfolio/03.jpg" alt="">
-                            </div>
-                            <div class="portfolio-content">
-                                <h3>
-                                    <span>漕河泾现代服务集聚区二期3工程(W19项目)</span>
-                                </h3>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-xl-4 col-lg-4 col-md-6 grid-item cat3">
-                    <div class="portfolio-wrapper mb-30">
-                        <a href="/example" target="_blank">
-                            <div class="portfolio-thumb">
-                                <img src="/img/portfolio/04.jpg" alt="">
-                            </div>
-                            <div class="portfolio-content">
-                                <h3>
-                                    <span>外高桥物流园区二期5-3地块（一期）仓库项目</span>
-                                </h3>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-xl-4 col-lg-4 col-md-6 grid-item cat1">
-                    <div class="portfolio-wrapper mb-30">
-                        <a href="/example" target="_blank">
-                            <div class="portfolio-thumb">
-                                <img src="/img/portfolio/05.jpg" alt="">
-                            </div>
-                            <div class="portfolio-content">
-                                <h3>
-                                    <span>高新青少年培训活动中心项目</span>
+                                    <span><%= project.title %></span>
                                 </h3>
                             </div>
                         </a>
                     </div>
                 </div>
             </div>
+            <% }) %>
         </div>
     </div>
     <!-- portfolio-area end -->
     <!-- features-area start -->
     <div class="promotion-area gray-bg">
-        <div class="promotion-img d-none d-lg-block" data-background="https://nmist.oss-cn-hangzhou.aliyuncs.com/img/bg/fea.jpg"></div>
+        <div class="promotion-img d-none d-lg-block"
+             data-background="https://nmist.oss-cn-hangzhou.aliyuncs.com/img/bg/fea.jpg"></div>
         <div class="container">
             <div class="row pt-110 pb-90">
                 <div class="col-xl-6 offset-xl-6 offset-lg-6 col-lg-6 col-md-12">
@@ -209,7 +146,8 @@
 
     <!-- services-area start -->
     <!-- counter-area start -->
-    <div class="counter-area pt-150 pb-120" data-background="https://nmist.oss-cn-hangzhou.aliyuncs.com/img/bg/bg-counter.jpg">
+    <div class="counter-area pt-150 pb-120"
+         data-background="https://nmist.oss-cn-hangzhou.aliyuncs.com/img/bg/bg-counter.jpg">
         <div class="container">
             <div class="row">
                 <div class="col-xl-4 col-lg-4 col-md-4">
@@ -241,7 +179,7 @@
             <div class="row">
                 <div class="col-lg-6 offset-lg-3">
                     <div class="section-title text-center mb-50">
-                        <h2>新闻动态</h2>
+                        <h2><a href="/news">新闻动态</a></h2>
                     </div>
                 </div>
             </div>
@@ -250,7 +188,7 @@
                 <div class="col-lg-6 col-md-6 blog-item mb-40 test-thumb">
                     <div class="blog-wrapper blog-column">
                         <div class="blog-thumb">
-                            <a href="/news/<%= newItem._id%>" target="_blank">
+                            <a href="/news/<%= newItem._id %>" target="_blank">
                                 <img src="<%= newItem.src %>"
                                      alt=""/>
                             </a>
@@ -262,11 +200,11 @@
                         </div>
                         <div class="blog-content">
                             <h2 class="blog-title">
-                                <a href="/news/<%= newItem._id%>" target="_blank"><%= newItem.title%></a>
+                                <a href="/news/<%= newItem._id %>" target="_blank"><%= newItem.title %></a>
                             </h2>
                         </div>
                         <div class="link-box">
-                            <a href="/news/<%= newItem._id%>" target="_blank">查看详情</a>
+                            <a href="/news/<%= newItem._id %>" target="_blank">查看详情</a>
                         </div>
                     </div>
                 </div>
