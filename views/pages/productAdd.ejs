@@ -1,0 +1,156 @@
+<% include ../includes/backend-head.ejs %>
+<body style="overflow-x: hidden;background-color: #eee;">
+<% include ../includes/backend-header.ejs %>
+<div class="main">
+    <% include ../includes/backend-sidebar.ejs %>
+    <div class="backend-container">
+        <div class="row pb-10" style="margin-right: 0;margin-left: 0">
+            <h2 class="w100 tc"><%= product && product._id ? "产品更新" : "产品添加" %></h2>
+        </div>
+        <hr class="layui-bg-blue pt-5">
+        <div class="backend-content" style="background-color: #fff">
+            <div class="layui-form" style="padding: 0 15px">
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <input type="hidden" value="<%= product && product._id %>" class="layui-input"
+                               id="product_id">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="product_name">产品名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="<%= product && product.name %>"
+                               placeholder="请输入产品名称"
+                               autocomplete="on" class="layui-input" id="product_name">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="product_desc">产品描述</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="<%= product && product.desc %>"
+                               placeholder="请输入产品描述"
+                               autocomplete="on" class="layui-input" id="product_desc">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="product_icon">产品图标</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="<%= product && product.icon %>"
+                               placeholder="请输入产品图标地址"
+                               autocomplete="on" class="layui-input" id="product_icon">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="product_imgUrl">产品图片</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="<%= product && product.imgUrl %>"
+                               placeholder="请输入产品封面图片地址"
+                               autocomplete="on" class="layui-input" id="product_imgUrl">
+                    </div>
+                </div>
+
+                <!--平台概述-->
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="product_summary">平台概述</label>
+                    <div class="layui-input-block">
+                        <textarea id="product_summary" placeholder="请输入平台概述" class="layui-textarea"><%= product && product.summary %></textarea>
+                    </div>
+                </div>
+
+                <!--平台特征-->
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="product_character">平台构成</label>
+                    <div class="layui-input-block">
+                        <textarea id="product_character" placeholder="请输入平台构成" class="layui-textarea"><%= product && product.character %></textarea>
+                    </div>
+                </div>
+
+                <!--平台优势-->
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="product_advantage">平台优势</label>
+                    <div class="layui-input-block">
+                        <textarea id="product_advantage" placeholder="请输入平台优势" class="layui-textarea"><%= product && product.advantage %></textarea>
+                    </div>
+                </div>
+
+                <!--平台培训-->
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="product_training">平台培训</label>
+                    <div class="layui-input-block">
+                        <textarea id="product_training" placeholder="请输入平台培训" class="layui-textarea"><%= product && product.training %></textarea>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="introduction">填写说明</label>
+                    <div class="layui-input-block">
+                        <input id="introduction" style="cursor: not-allowed;color:red" disabled="disabled"
+                               value="平台概述、构成、优势、培训分两级填写,模板如:标题1=内容1||内容2||内容3&&标题2=内容1||内容2||内容3||内容4;如果没有标题,则模板如：内容1||内容2||内容3;如果内容为图片，则直接填写图片地址"
+                               class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item mt-30 pb-30">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" type="button" id="save_product">保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+	$(document).ready(function () {
+		layer.config({
+			title: '提示'
+		})
+
+		$("#save_product").bind('click', function () {
+			var product_id = $('#product_id').val();
+			var product_desc = $("#product_desc").val();
+			var product_name = $('#product_name').val();
+			var product_icon = $("#product_icon").val();
+			var product_imgUrl = $("#product_imgUrl").val();
+			var product_summary = $("#product_summary").val();
+			var product_character = $("#product_character").val();
+			var product_advantage = $("#product_advantage").val();
+			var product_training = $("#product_training").val();
+			if (!(product_desc.trim() && product_name.trim() && product_icon.trim() && product_imgUrl.trim())) {
+				layer.msg("产品基本信息不能为空哦😯!");
+				return;
+			}
+
+			if (!(product_summary.trim() && product_character.trim() && product_advantage.trim())) {
+				layer.msg("产品信息不能为空哦😯!");
+				return;
+			}
+
+			$.ajax({
+				type: 'POST',
+				url: '/admin/product/save',
+				data: {
+					productId: product_id,
+					name: product_name,
+					desc: product_desc,
+					imgUrl: product_imgUrl,
+					icon: product_icon,
+					summary: product_summary,
+					character: product_character,
+					advantage: product_advantage,
+					training: product_training,
+				}
+			}).done(function (res) {
+				if (res.success === 1) {
+					layer.msg("产品信息保存成功!")
+					location.replace('/admin/productList')
+				}
+			})
+
+		})
+	})
+</script>
+</body>

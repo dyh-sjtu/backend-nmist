@@ -106,8 +106,7 @@
 			var project_commentFrom = $('#project_commentFrom').val();
 			var project_category = $("input[name='project_category']:checked").val();
 			if (!(project_title.trim() && project_imgUrl.trim()
-					&& project_company.trim() && project_comment.trim()
-					&& project_commentFrom.trim() && project_category.trim())) {
+					&& project_company.trim() && project_category.trim())) {
 				layer.msg("案例信息不能为空哦😯!");
 				return;
 			}

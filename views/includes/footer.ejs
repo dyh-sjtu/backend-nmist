@@ -71,6 +71,8 @@
 </script>
 <script type="text/javascript">
 	$(document).ready(function () {
+
+		// 获取友情链接
 		$.ajax({
 			type: 'GET',
 			url: '/index/friendLink'
@@ -82,6 +84,36 @@
 					htmlStr += "<li><a href='" + friendLink.url + "' target='_blank'>" + friendLink.title + "</a></li>"
 				})
 				$(".friendLink").html(htmlStr);
+			}
+		})
+
+		// 获取案例类型
+		$.ajax({
+			type: 'GET',
+			url: '/index/projectCategory'
+		}).done(function (res) {
+			if (res.success === 1) {
+				var projectCategorys = res.data.projectCategorys;
+				var htmlStr = '';
+				projectCategorys.forEach(function (projectCategory, index) {
+					htmlStr += "<li><a href='/project/category/" + projectCategory._id + "'>" + projectCategory.name + "</a></li>"
+				})
+				$(".projectCategory_menu").html(htmlStr);
+			}
+		})
+
+		// 获取产品列表
+		$.ajax({
+			type: 'GET',
+			url: '/index/product'
+		}).done(function (res) {
+			if (res.success === 1) {
+				var products = res.data.products;
+				var htmlStr = '';
+				products.forEach(function (product, index) {
+					htmlStr += "<li><a href='/product/detail/" + product._id + "'>" + product.name + "</a></li>"
+				})
+				$(".product_menu").html(htmlStr);
 			}
 		})
 	})

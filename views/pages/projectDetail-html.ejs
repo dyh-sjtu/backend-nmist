@@ -1,6 +1,7 @@
 <div class="wrapper-box p-0">
     <!-- page-title-area start -->
-    <div class="page-title-area pt-210 pb-210" data-background="https://nmist.oss-cn-hangzhou.aliyuncs.com/img/bg/page-title.jpg">
+    <div class="page-title-area pt-210 pb-210"
+         data-background="https://nmist.oss-cn-hangzhou.aliyuncs.com/img/bg/page-title.jpg">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-xl-12">
@@ -33,6 +34,7 @@
                             <h6 style="color:#9e9e9e;">——应用企业：<%= project.company %></h6>
                         </div>
                     </div>
+                    <% if (project.comment) { %>
                     <div class="blog-content">
                         <h2 class="blog-title">
                             客户评价
@@ -41,12 +43,13 @@
                             <%= project.comment %>
                         </p>
                         <h6 class="fa-pull-right">
-                            <%= project.commentFrom %>
+                            ——<%= project.commentFrom %>
                         </h6>
                     </div>
+                    <% } %>
                 </div>
             </div>
-            <% })%>
+            <% }) %>
         </div>
     </div>
 

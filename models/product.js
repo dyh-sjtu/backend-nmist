@@ -2,8 +2,22 @@ const mongoose = require('mongoose');
 const ProductSchema = new mongoose.Schema({
 	name: String,
 	desc: String,
-	icon: String,
-	
+	icon: String,  // 产品图标
+	imgUrl: String,  // 产品封面图片地址
+	summary: String,  // 平台概述
+	character: String,  // 平台特征
+	advantage: String,  // 平台优势
+	training: String,  // 平台背景
+	meta: {
+		createAt: {
+			type: Date,
+			default: Date.now()
+		},
+		updateAt: {
+			type: Date,
+			default: Date.now()
+		}
+	}
 });
 
 ProductSchema.pre('save', function (next) {

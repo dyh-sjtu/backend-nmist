@@ -104,4 +104,20 @@ router.delete('/admin/projectCategoryList/del', Auth.requiredLogin, Auth.require
 	}
 });
 
+router.get('/index/projectCategory', (req, res) => {
+	try {
+		ProjectCategory.find({}).exec((err, projectCategorys) => {
+			return res.json({
+				success: 1,
+				data: {
+					projectCategorys: projectCategorys
+				}
+			})
+		});
+	} catch (err) {
+		console.log('err', err)
+	}
+});
+
+
 module.exports = router;
