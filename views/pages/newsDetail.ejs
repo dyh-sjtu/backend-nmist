@@ -9,9 +9,8 @@
                 <%= news.title %>
             </h2>
             <hr class="layui-bg-gray">
-            <h6 class="w100 tr" style="color: #ccc; position: relative; right: 20px">
-                时间:
-                <%= moment(news.time).format("YYYY-MM-DD") %>
+            <h6 class="w100 tc" style="color: #ccc; position: relative; right: 20px">
+                时间:<%= moment(news.time).format("YYYY-MM-DD") %>
             </h6>
         </div>
         <div class="scroll-content">
