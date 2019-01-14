@@ -5,24 +5,36 @@ const Auth = require("../middleware/auth");
 const moment = require('moment');
 
 
-router.get('/admin/viewAnalysis', (req, res) => {
-	let localUser = res.locals.user;
-	Pv.fetch((err, allPvs) => {
-		// allPvs为访问总数
-		// allIps为访问的独立ip总数
-		let ipHasRepeat = [];
-		allPvs.forEach((pv, index) => {
-			if (ipHasRepeat.indexOf(pv.ip) === -1) {
-				ipHasRepeat.push(pv.ip);
-			}
-		});
-		res.render('viewList', {
-			title: "访问统计",
-			localUser: localUser,
-			allPvs: allPvs,
-			allIps: ipHasRepeat,
+router.get('/admin/viewAnalysis', Auth.requiredLogin, Auth.requiredAdmin, (req, res) => {
+	try {
+		let localUser = res.locals.user;
+		Pv.fetch((err, allPvs) => {
+			// allPvs为访问总数
+			// allIps为访问的独立ip总数
+			let ipHasRepeat = [];
+			allPvs.forEach((pv, index) => {
+				if (ipHasRepeat.indexOf(pv.ip) === -1) {
+					ipHasRepeat.push(pv.ip);
+				}
+			});
+			res.render('viewList', {
+				title: "访问统计",
+				localUser: localUser,
+				allPvs: allPvs,
+				allIps: ipHasRepeat,
+			})
 		})
-	})
+	} catch (err) {
+		console.log('err', err);
+	}
+});
+
+router.get('/admin/viewAnalysis/search', Auth.requiredLogin, Auth.requiredAdmin, (req, res) => {
+	try {
+		let timeStart;
+	}catch(err) {
+		console.log('err', err);
+	}
 });
 
 
@@ -37,11 +49,11 @@ router.post('/admin/viewData', Auth.requiredAdmin, Auth.requiredLogin, (req, res
 				return res.json({
 					success: 1,
 					data: {
-						pvs:pvs
+						pvs: pvs
 					}
 				})
 			})
-	}catch(err) {
+	} catch (err) {
 		console.log('err', err);
 	}
 });

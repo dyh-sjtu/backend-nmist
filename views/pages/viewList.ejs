@@ -5,31 +5,57 @@
     <% include ../includes/backend-sidebar.ejs %>
     <div class="backend-container">
         <div class="row pb-10" style="margin-right: 0;margin-left: 0">
-            <h2 class="w100 tc">用户官网访问统计</h2>
+            <h2 class="w100 tc">官网访问统计</h2>
         </div>
         <hr class="layui-bg-blue pt-5">
-        <div class="backend-content">
+        <div class="backend-content" style="overflow: scroll">
             <div class="layui-container">
                 <div class="layui-row">
                     <div class="pt-20">
-                        <h3>访问日期</h3>
-                        <div class="layui-input-inline">
-                            <input type="text" class="layui-input" style="display: inline-block;width: auto"
-                                   placeholder="yyyy-MM-dd" id="date_select">
-                            <i class="layui-icon layui-icon-date"
-                               style="font-size: 28px; color: #409388;position: relative;top:6px;left:-35px"></i>
+
+                        <div class="layui-form">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">查询方式</label>
+                                <div class="layui-input-block">
+                                    <input type="radio" lay-filter="search_type" name="search_type" value="1"
+                                           title="按单个日期查询" checked>
+                                    <input type="radio" lay-filter="search_type" name="search_type" value="2"
+                                           title="按日期范围查询">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item date_select_single">
+                                <div class="layui-input-block">
+                                    <input type="text" class="layui-input" style="display: inline-block;width: 300px"
+                                           placeholder="yyyy-MM-dd" id="date_select_single">
+                                    <i class="layui-icon layui-icon-date"
+                                       style="font-size: 28px; color: #409388;position: relative;top:6px;left:-35px"></i>
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item date_select_range" style="display: none">
+                                <div class="layui-input-block">
+                                    <input type="text" class="layui-input" style="display: inline-block;width: 300px"
+                                           placeholder="yyyy-MM-dd" id="date_select_range">
+                                    <i class="layui-icon layui-icon-date"
+                                       style="font-size: 28px; color: #409388;position: relative;top:6px;left:-35px"></i>
+                                </div>
+                            </div>
+
                         </div>
+
+
                     </div>
                 </div>
-                <div id="pv_show" style="width:100%;height:400px">
+                <div id="pv_show" style="width:100%;height:400px" style="overflow: scroll">
 
                 </div>
-                <div class="layui-row flex-be">
-                    <div class="layui-col-xl6 layui-col-lg6 layui-col-md6 pl-100">
+                <div class="layui-row mb-50">
+                    <div class="layui-col-xl12 layui-col-lg12 layui-col-md12 pl-50 tc">
                         <h3 id="current_pvs"></h3>
                         <h3 id="current_uvs"></h3>
                     </div>
-                    <div class="layui-col-xl6 layui-col-lg6 layui-col-md6 pr-100" style="text-align: right">
+                    <div class="layui-col-xl12 layui-col-lg12 layui-col-md12 pl-50 tc">
                         <h3>网站累计总访客数: <%= allIps.length %></h3>
                         <h3>网站累计总浏览数: <%= allPvs.length %></h3>
                     </div>
@@ -42,199 +68,248 @@
 <script src="https://cdn.bootcss.com/echarts/4.2.0-rc.2/echarts.min.js" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
 <script>
-	var myChart = echarts.init(document.getElementById('pv_show'));
-	var now = moment(Date.now()).format("YYYY-MM-DD");
-	getDayViewData(now, myChart);
-	layui.use('laydate', function () {
-		var laydate = layui.laydate;
-		//执行一个laydate实例
-		laydate.render({
-			elem: '#date_select', //指定元素
-			value: new Date(),
-			done: function (value) {
-				getDayViewData(value, myChart)
-			}
-		});
-	});
-	
-	function getDayViewData(day, myChart) {
-		//day: string YYYY-MM-DD表示的日期
-		$.ajax({
-			url: '/admin/viewData',
-			type: 'POST',
-			data: {
-				day: day
-			}
-		}).done(function (res) {
-			if (res.success === 1) {
-				updateViewData(day, res.data.pvs, myChart);
-			} else {
-				layer.msg("数据获取失败,请检查网络!")
-			}
-		})
-	}
-	
-	function updateViewData(day, pvsOfDay, myChart) {
-		var pvsOfSelectDay = Array.from({length: 24}, (item, index) => item = 0);
-		var uvsItemOfSelectDay = Array.from({length: 24}, (item, index) => item = []);
-		pvsOfDay.forEach((pvOfDay, index) => {
-			if (moment(pvOfDay.meta.createAt).get("hour") < 1) {
-				uvsItemOfSelectDay[0].push(pvOfDay.ip);
-				pvsOfSelectDay[0] += 1;
-			} else if (moment(pvOfDay.meta.createAt).get("hour") < 2) {
-				uvsItemOfSelectDay[1].push(pvOfDay.ip);
-				pvsOfSelectDay[1] += 1;
-			} else if (moment(pvOfDay.meta.createAt).get("hour") < 3) {
-				uvsItemOfSelectDay[2].push(pvOfDay.ip);
-				pvsOfSelectDay[2] += 1;
-			} else if (moment(pvOfDay.meta.createAt).get("hour") < 4) {
-				uvsItemOfSelectDay[3].push(pvOfDay.ip);
-				pvsOfSelectDay[3] += 1;
-			} else if (moment(pvOfDay.meta.createAt).get("hour") < 5) {
-				uvsItemOfSelectDay[4].push(pvOfDay.ip);
-				pvsOfSelectDay[4] += 1;
-			} else if (moment(pvOfDay.meta.createAt).get("hour") < 6) {
-				uvsItemOfSelectDay[5].push(pvOfDay.ip);
-				pvsOfSelectDay[5] += 1;
-			} else if (moment(pvOfDay.meta.createAt).get("hour") < 7) {
-				uvsItemOfSelectDay[6].push(pvOfDay.ip);
-				pvsOfSelectDay[6] += 1;
-			} else if (moment(pvOfDay.meta.createAt).get("hour") < 8) {
-				uvsItemOfSelectDay[7].push(pvOfDay.ip);
-				pvsOfSelectDay[7] += 1;
-			} else if (moment(pvOfDay.meta.createAt).get("hour") < 9) {
-				uvsItemOfSelectDay[8].push(pvOfDay.ip);
-				pvsOfSelectDay[8] += 1;
-			} else if (moment(pvOfDay.meta.createAt).get("hour") < 10) {
-				uvsItemOfSelectDay[9].push(pvOfDay.ip);
-				pvsOfSelectDay[9] += 1;
-			} else if (moment(pvOfDay.meta.createAt).get("hour") < 11) {
-				uvsItemOfSelectDay[10].push(pvOfDay.ip);
-				pvsOfSelectDay[10] += 1;
-			} else if (moment(pvOfDay.meta.createAt).get("hour") < 12) {
-				uvsItemOfSelectDay[11].push(pvOfDay.ip);
-				pvsOfSelectDay[11] += 1;
-			} else if (moment(pvOfDay.meta.createAt).get("hour") < 13) {
-				uvsItemOfSelectDay[12].push(pvOfDay.ip);
-				pvsOfSelectDay[12] += 1;
-			} else if (moment(pvOfDay.meta.createAt).get("hour") < 14) {
-				uvsItemOfSelectDay[13].push(pvOfDay.ip);
-				pvsOfSelectDay[13] += 1;
-			} else if (moment(pvOfDay.meta.createAt).get("hour") < 15) {
-				uvsItemOfSelectDay[14].push(pvOfDay.ip);
-				pvsOfSelectDay[14] += 1;
-			} else if (moment(pvOfDay.meta.createAt).get("hour") < 16) {
-				uvsItemOfSelectDay[15].push(pvOfDay.ip);
-				pvsOfSelectDay[15] += 1;
-			} else if (moment(pvOfDay.meta.createAt).get("hour") < 17) {
-				uvsItemOfSelectDay[16].push(pvOfDay.ip);
-				pvsOfSelectDay[16] += 1;
-			} else if (moment(pvOfDay.meta.createAt).get("hour") < 18) {
-				uvsItemOfSelectDay[17].push(pvOfDay.ip);
-				pvsOfSelectDay[17] += 1;
-			} else if (moment(pvOfDay.meta.createAt).get("hour") < 19) {
-				uvsItemOfSelectDay[18].push(pvOfDay.ip);
-				pvsOfSelectDay[18] += 1;
-			} else if (moment(pvOfDay.meta.createAt).get("hour") < 20) {
-				uvsItemOfSelectDay[19].push(pvOfDay.ip);
-				pvsOfSelectDay[19] += 1;
-			} else if (moment(pvOfDay.meta.createAt).get("hour") < 21) {
-				uvsItemOfSelectDay[20].push(pvOfDay.ip);
-				pvsOfSelectDay[20] += 1;
-			} else if (moment(pvOfDay.meta.createAt).get("hour") < 22) {
-				uvsItemOfSelectDay[21].push(pvOfDay.ip);
-				pvsOfSelectDay[21] += 1;
-			} else if (moment(pvOfDay.meta.createAt).get("hour") < 23) {
-				uvsItemOfSelectDay[22].push(pvOfDay.ip);
-				pvsOfSelectDay[22] += 1;
-			} else {
-				uvsItemOfSelectDay[23].push(pvOfDay.ip);
-				pvsOfSelectDay[23] += 1;
-			}
-		});
-		var uvsOfSelectDay = Array.from({length: 24}, (item, index) => item = 0);
-		uvsItemOfSelectDay.forEach((uvOfSelectDay, index) => {
-			uvsOfSelectDay[index] = delRepeat(uvOfSelectDay).length;
-		})
-		updateChart(day, pvsOfSelectDay, uvsOfSelectDay, myChart);
-	}
+	$(document).ready(function () {
 
-	function delRepeat(arr) {
-		var noRepeatArr = [];
-		arr.forEach((item, index) => {
-			if (noRepeatArr.indexOf(item) === -1) {
-				noRepeatArr.push(item);
-			}
-		})
-		return noRepeatArr;
+		var myChart = echarts.init(document.getElementById('pv_show'));
 
-	}
-	
-	function updateChart(day, pvsOfSelectDay, uvsOfSelectDay, myChart) {
-		var current_pvs = document.getElementById('current_pvs');
-		var current_uvs = document.getElementById("current_uvs");
-		current_uvs.innerHTML = '网站当日访客数：' + uvsOfSelectDay.reduce((prev, cur) => {
-			return prev + cur;
-		}, 0);
-		current_pvs.innerHTML = '网站当日浏览数：' + pvsOfSelectDay.reduce((prev, cur) => {
-			return prev + cur;
-		}, 0);
-		myChart.setOption({
-			title: {
-				text: `${moment(day).format("YYYY-MM-DD")} 的访问记录`,
-				left: 'center'
-			},
-			tooltip: {
-				trigger: 'axis',
-				axisPointer: {
-					type: "cross"
-				},
-				formatter: function (params) {
-					return [`${moment(day).format("YYYY-MM-DD")} ${params[0].name}-${(params[0].dataIndex + 1) > 10 ? (params[0].dataIndex + 1) : '0' + (params[0].dataIndex + 1)}:00` + '<hr size=1 style="margin:3px 0"/>', '浏览次数：' + params[0].data + "<br />", "独立访客：" + params[1].data].join("");
+		layui.use('form', function () {
+			var form = layui.form;
+			layui.use('laydate', function () {
+				var laydate = layui.laydate;
+				//执行一个laydate实例
+				laydate.render({
+					elem: '#date_select_single', //指定元素
+					value: new Date(),
+					done: function (value) {
+						getDayViewData(value, myChart)
+					}
+				});
+			});
+			form.on('radio(search_type)', function (data) {
+				if (parseInt(data.value) === 1) {
+					$(".date_select_range").css('display', 'none');
+					$(".date_select_single").css('display', 'block');
+					layui.use('laydate', function () {
+						var laydate = layui.laydate;
+						//执行一个laydate实例
+						laydate.render({
+							elem: '#date_select_single', //指定元素
+							value: new Date(),
+							done: function (value) {
+								getDayViewData(value, myChart)
+							}
+						});
+					});
 				}
-			},
-			toolbox: {
-				top: 0,
-				right: 110,
-				feature: {
-					dataView: {
-						show: true,
-						readOnly: false
+				if (parseInt(data.value) === 2) {
+					$(".date_select_range").css('display', 'block');
+					$(".date_select_single").css('display', 'none');
+					layui.use('laydate', function () {
+						var laydate = layui.laydate;
+						//执行一个laydate实例
+						laydate.render({
+							elem: '#date_select_range', //指定元素
+							range: true,
+							done: function (value) {
+								console.log(value);
+							}
+						});
+					});
+				}
+
+			})
+		})
+
+		var now = moment(Date.now()).format("YYYY-MM-DD");
+		getDayViewData(now, myChart);
+
+		function getDayViewData(day, myChart) {
+			//day: string YYYY-MM-DD表示的日期
+			$.ajax({
+				url: '/admin/viewData',
+				type: 'POST',
+				data: {
+					day: day
+				}
+			}).done(function (res) {
+				if (res.success === 1) {
+					updateViewData(day, res.data.pvs, myChart);
+				} else {
+					layer.msg("数据获取失败,请检查网络!")
+				}
+			})
+		}
+
+		function updateViewData(day, pvsOfDay, myChart) {
+			var pvsOfSelectDay = Array.from({length: 24}, (item, index) => item = 0);
+			var uvsItemOfSelectDay = Array.from({length: 24}, (item, index) => item = []);
+			pvsOfDay.forEach((pvOfDay, index) => {
+				if (moment(pvOfDay.meta.createAt).get("hour") < 1) {
+					uvsItemOfSelectDay[0].push(pvOfDay.ip);
+					pvsOfSelectDay[0] += 1;
+				} else if (moment(pvOfDay.meta.createAt).get("hour") < 2) {
+					uvsItemOfSelectDay[1].push(pvOfDay.ip);
+					pvsOfSelectDay[1] += 1;
+				} else if (moment(pvOfDay.meta.createAt).get("hour") < 3) {
+					uvsItemOfSelectDay[2].push(pvOfDay.ip);
+					pvsOfSelectDay[2] += 1;
+				} else if (moment(pvOfDay.meta.createAt).get("hour") < 4) {
+					uvsItemOfSelectDay[3].push(pvOfDay.ip);
+					pvsOfSelectDay[3] += 1;
+				} else if (moment(pvOfDay.meta.createAt).get("hour") < 5) {
+					uvsItemOfSelectDay[4].push(pvOfDay.ip);
+					pvsOfSelectDay[4] += 1;
+				} else if (moment(pvOfDay.meta.createAt).get("hour") < 6) {
+					uvsItemOfSelectDay[5].push(pvOfDay.ip);
+					pvsOfSelectDay[5] += 1;
+				} else if (moment(pvOfDay.meta.createAt).get("hour") < 7) {
+					uvsItemOfSelectDay[6].push(pvOfDay.ip);
+					pvsOfSelectDay[6] += 1;
+				} else if (moment(pvOfDay.meta.createAt).get("hour") < 8) {
+					uvsItemOfSelectDay[7].push(pvOfDay.ip);
+					pvsOfSelectDay[7] += 1;
+				} else if (moment(pvOfDay.meta.createAt).get("hour") < 9) {
+					uvsItemOfSelectDay[8].push(pvOfDay.ip);
+					pvsOfSelectDay[8] += 1;
+				} else if (moment(pvOfDay.meta.createAt).get("hour") < 10) {
+					uvsItemOfSelectDay[9].push(pvOfDay.ip);
+					pvsOfSelectDay[9] += 1;
+				} else if (moment(pvOfDay.meta.createAt).get("hour") < 11) {
+					uvsItemOfSelectDay[10].push(pvOfDay.ip);
+					pvsOfSelectDay[10] += 1;
+				} else if (moment(pvOfDay.meta.createAt).get("hour") < 12) {
+					uvsItemOfSelectDay[11].push(pvOfDay.ip);
+					pvsOfSelectDay[11] += 1;
+				} else if (moment(pvOfDay.meta.createAt).get("hour") < 13) {
+					uvsItemOfSelectDay[12].push(pvOfDay.ip);
+					pvsOfSelectDay[12] += 1;
+				} else if (moment(pvOfDay.meta.createAt).get("hour") < 14) {
+					uvsItemOfSelectDay[13].push(pvOfDay.ip);
+					pvsOfSelectDay[13] += 1;
+				} else if (moment(pvOfDay.meta.createAt).get("hour") < 15) {
+					uvsItemOfSelectDay[14].push(pvOfDay.ip);
+					pvsOfSelectDay[14] += 1;
+				} else if (moment(pvOfDay.meta.createAt).get("hour") < 16) {
+					uvsItemOfSelectDay[15].push(pvOfDay.ip);
+					pvsOfSelectDay[15] += 1;
+				} else if (moment(pvOfDay.meta.createAt).get("hour") < 17) {
+					uvsItemOfSelectDay[16].push(pvOfDay.ip);
+					pvsOfSelectDay[16] += 1;
+				} else if (moment(pvOfDay.meta.createAt).get("hour") < 18) {
+					uvsItemOfSelectDay[17].push(pvOfDay.ip);
+					pvsOfSelectDay[17] += 1;
+				} else if (moment(pvOfDay.meta.createAt).get("hour") < 19) {
+					uvsItemOfSelectDay[18].push(pvOfDay.ip);
+					pvsOfSelectDay[18] += 1;
+				} else if (moment(pvOfDay.meta.createAt).get("hour") < 20) {
+					uvsItemOfSelectDay[19].push(pvOfDay.ip);
+					pvsOfSelectDay[19] += 1;
+				} else if (moment(pvOfDay.meta.createAt).get("hour") < 21) {
+					uvsItemOfSelectDay[20].push(pvOfDay.ip);
+					pvsOfSelectDay[20] += 1;
+				} else if (moment(pvOfDay.meta.createAt).get("hour") < 22) {
+					uvsItemOfSelectDay[21].push(pvOfDay.ip);
+					pvsOfSelectDay[21] += 1;
+				} else if (moment(pvOfDay.meta.createAt).get("hour") < 23) {
+					uvsItemOfSelectDay[22].push(pvOfDay.ip);
+					pvsOfSelectDay[22] += 1;
+				} else {
+					uvsItemOfSelectDay[23].push(pvOfDay.ip);
+					pvsOfSelectDay[23] += 1;
+				}
+			});
+			var uvsOfSelectDay = Array.from({length: 24}, (item, index) => item = 0);
+			uvsItemOfSelectDay.forEach((uvOfSelectDay, index) => {
+				uvsOfSelectDay[index] = delRepeat(uvOfSelectDay).length;
+			})
+			updateChart(day, pvsOfDay, pvsOfSelectDay, uvsOfSelectDay, myChart);
+		}
+
+		function delRepeat(arr) {
+			var noRepeatArr = [];
+			arr.forEach(function (item, index) {
+				if (noRepeatArr.indexOf(item) === -1) {
+					noRepeatArr.push(item);
+				}
+			})
+			return noRepeatArr;
+
+		}
+
+		function delRepeatIp(pvs) {
+			var noRepeatArr = [];
+			pvs.forEach(function (pv, index) {
+				if (noRepeatArr.indexOf(pv.ip) === -1) {
+					noRepeatArr.push(pv.ip);
+				}
+			})
+			return noRepeatArr;
+		}
+
+		function updateChart(day, pvsOfDay, pvsOfSelectDay, uvsOfSelectDay, myChart) {
+			var current_pvs = document.getElementById('current_pvs');
+			var current_uvs = document.getElementById("current_uvs");
+			current_uvs.innerHTML = '网站当日访客数：' + delRepeatIp(pvsOfDay).length;
+			current_pvs.innerHTML = '网站当日浏览数：' + pvsOfSelectDay.reduce((prev, cur) => {
+				return prev + cur;
+			}, 0);
+			myChart.setOption({
+				title: {
+					text: `${moment(day).format("YYYY-MM-DD")} 的访问记录`,
+					left: 'center'
+				},
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: {
+						type: "cross"
 					},
-					restore: {show: true},
-					saveAsImage: {show: true}
-				}
-			},
-			legend: {
-				bottom: 10,
-				left: 'center',
-				data: ['当日各时段网站浏览数', '当日各时段网站访客数']
-			},
-			xAxis: {
-				data: ["00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00",
-					"08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00",
-					"16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00",]
-			},
-			yAxis: {
-				name: '人数',
-			},
-			series: [
-				{
-					name: '当日各时段网站浏览数',
-					type: 'line',
-					color: '#4891D4',
-
-					data: pvsOfSelectDay
+					formatter: function (params) {
+						return [`${moment(day).format("YYYY-MM-DD")} ${params[0].name}-${(params[0].dataIndex + 1) > 10 ? (params[0].dataIndex + 1) : '0' + (params[0].dataIndex + 1)}:00` + '<hr size=1 style="margin:3px 0"/>', '浏览次数：' + params[0].data + "<br />", "独立访客：" + params[1].data].join("");
+					}
 				},
-				{
-					name: '当日各时段网站访客数',
-					type: 'line',
-					color: '#80BB51',
-					data: uvsOfSelectDay
-				}
-			]
-		})
-	}
+				toolbox: {
+					top: 0,
+					right: 110,
+					feature: {
+						dataView: {
+							show: true,
+							readOnly: false
+						},
+						restore: {show: true},
+						saveAsImage: {show: true}
+					}
+				},
+				legend: {
+					bottom: 10,
+					left: 'center',
+					data: ['当日各时段网站浏览数', '当日各时段网站访客数']
+				},
+				xAxis: {
+					data: ["00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00",
+						"08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00",
+						"16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00",]
+				},
+				yAxis: {
+					name: '人数',
+				},
+				series: [
+					{
+						name: '当日各时段网站浏览数',
+						type: 'line',
+						color: '#4891D4',
+
+						data: pvsOfSelectDay
+					},
+					{
+						name: '当日各时段网站访客数',
+						type: 'line',
+						color: '#80BB51',
+						data: uvsOfSelectDay
+					}
+				]
+			})
+		}
+	})
 
 </script>
 </body>

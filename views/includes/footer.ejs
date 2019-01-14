@@ -6,10 +6,7 @@
                 <div class="col-xl-4 col-lg-4 col-md-4 mb-30">
                     <div class="footer-widget">
                         <img class="mb-30" src="/img/logo/logo-white.png" alt="天磁">
-                        <ul class="footer-link">
-                            <li><a href="/NMCAD" target="_blank">天磁CAD协同设计平台</a></li>
-                            <li><a href="/NMBIM" target="_blank">天磁BIM协同管理平台</a></li>
-                            <li><a href="/NMGIS" target="_blank">天磁GIS三维数字地球开发平台</a></li>
+                        <ul class="footer-link product_link">
                         </ul>
                     </div>
                 </div>
@@ -110,10 +107,13 @@
 			if (res.success === 1) {
 				var products = res.data.products;
 				var htmlStr = '';
+				var productHtmlStr = '';
 				products.forEach(function (product, index) {
-					htmlStr += "<li><a href='/product/detail/" + product._id + "'>" + product.name + "</a></li>"
+					htmlStr += "<li><a href='/product/detail/" + product._id + "'>" + product.name + "</a></li>";
+					productHtmlStr += "<li><a href='/product/detail/" + product._id + "'>" + product.cnName + "</a></li>";
 				})
 				$(".product_menu").html(htmlStr);
+				$(".product_link").html(productHtmlStr);
 			}
 		})
 	})

@@ -17,11 +17,20 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label" for="product_name">产品名称</label>
+                    <label class="layui-form-label" for="product_name">产品简称</label>
                     <div class="layui-input-block">
                         <input type="text" value="<%= product && product.name %>"
-                               placeholder="请输入产品名称"
+                               placeholder="请输入产品英文简称"
                                autocomplete="on" class="layui-input" id="product_name">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="product_cnName">产品全称</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="<%= product && product.cnName %>"
+                               placeholder="请输入产品中文全称"
+                               autocomplete="on" class="layui-input" id="product_cnName">
                     </div>
                 </div>
 
@@ -56,7 +65,8 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label" for="product_summary">平台概述</label>
                     <div class="layui-input-block">
-                        <textarea id="product_summary" placeholder="请输入平台概述" class="layui-textarea"><%= product && product.summary %></textarea>
+                        <textarea id="product_summary" placeholder="请输入平台概述"
+                                  class="layui-textarea"><%= product && product.summary %></textarea>
                     </div>
                 </div>
 
@@ -64,7 +74,8 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label" for="product_character">平台构成</label>
                     <div class="layui-input-block">
-                        <textarea id="product_character" placeholder="请输入平台构成" class="layui-textarea"><%= product && product.character %></textarea>
+                        <textarea id="product_character" placeholder="请输入平台构成"
+                                  class="layui-textarea"><%= product && product.character %></textarea>
                     </div>
                 </div>
 
@@ -72,7 +83,8 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label" for="product_advantage">平台优势</label>
                     <div class="layui-input-block">
-                        <textarea id="product_advantage" placeholder="请输入平台优势" class="layui-textarea"><%= product && product.advantage %></textarea>
+                        <textarea id="product_advantage" placeholder="请输入平台优势"
+                                  class="layui-textarea"><%= product && product.advantage %></textarea>
                     </div>
                 </div>
 
@@ -80,7 +92,8 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label" for="product_training">平台培训</label>
                     <div class="layui-input-block">
-                        <textarea id="product_training" placeholder="请输入平台培训" class="layui-textarea"><%= product && product.training %></textarea>
+                        <textarea id="product_training" placeholder="请输入平台培训"
+                                  class="layui-textarea"><%= product && product.training %></textarea>
                     </div>
                 </div>
 
@@ -113,13 +126,14 @@
 			var product_id = $('#product_id').val();
 			var product_desc = $("#product_desc").val();
 			var product_name = $('#product_name').val();
+			var product_cnName = $('#product_cnName').val();
 			var product_icon = $("#product_icon").val();
 			var product_imgUrl = $("#product_imgUrl").val();
 			var product_summary = $("#product_summary").val();
 			var product_character = $("#product_character").val();
 			var product_advantage = $("#product_advantage").val();
 			var product_training = $("#product_training").val();
-			if (!(product_desc.trim() && product_name.trim() && product_icon.trim() && product_imgUrl.trim())) {
+			if (!(product_desc.trim() && product_name.trim() && product_cnName.trim() && product_icon.trim() && product_imgUrl.trim())) {
 				layer.msg("产品基本信息不能为空哦😯!");
 				return;
 			}
@@ -135,6 +149,7 @@
 				data: {
 					productId: product_id,
 					name: product_name,
+					cnName: product_cnName,
 					desc: product_desc,
 					imgUrl: product_imgUrl,
 					icon: product_icon,

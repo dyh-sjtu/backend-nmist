@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const ProductSchema = new mongoose.Schema({
-	name: String,
+	name: String,  // 英文名称
+	cnName: String,  // 中文名称
 	desc: String,
 	icon: String,  // 产品图标
 	imgUrl: String,  // 产品封面图片地址
