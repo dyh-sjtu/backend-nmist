@@ -226,7 +226,7 @@ $(document).ready(function () {
 			},
 			series: [
 				{
-					name: '当月日网站浏览数',
+					name: '当月各日网站浏览数',
 					type: 'line',
 					color: '#4891D4',
 					
