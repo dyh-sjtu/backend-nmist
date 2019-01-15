@@ -38,12 +38,52 @@ router.get('/admin/viewAnalysis/search', Auth.requiredLogin, Auth.requiredAdmin,
 });
 
 
-router.post('/admin/viewData', Auth.requiredAdmin, Auth.requiredLogin, (req, res) => {
+router.post('/admin/viewData/day', Auth.requiredAdmin, Auth.requiredLogin, (req, res) => {
 	try {
 		let day = req.body.day;
 		Pv.find({
 			"$and": [{"meta.createAt": {"$gt": moment(day)}},
 				{"meta.createAt": {"$lte": moment(day).add(24, 'hours')}}]
+		})
+			.exec((err, pvs) => {
+				return res.json({
+					success: 1,
+					data: {
+						pvs: pvs
+					}
+				})
+			})
+	} catch (err) {
+		console.log('err', err);
+	}
+});
+
+router.post('/admin/viewData/month', Auth.requiredAdmin, Auth.requiredLogin, (req, res) => {
+	try {
+		let month = req.body.month;
+		Pv.find({
+			"$and": [{"meta.createAt": {"$gt": moment(month)}},
+				{"meta.createAt": {"$lte": moment(month).add(1, 'month')}}]
+		})
+			.exec((err, pvs) => {
+				return res.json({
+					success: 1,
+					data: {
+						pvs: pvs
+					}
+				})
+			})
+	} catch (err) {
+		console.log('err', err);
+	}
+});
+
+router.post('/admin/viewData/year', Auth.requiredAdmin, Auth.requiredLogin, (req, res) => {
+	try {
+		let year = req.body.year;
+		Pv.find({
+			"$and": [{"meta.createAt": {"$gt": moment(year)}},
+				{"meta.createAt": {"$lte": moment(year).add(1, 'year')}}]
 		})
 			.exec((err, pvs) => {
 				return res.json({
