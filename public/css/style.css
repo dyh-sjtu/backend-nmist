@@ -920,7 +920,7 @@ header {
 	padding: 20px;
 }
 .blog-thumb {
-	margin-bottom: 20px;
+	margin-bottom: 10px;
 }
 .blog-title {
 	display: inline-block;
@@ -969,9 +969,7 @@ header {
 	width: 5px;
 }
 .meta-info ul li:first-child:before{display:none}
-.blog-thumb img {
-	width: 100%;
-}
+
 .link-box a {
 	font-weight: 600;
 }
