@@ -90,9 +90,9 @@
             </div>
         </div>
         <div class="container">
-            <% projects.forEach(function (project, index) { %>
             <div class="row grid">
-                <div class="col-xl-4 col-lg-4 col-md-4 grid-item cat1">
+                <% projects.forEach(function (project, index) { %>
+                <div class="col-xl-4 col-lg-4 col-md-4 grid-item">
                     <div class="portfolio-wrapper mb-30">
                         <a href="/project/detail/<%= project._id %>">
                             <div class="portfolio-thumb">
@@ -106,8 +106,8 @@
                         </a>
                     </div>
                 </div>
+                <% }) %>
             </div>
-            <% }) %>
         </div>
     </div>
     <!-- portfolio-area end -->
