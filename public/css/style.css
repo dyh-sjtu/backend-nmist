@@ -750,6 +750,10 @@ header {
 .portfolio-wrapper {
 	position: relative;
 }
+.product_img_container {
+	height: 210px;
+}
+
 .portfolio-content > h3 {
 	color: #ddd;
 	font-size: 18px;
@@ -766,21 +770,6 @@ header {
 	position: relative;
 	width: 20px;
 }
-/* .icon a::before ,.icon a::after {
-    background: #414149 none repeat scroll 0 0;
-    content: "";
-    height: 2px;
-    left: 0;
-    margin: auto;
-    position: absolute;
-    right: 0;
-    width: 20px;
-}
-.icon a::after {
-  height: 20px;
-  top: -9px;
-  width: 2px;
-} */
 
 
 .portfolio-menu > button {
