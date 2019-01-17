@@ -97,12 +97,21 @@
                     </div>
                 </div>
 
+                <!--展示视频-->
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="product_video">展示视频</label>
+                    <div class="layui-input-block">
+                        <textarea id="product_video" placeholder="请输入平台功能演示视频"
+                                  class="layui-textarea"><%= product && product.video %></textarea>
+                    </div>
+                </div>
+
                 <div class="layui-form-item">
                     <label class="layui-form-label" for="introduction">填写说明</label>
                     <div class="layui-input-block">
-                        <input id="introduction" style="cursor: not-allowed;color:red" disabled="disabled"
-                               value="平台概述、构成、优势、培训分两级填写,模板如:标题1=内容1||内容2||内容3&&标题2=内容1||内容2||内容3||内容4;如果没有标题,则模板如：内容1||内容2||内容3;如果内容为图片，则直接填写图片地址"
-                               class="layui-input">
+                        <textarea id="introduction" style="cursor: not-allowed;color:red"
+                                  disabled="disabled" class="layui-textarea">平台概述、构成、优势、培训分两级填写,模板如:标题1=内容1||内容2||内容3&&标题2=内容1||内容2||内容3||内容4;如果没有标题,则模板如：内容1||内容2||内容3;如果内容为图片，则直接填写图片地址；展示视频填写模板如：视频名称1=视频地址1||视频名称2=视频地址2||视频名称3=视频地址3；"||"、"="和"&&"作为分隔符，其他地方切不可出现！！！
+                        </textarea>
                     </div>
                 </div>
 
@@ -133,12 +142,13 @@
 			var product_character = $("#product_character").val();
 			var product_advantage = $("#product_advantage").val();
 			var product_training = $("#product_training").val();
+			var product_video = $("#product_video").val();
 			if (!(product_desc.trim() && product_name.trim() && product_cnName.trim() && product_icon.trim() && product_imgUrl.trim())) {
 				layer.msg("产品基本信息不能为空哦😯!");
 				return;
 			}
 
-			if (!(product_summary.trim() && product_character.trim() && product_advantage.trim())) {
+			if (!(product_summary.trim() && product_character.trim() && product_advantage.trim() && product_video.trim())) {
 				layer.msg("产品信息不能为空哦😯!");
 				return;
 			}
@@ -157,6 +167,7 @@
 					character: product_character,
 					advantage: product_advantage,
 					training: product_training,
+					video: product_video
 				}
 			}).done(function (res) {
 				if (res.success === 1) {

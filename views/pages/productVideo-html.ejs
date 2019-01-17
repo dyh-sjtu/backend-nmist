@@ -1,0 +1,63 @@
+<!-- wrapper-box start -->
+<div class="wrapper-box p-0">
+    <!-- page-title-area start -->
+    <div class="page-title-area pt-210 pb-210"
+         data-background="https://nmist.oss-cn-hangzhou.aliyuncs.com/img/bg/page-title.jpg">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="page-title text-center">
+                        <h1>产品演示视频</h1>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb justify-content-center">
+                                <% products.forEach(function (product, index) { %>
+                                <li class="breadcrumb-item">
+                                    <span><%= product.name %></span>
+                                </li>
+                                <% }) %>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- page-title-area end -->
+
+    <!-- services-area start -->
+    <div class="services-area pt-115 pb-60">
+        <div class="container">
+            <% products.forEach(function (product, index) { %>
+            <div class="mb-100 service-wrapper-2">
+                <h2 class="tc w100 mb-20"><%= product.name %>的演示视频</h2>
+                <div class="row">
+                    <% product.video.split("&&").forEach(function(videoItem, index) { %>
+                    <div class="col-xl-3 col-md-3 col-lg-3 flex-column-sp mt-20 mb-20">
+                        <video src="<%= videoItem.split("=")[1] %>" class="product_video" controls width="100%"
+                               height="100%">
+                            抱歉，您的浏览器不支持MP4格式的视频播放，请更换浏览器重试！
+                        </video>
+                        <div class="mt-25 w100 flex-space">
+                            <span><%= videoItem.split("=")[0] %></span>
+                            <span class="weintern-gray-normal product_video_time"></span>
+                        </div>
+                    </div>
+                    <% }) %>
+                </div>
+            </div>
+            <% }) %>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function () {
+		var videoObj = document.getElementsByClassName('product_video');
+		var videoTimeObj = document.getElementsByClassName('product_video_time');
+		Array.from(videoObj).forEach(function (ele, index) {
+			ele.addEventListener('loadedmetadata', function () {
+				Array.from(videoTimeObj)[index].innerHTML = ele.duration;
+			})
+		})
+	})
+</script>

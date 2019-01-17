@@ -9,6 +9,7 @@ const ProductSchema = new mongoose.Schema({
 	character: String,  // 平台特征
 	advantage: String,  // 平台优势
 	training: String,  // 平台背景
+	video: String,  // 视频相关信息
 	meta: {
 		createAt: {
 			type: Date,

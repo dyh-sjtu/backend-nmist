@@ -82,7 +82,7 @@ router.get('/download', upload.saveViewData, (req, res) => {
 				softwares: softwares
 			})
 		})
-	}catch (err) {
+	} catch (err) {
 		console.log('err', err);
 	}
 });
@@ -94,10 +94,39 @@ router.get('/productList', upload.saveViewData, (req, res) => {
 				products: products
 			})
 		})
-	}catch(err) {
+	} catch (err) {
 		console.log('err', err);
 	}
 });
+
+router.get('/product/videoType/:id', (req, res) => {
+	try {
+		let productId = req.params.id;
+		if (productId) {
+			Product.findById(productId, (err, product) => {
+				if (err) console.log(err);
+				res.render('productVideo', {
+					products: [product]
+				})
+			})
+		}
+	} catch (err) {
+		console.log('err', err);
+	}
+})
+
+router.get('/product/video/all', (req, res) => {
+	try {
+		Product.find({}).exec((err, products) => {
+			if (err) console.log(err);
+			res.render('productVideo', {
+				products: products
+			})
+		})
+	} catch (err) {
+		console.log('err', err);
+	}
+})
 
 router.get('/product/detail/:id', upload.saveViewData, (req, res) => {
 	try {
@@ -109,7 +138,7 @@ router.get('/product/detail/:id', upload.saveViewData, (req, res) => {
 				})
 			})
 		}
-	}catch (err) {
+	} catch (err) {
 		console.log('err', err);
 	}
 })
@@ -154,17 +183,6 @@ router.get('/project/category/:id', upload.saveViewData, (req, res) => {
 	}
 })
 
-router.get('/NMCAD', upload.saveViewData, (req, res) => {
-	res.render("nmcad")
-})
-
-router.get('/NMBIM', upload.saveViewData, (req, res) => {
-	res.render("nmbim")
-})
-
-router.get('/NMGIS', upload.saveViewData, (req, res) => {
-	res.render("nmgis")
-});
 
 router.get('/recurit', upload.saveViewData, (req, res) => {
 	res.render("recurit")
