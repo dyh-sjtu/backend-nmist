@@ -85,6 +85,12 @@ let apply  = require('./routes/software/apply');
 // 友情链接
 let friendLink  = require('./routes/software/friendLink');
 
+// 关于天磁
+let company = require('./routes/software/company');
+
+// 人才招聘
+let job = require('./routes/software/job');
+
 // 工程项目相关
 let project = require('./routes/project/project');
 let projectCategory = require('./routes/project/projectCategory');
@@ -129,6 +135,10 @@ app.use('/', product);
 app.use('/', customer);
 
 app.use('/', friendLink);
+
+app.use('/', company);
+
+app.use('/', job);
 
 // 项目案例相关
 app.use('/', project);

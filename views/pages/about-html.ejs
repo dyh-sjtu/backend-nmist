@@ -1,7 +1,8 @@
 <!-- wrapper-box start -->
 <div class="wrapper-box p-0">
     <!-- page-title-area start -->
-    <div class="page-title-area pt-210 pb-210" data-background="https://nmist.oss-cn-hangzhou.aliyuncs.com/img/bg/page-title.jpg">
+    <div class="page-title-area pt-210 pb-210"
+         data-background="https://nmist.oss-cn-hangzhou.aliyuncs.com/img/bg/page-title.jpg">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-xl-12">
@@ -31,18 +32,13 @@
                 <div class="col-xl-8 col-lg-8 wh-pad pr-60">
                     <div class="who-we-box white-bg">
                         <h2 class="mb-20">公司简介</h2>
-                        <p class="suojin">
-                            上海天磁信息科技有限公司依托上海交通大学BIM研究中心创建，成立于2009年。主要业务涉及市政基础设施、铁路工程、轨道交通、道路桥梁隧道、工业与民用建筑等项目的CAD/BIM协同应用与技术咨询服务；公司拥有经验丰富的产品规划、研究、开发团队，其中硕士/博士占比40%。同时拥有完善的项目交付及技术支持团队。</p>
-                        <p class="suojin">
-                            上海天磁是一家主要从事软件开发，软硬件销售，信息化建设的高新创业科技公司。具有完全自主知识产权的天磁CAD协同设计管理平台（NMCAD）、天磁BIM协同管理平台（NMBIM）、天磁地理信息系统（NMGIS）等系列产品，已在多家大型建筑企业成功推广与应用。上海天磁凭借雄厚的实力与Graphisoft
-                            中国、广联达科技公司等达成战略合作伙伴关系。</p>
-                        <p class="suojin">
-                            多年来，上海天磁不断革新，始终坚持客户至上的理念，强化团队素质，培养和引进高端人才，以最先进的技术为服务根基，用最专业的服务打造客户满意的产品。目前，上海天磁信息科技有限公司已经成为上海交通大学“产学研”的重点推广项目。</p>
+                        <% company && company.introduction && company.introduction.split("||").forEach(function (item, index) { %>
+                        <p class="suojin"><%= item %></p>
+                        <% }) %>
                         <ul class="expert-list clearfix mb-30">
-                            <li>源自上海交通大学BIM研究中心</li>
-                            <li>多专业(CAD/BIM/GIS)协同设计总体解决方案</li>
-                            <li>中建西北院、铁四院、上海建工等优质客户群体</li>
-                            <li>引领国内建筑信息化潮流</li>
+                            <% company && company.character && company.character.split("||").forEach(function (item, index) { %>
+                            <li><%= item %></li>
+                            <% }) %>
                         </ul>
                         <a data-animation="fadeInLeft" data-delay="1.2s" href="/contact" class="btn brand-btn"
                            style="animation-delay: 1.2s;"
@@ -52,7 +48,8 @@
                     </div>
                 </div>
                 <div class="col-xl-4 col-lg-4">
-                    <div class="zoomImage" style="background-image: url(https://nmist.oss-cn-hangzhou.aliyuncs.com/img/team/gongsi.jpg)"></div>
+                    <div class="zoomImage"
+                         style="background-image: url(<%= company && company.imgUrl %>)"></div>
                 </div>
             </div>
         </div>
@@ -66,7 +63,8 @@
                     <div class="intro-text text-center">
                         <h1>公司发展历史</h1>
                         <div class="blog-thumb mt-40">
-                            <img src="https://nmist.oss-cn-hangzhou.aliyuncs.com/img/team/history.jpg" width="100%" alt="">
+                            <img src="<%= company && company.history %>" width="100%"
+                                 alt="">
                         </div>
                     </div>
                 </div>
@@ -75,7 +73,8 @@
     </div>
     <!-- intro-area end -->
     <!-- counter-area start -->
-    <div class="counter-area pt-150 pb-120" data-background="https://nmist.oss-cn-hangzhou.aliyuncs.com/img/bg/bg-counter.jpg">
+    <div class="counter-area pt-150 pb-120"
+         data-background="https://nmist.oss-cn-hangzhou.aliyuncs.com/img/bg/bg-counter.jpg">
         <div class="container">
             <div class="row">
                 <div class="col-xl-4 col-lg-4 col-md-4">
@@ -111,66 +110,66 @@
                 </div>
             </div>
             <!--<div class="row testimonial-box-active dot-style">-->
-                <!--<div class="col-xl-4 col-md-4 col-lg-4">-->
-                    <!--<div class="testimonial-box text-center">-->
-                        <!--<div class="test-info">-->
-                            <!--<div class="test-thumb pb-15">-->
-                                <!--<img src="img/team/01.png" alt="">-->
-                            <!--</div>-->
-                            <!--<div class="test-title pb-20">-->
-                                <!--<h5>吴宇</h5>-->
-                                <!--<span>CEO</span>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<p>英国曼彻斯特大学计算机硕士</p>-->
-                        <!--<p>上海第七批千人计划引进专家</p>-->
-                        <!--<p>具备丰富的商业智能及大数据挖掘研发领导经验</p>-->
-                        <!--<p>曾任英国XARIOS商业智能公司联合创始人及CTO</p>-->
-                        <!--<p>英国华人青年企业家联合会副会长</p>-->
-                    <!--</div>-->
-                <!--</div>-->
-                <!--<div class="col-xl-4 col-md-4 col-lg-4">-->
-                    <!--<div class="testimonial-box text-center">-->
-                        <!--<div class="test-info">-->
-                            <!--<div class="test-thumb pb-15">-->
-                                <!--<img src="img/team/02.png" alt="">-->
-                            <!--</div>-->
-                            <!--<div class="test-title pb-20">-->
-                                <!--<h5>邓雪原</h5>-->
-                                <!--<span>创始人兼CTO</span>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<p>新加坡南洋理工大学 博士</p>-->
-                        <!--<p>英国特许土木工程师</p>-->
-                        <!--<p>上海交通大学BIM研究中心 执行主任</p>-->
-                        <!--<p>中国建筑学会建筑施工分会BIM专委会理事</p>-->
-                        <!--<p>中国工程建设标准化协会BIM专业委员会委员</p>-->
-                        <!--<p>中国BIM发展联盟理事会技术委员会委员</p>-->
-                        <!--<p>中国工程图学学会土木工程图学分会委员会委员</p>-->
-                        <!--<p>中国图学学会BIM专业委员会委员</p>-->
-                        <!--<p>上海BIM技术创新联盟副理事长</p>-->
-                        <!--<p>上海城市轨道交通BIM技术联盟常务理事</p>-->
-                    <!--</div>-->
-                <!--</div>-->
-                <!--<div class="col-xl-4 col-md-4 col-lg-4">-->
-                    <!--<div class="testimonial-box text-center">-->
-                        <!--<div class="test-info">-->
-                            <!--<div class="test-thumb pb-15">-->
-                                <!--<img src="img/team/03.png" alt="">-->
-                            <!--</div>-->
-                            <!--<div class="test-title pb-20">-->
-                                <!--<h5>李昂</h5>-->
-                                <!--<span>销售总监</span>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<p>中南大学硕士研究生</p>-->
-                        <!--<p>芬兰A&A建筑设计事务所 建筑师</p>-->
-                        <!--<p>北京建工设计院 建筑师</p>-->
-                        <!--<p>中国BIM联盟理事，联合研发了首批P-BIM平台</p>-->
-                        <!--<p>中国装饰协会BIM专业委员会副会长，长期从事装饰BIM的研发及应用</p>-->
-                        <!--<p>GRAPHISOFT BIM经理，长期负责区域市场开拓、BIM技术及产品二次研发。具备丰富的商业经验及多年BIM产品研发、整合、架构的经验</p>-->
-                    <!--</div>-->
-                <!--</div>-->
+            <!--<div class="col-xl-4 col-md-4 col-lg-4">-->
+            <!--<div class="testimonial-box text-center">-->
+            <!--<div class="test-info">-->
+            <!--<div class="test-thumb pb-15">-->
+            <!--<img src="img/team/01.png" alt="">-->
+            <!--</div>-->
+            <!--<div class="test-title pb-20">-->
+            <!--<h5>吴宇</h5>-->
+            <!--<span>CEO</span>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--<p>英国曼彻斯特大学计算机硕士</p>-->
+            <!--<p>上海第七批千人计划引进专家</p>-->
+            <!--<p>具备丰富的商业智能及大数据挖掘研发领导经验</p>-->
+            <!--<p>曾任英国XARIOS商业智能公司联合创始人及CTO</p>-->
+            <!--<p>英国华人青年企业家联合会副会长</p>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--<div class="col-xl-4 col-md-4 col-lg-4">-->
+            <!--<div class="testimonial-box text-center">-->
+            <!--<div class="test-info">-->
+            <!--<div class="test-thumb pb-15">-->
+            <!--<img src="img/team/02.png" alt="">-->
+            <!--</div>-->
+            <!--<div class="test-title pb-20">-->
+            <!--<h5>邓雪原</h5>-->
+            <!--<span>创始人兼CTO</span>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--<p>新加坡南洋理工大学 博士</p>-->
+            <!--<p>英国特许土木工程师</p>-->
+            <!--<p>上海交通大学BIM研究中心 执行主任</p>-->
+            <!--<p>中国建筑学会建筑施工分会BIM专委会理事</p>-->
+            <!--<p>中国工程建设标准化协会BIM专业委员会委员</p>-->
+            <!--<p>中国BIM发展联盟理事会技术委员会委员</p>-->
+            <!--<p>中国工程图学学会土木工程图学分会委员会委员</p>-->
+            <!--<p>中国图学学会BIM专业委员会委员</p>-->
+            <!--<p>上海BIM技术创新联盟副理事长</p>-->
+            <!--<p>上海城市轨道交通BIM技术联盟常务理事</p>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--<div class="col-xl-4 col-md-4 col-lg-4">-->
+            <!--<div class="testimonial-box text-center">-->
+            <!--<div class="test-info">-->
+            <!--<div class="test-thumb pb-15">-->
+            <!--<img src="img/team/03.png" alt="">-->
+            <!--</div>-->
+            <!--<div class="test-title pb-20">-->
+            <!--<h5>李昂</h5>-->
+            <!--<span>销售总监</span>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--<p>中南大学硕士研究生</p>-->
+            <!--<p>芬兰A&A建筑设计事务所 建筑师</p>-->
+            <!--<p>北京建工设计院 建筑师</p>-->
+            <!--<p>中国BIM联盟理事，联合研发了首批P-BIM平台</p>-->
+            <!--<p>中国装饰协会BIM专业委员会副会长，长期从事装饰BIM的研发及应用</p>-->
+            <!--<p>GRAPHISOFT BIM经理，长期负责区域市场开拓、BIM技术及产品二次研发。具备丰富的商业经验及多年BIM产品研发、整合、架构的经验</p>-->
+            <!--</div>-->
+            <!--</div>-->
             <!--</div>-->
         </div>
     </div>

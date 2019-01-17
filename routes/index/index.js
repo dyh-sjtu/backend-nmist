@@ -8,6 +8,8 @@ const Customer = require('../../models/customer');
 const Project = require('../../models/project');
 const ProjectCategory = require('../../models/projectCategory');
 const Product = require('../../models/product');
+const Company = require('../../models/company');
+const Job = require('../../models/job');
 
 
 // 所有静态页面
@@ -68,7 +70,15 @@ router.get('/index', upload.saveViewData, (req, res) => {
 });
 
 router.get('/about', upload.saveViewData, (req, res) => {
-	res.render("about")
+	try {
+		Company.fetch((err, companys) => {
+			res.render("about", {
+				company: companys[0]
+			})
+		})
+	} catch (err) {
+		console.log('err', err);
+	}
 })
 
 router.get('/contact', upload.saveViewData, (req, res) => {
@@ -185,7 +195,16 @@ router.get('/project/category/:id', upload.saveViewData, (req, res) => {
 
 
 router.get('/recurit', upload.saveViewData, (req, res) => {
-	res.render("recurit")
+	try {
+		Job.find({}).exec((err, jobs) => {
+			if (err) console.log(err);
+			res.render('recurit', {
+				jobs: jobs
+			})
+		})
+	} catch (err) {
+		console.log('err', err);
+	}
 });
 
 router.get('/agent', upload.saveViewData, (req, res) => {

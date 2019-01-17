@@ -1,0 +1,108 @@
+<% include ../includes/backend-head.ejs %>
+<body style="overflow-x: hidden;background-color: #eee;">
+<% include ../includes/backend-header.ejs %>
+<div class="main">
+    <% include ../includes/backend-sidebar.ejs %>
+    <div class="backend-container">
+        <div class="row pb-10" style="margin-right: 0;margin-left: 0">
+            <h2 class="w100 tc">关于天磁</h2>
+        </div>
+        <hr class="layui-bg-blue pt-5">
+        <div class="backend-content" style="background-color: #fff">
+            <div class="layui-form" style="padding: 0 15px">
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <input type="hidden" value="<%= company && company._id %>" class="layui-input"
+                               id="company_id">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="company_introduction">公司简介</label>
+                    <div class="layui-input-block">
+                        <textarea placeholder="请输入公司简介" class="layui-textarea"
+                                  id="company_introduction"><%= company && company.introduction %></textarea>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="company_character">公司特征</label>
+                    <div class="layui-input-block">
+                        <textarea placeholder="请输入公司的特征" class="layui-textarea"
+                                  id="company_character"><%= company && company.character %></textarea>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="company_imgUrl">公司图片</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="<%= company && company.imgUrl %>"
+                               placeholder="请输入公司封面图片地址"
+                               autocomplete="on" class="layui-input" id="company_imgUrl">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="company_history">公司历史</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="<%= company && company.history %>"
+                               placeholder="请输入描述公司的历史图片"
+                               autocomplete="on" class="layui-input" id="company_history">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="company_note">填写说明</label>
+                    <div class="layui-input-block">
+                        <textarea id="company_note" style="cursor: not-allowed;color:red"
+                                  disabled="disabled" class="layui-textarea">公司简介每段之间用"||"分隔，公司特征内容项之间采用"||"分隔，如：特征1||特征2||特征3，"||"作为分隔符，其他地方切不可出现！！！</textarea>
+                    </div>
+                </div>
+
+
+                <div class="layui-form-item mt-30 pb-30">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" type="button" id="save_company">保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+	$(document).ready(function () {
+		layer.config({
+			title: '提示'
+		})
+
+		$("#save_company").bind('click', function () {
+			var company_id = $('#company_id').val();
+			var company_introduction = $('#company_introduction').val();
+			var company_character = $('#company_character').val();
+			var company_imgUrl = $('#company_imgUrl').val();
+			var company_history = $('#company_history').val();
+			if (!(company_introduction.trim() && company_character.trim() && company_imgUrl.trim() && company_history.trim())) {
+				layer.msg("公司信息不能为空哦😯!");
+				return;
+			}
+
+			$.ajax({
+				type: 'POST',
+				url: '/admin/company/save',
+				data: {
+					company_id: company_id,
+					introduction: company_introduction,
+					character: company_character,
+					imgUrl: company_imgUrl,
+					history: company_history
+				}
+			}).done(function (res) {
+				if (res.success === 1) {
+					layer.msg("公司信息保存成功!")
+				}
+			})
+
+		})
+	})
+</script>
+</body>

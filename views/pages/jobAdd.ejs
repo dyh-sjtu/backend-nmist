@@ -1,0 +1,129 @@
+<% include ../includes/backend-head.ejs %>
+<body style="overflow-x: hidden;background-color: #eee;">
+<% include ../includes/backend-header.ejs %>
+<div class="main">
+    <% include ../includes/backend-sidebar.ejs %>
+    <div class="backend-container">
+        <div class="row pb-10" style="margin-right: 0;margin-left: 0">
+            <h2 class="w100 tc"><%= job && job._id ? "岗位更新" : "岗位添加" %></h2>
+        </div>
+        <hr class="layui-bg-blue pt-5">
+        <div class="backend-content" style="background-color: #fff">
+            <div class="layui-form" style="padding: 0 15px">
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <input type="hidden" value="<%= job && job._id %>" class="layui-input"
+                               id="job_id">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="job_jobname">岗位名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="<%= job && job.jobname %>"
+                               placeholder="请输入岗位名称"
+                               autocomplete="on" class="layui-input" id="job_jobname">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="job_requirement">岗位要求</label>
+                    <div class="layui-input-block">
+                        <textarea placeholder="请输入岗位要求" class="layui-textarea"
+                                  id="job_requirement"><%= job && job.requirement %></textarea>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="job_duty">岗位职责</label>
+                    <div class="layui-input-block">
+                        <textarea placeholder="请输入岗位职责" class="layui-textarea"
+                                  id="job_duty"><%= job && job.duty %></textarea>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="job_address">岗位地点</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="<%= job && job.address %>"
+                               placeholder="请输入岗位地点"
+                               autocomplete="on" class="layui-input" id="job_address">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="job_applyWay">投递方式</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="<%= job && job.applyWay %>"
+                               placeholder="请输入岗位投递方式"
+                               autocomplete="on" class="layui-input" id="job_applyWay">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="job_note">岗位备注</label>
+                    <div class="layui-input-block">
+                        <textarea placeholder="请输入岗位备注" class="layui-textarea"
+                                  id="job_note"><%= job && job.note %></textarea>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="job_beizhu">填写说明</label>
+                    <div class="layui-input-block">
+                        <textarea id="job_beizhu" style="cursor: not-allowed;color:red"
+                                  disabled="disabled" class="layui-textarea">岗位要求、岗位职责、岗位备注如果有多项内容，可采用"||"分隔，如：内容1||内容2||内容3，"||"作为分隔符，其他地方切不可出现！！！</textarea>
+                    </div>
+                </div>
+
+
+                <div class="layui-form-item mt-30 pb-30">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" type="button" id="save_job">保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+	$(document).ready(function () {
+		layer.config({
+			title: '提示'
+		})
+
+		$("#save_job").bind('click', function () {
+			var job_id = $('#job_id').val();
+			var job_jobname = $('#job_jobname').val();
+			var job_requirement = $('#job_requirement').val();
+			var job_duty = $('#job_duty').val();
+			var job_address = $('#job_address').val();
+			var job_note = $('#job_note').val();
+			var job_applyWay = $('#job_applyWay').val();
+			if (!(job_jobname.trim() && job_requirement.trim() && job_applyWay.trim())) {
+				layer.msg("岗位信息不能为空哦😯!");
+				return;
+			}
+
+			$.ajax({
+				type: 'POST',
+				url: '/admin/job/save',
+				data: {
+					jobId: job_id,
+					jobname: job_jobname,
+					requirement: job_requirement,
+					duty: job_duty,
+					address: job_address,
+					note: job_note,
+					applyWay: job_applyWay
+				}
+			}).done(function (res) {
+				if (res.success === 1) {
+					layer.msg("岗位信息保存成功!")
+					location.replace('/admin/jobList')
+				}
+			})
+		})
+	})
+</script>
+</body>

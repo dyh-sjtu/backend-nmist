@@ -43,57 +43,62 @@
         </div>
         <div class="row service-wrapper-2 white-bg">
             <div class="col-xl-12 col-lg-12 col-md-12">
+                <% jobs.forEach(function (job, index) { %>
                 <div class="service-box service-3">
                     <h3>
-                        <a href="javascript:;">C++/C#/VB软件开发</a>
+                        <a href="javascript:;"><%= job && job.jobname %></a>
                     </h3>
-                    <h5 class="mb-20">
+
+                    <% if(job && job.requirement) { %>
+                    <h5 class="mt-20">
                         <a href="javascript:;">岗位要求</a>
                     </h5>
                     <ul class="weintern-gray-deep">
-                        <li><span class="lnr lnr-pointer-right mr-10"></span>计算机类相关专业，有1年以上C++、C#开发经验;</li>
-                        <li><span class="lnr lnr-pointer-right mr-10"></span>精通C++、C#，熟练掌握.net（C#和C++)平台开发技术，深刻理解面向对象设计，并具有良好的编程习惯;</li>
-                        <li><span class="lnr lnr-pointer-right mr-10"></span>熟悉QT，能进行UI等相关开发者优先考虑;</li>
-                        <li><span class="lnr lnr-pointer-right mr-10"></span>熟悉Oracle、SQLServer、Mysql等主流数据库管理系统、相关技术及工具者优先考虑;</li>
-                        <li><span class="lnr lnr-pointer-right mr-10"></span>有OSG/ OpenGL相关开发经验者优先考虑;</li>
-                        <li><span class="lnr lnr-pointer-right mr-10"></span>有VB及AutoCAD二次开发经验者优先考虑。</li>
+                        <% job && job.requirement && job.requirement.split("||").forEach(function (item, index) { %>
+                        <li><span class="lnr lnr-pointer-right mr-10"></span><%= item %></li>
+                        <% })%>
                     </ul>
-                    <h5 class="mt-20">工作地点</h5>
-                    <p>上海交通大学校内（可远程工作)</p>
-                    <a data-animation="fadeInLeft" data-delay="1.2s" target="_blank" href="/resume?jobname=<%= encodeURIComponent("C++/C#/VB软件开发")%>"
-                       class="service-link btn brand-btn"
-                       style="animation-delay: 1.2s;">简历投递
-                        <span>→</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="row service-wrapper-2 white-bg mt-50">
-            <div class="col-xl-12 col-lg-12 col-md-12">
-                <div class="service-box service-3">
-                    <h3>
-                        <a href="javascript:;">软件界面设计</a>
-                    </h3>
-                    <h5 class="mb-20">
-                        <a href="javascript:;">岗位要求</a>
-                    </h5>
-                    <ul class="weintern-gray-deep">
-                        <li><span class="lnr lnr-pointer-right mr-10"></span>工业设计或视觉传达专业本科或硕士研究生;</li>
-                    </ul>
-                    <h5 class="mb-20 mt-20">
+                    <% } %>
+
+                    <% if(job && job.duty) { %>
+                    <h5 class="mt-20">
                         <a href="javascript:;">岗位职责</a>
                     </h5>
                     <ul class="weintern-gray-deep">
-                        <li><span class="lnr lnr-pointer-right mr-10"></span>对已有系列软件产品的界面进行重新设计与美化;</li>
+                        <% job.duty && job.duty.split("||").forEach(function (item, index) { %>
+                        <li><span class="lnr lnr-pointer-right mr-10"></span><%= item %></li>
+                        <% })%>
                     </ul>
+                    <% } %>
+
+                    <% if (job && job.address) { %>
                     <h5 class="mt-20">工作地点</h5>
-                    <p>上海交通大学校内（可远程工作)</p>
-                    <a data-animation="fadeInLeft" data-delay="1.2s" target="_blank" href="/resume?jobname=<%= encodeURIComponent("软件界面设计")%>"
-                       class="service-link btn brand-btn"
-                       style="animation-delay: 1.2s;">简历投递
-                        <span>→</span>
-                    </a>
+                    <p><%= job.address %></p>
+                    <% } %>
+
+                    <% if(job && job.note) { %>
+                    <h5 class="mt-20">
+                        <a href="javascript:;">备注</a>
+                    </h5>
+                    <ul class="weintern-gray-deep">
+                        <% job.note && job.note.split("||").forEach(function (item, index) { %>
+                        <li><span class="lnr lnr-pointer-right mr-10"></span><%= item %></li>
+                        <% })%>
+                    </ul>
+                    <% } %>
+
+                    <% if (job && job.applyWay) { %>
+                    <h5 class="mt-20">投递方式</h5>
+                    <p><%= job.applyWay %></p>
+                    <% } %>
+
+                    <!--<a data-animation="fadeInLeft" data-delay="1.2s" target="_blank" href="/resume?jobname=encodeURIComponent("C++/C#/VB软件开发")"-->
+                    <!--class="service-link btn brand-btn"-->
+                    <!--style="animation-delay: 1.2s;">简历投递-->
+                    <!--<span>→</span>-->
+                    <!--</a>-->
                 </div>
+                <% }) %>
             </div>
         </div>
     </div>
