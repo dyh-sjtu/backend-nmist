@@ -1189,9 +1189,11 @@
 }
 
 .text-over-line {
+	height: 120px;
+	line-height: 24px;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	display: -webkit-box;
 	-webkit-box-orient: vertical;
-	-webkit-line-clamp: 4;
+	-webkit-line-clamp: 5;
 }
