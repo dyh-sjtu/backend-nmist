@@ -60,6 +60,15 @@
                 </div>
 
                 <div class="layui-form-item">
+                    <label class="layui-form-label" for="project_linkUrl">案例项目链接</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="<%= project && project.linkUrl %>"
+                               placeholder="请输入应用该案例项目的链接"
+                               autocomplete="on" class="layui-input" id="project_linkUrl">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
                     <label class="layui-form-label" for="project_comment">案例评价</label>
                     <div class="layui-input-block">
                         <input type="text" value="<%= project && project.comment %>"
@@ -103,6 +112,7 @@
 			var project_imgUrl = $('#project_imgUrl').val();
 			var project_company = $('#project_company').val();
 			var project_comment = $('#project_comment').val();
+			var project_linkUrl = $('#project_linkUrl').val();
 			var project_commentFrom = $('#project_commentFrom').val();
 			var project_category = $("input[name='project_category']:checked").val();
 			if (!(project_title.trim() && project_imgUrl.trim()
@@ -120,6 +130,7 @@
 					imgUrl: project_imgUrl,
 					company: project_company,
 					comment: project_comment,
+					linkUrl: project_linkUrl,
 					commentFrom: project_commentFrom,
 					category: project_category
 				}

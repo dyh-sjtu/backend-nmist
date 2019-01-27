@@ -40,7 +40,9 @@
                             客户评价
                         </h2>
                         <p>
-                            <%= project.comment %>
+                            <%= project.comment %><% if (project.linkUrl) { %>
+                            <a href="<%= project.linkUrl %>" target="_blank" style="color:#469ff8;">点击前往</a>
+                            <% } %>
                         </p>
                         <h6 class="fa-pull-right">
                             ——<%= project.commentFrom %>

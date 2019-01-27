@@ -9,6 +9,7 @@ let ProjectSchema = new mongoose.Schema({
 	imgUrl: String,  // 项目图片
 	company: String,  // 项目公司
 	comment: String,  // 客户评价
+	linkUrl: String,  // 项目链接
 	commentFrom: String,  // 评价客户
 	meta: {
 		createAt: {
