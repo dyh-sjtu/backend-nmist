@@ -28,36 +28,46 @@
                     <div class="contact-info mb-20">
                         <h2>联系方式</h2>
                         <div class="row">
+                            <% if (company && company.tel) { %>
                             <div class="col-xl-12">
                                 <div class="contact-meta mb-20">
-                                    <!--<div class="contact-meta-info">-->
-                                        <!--<h4>固定电话</h4>-->
-                                    <!--</div>-->
-                                    <!--<div class="contact-meta-info">-->
-                                        <!--<h4>手机号码</h4>-->
-                                    <!--</div>-->
-                                </div>
-                            </div>
-                            <div class="col-xl-12">
-                                <div class="contact-meta mb-20">
-                                    <div class="contact-meta-info mb-20">
-                                        <h4>邮箱</h4>
-                                        <p>NMsupport@163.com</p>
-                                    </div>
                                     <div class="contact-meta-info">
-                                        <h4>QQ技术交流群</h4>
-                                        <p>310291268</p>
+                                        <h4>业务咨询电话</h4>
+                                        <p><%= company.tel %></p>
                                     </div>
                                 </div>
                             </div>
+                            <% } %>
+                            <% if (company && company.email) { %>
                             <div class="col-xl-12">
-                                <div class="contact-meta">
+                                <div class="contact-meta mb-20">
+                                    <div class="contact-meta-info">
+                                        <h4>公司邮箱</h4>
+                                        <p><%= company.email %></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <% } %>
+                            <% if (company && company.address) { %>
+                            <div class="col-xl-12">
+                                <div class="contact-meta mb-20">
                                     <div class="contact-meta-info">
                                         <h4>公司地址</h4>
-                                        <p>上海市虹桥路333号</p>
+                                        <p><%= company.address %></p>
                                     </div>
                                 </div>
                             </div>
+                            <% } %>
+                            <% if (company && company.qqNumber) { %>
+                            <div class="col-xl-12">
+                                <div class="contact-meta mb-20">
+                                    <div class="contact-meta-info">
+                                        <h4>QQ技术交流群</h4>
+                                        <p><%= company.qqNumber %></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <% } %>
                         </div>
                     </div>
                 </div>

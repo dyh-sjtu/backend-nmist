@@ -82,7 +82,15 @@ router.get('/about', upload.saveViewData, (req, res) => {
 })
 
 router.get('/contact', upload.saveViewData, (req, res) => {
-	res.render("contact")
+	try {
+		Company.fetch((err, companys) => {
+			res.render("contact", {
+				company: companys[0]
+			})
+		})
+	}catch(err) {
+		console.log('err', err);
+	}
 });
 
 router.get('/download', upload.saveViewData, (req, res) => {

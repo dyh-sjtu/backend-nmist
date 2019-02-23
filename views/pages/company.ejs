@@ -51,6 +51,42 @@
                 </div>
 
                 <div class="layui-form-item">
+                    <label class="layui-form-label" for="company_tel">公司业务咨询电话</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="<%= company && company.tel %>"
+                               placeholder="请输入公司的业务咨询电话"
+                               autocomplete="on" class="layui-input" id="company_tel">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="company_address">公司地址</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="<%= company && company.address %>"
+                               placeholder="请输入公司的所在地址"
+                               autocomplete="on" class="layui-input" id="company_address">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="company_email">公司邮箱</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="<%= company && company.email %>"
+                               placeholder="请输入公司的联系邮箱"
+                               autocomplete="on" class="layui-input" id="company_email">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label" for="company_qqNumber">公司QQ技术交流群</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="<%= company && company.qqNumber %>"
+                               placeholder="请输入天磁的QQ技术交流群"
+                               autocomplete="on" class="layui-input" id="company_qqNumber">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
                     <label class="layui-form-label" for="company_note">填写说明</label>
                     <div class="layui-input-block">
                         <textarea id="company_note" style="cursor: not-allowed;color:red"
@@ -81,7 +117,11 @@
 			var company_character = $('#company_character').val();
 			var company_imgUrl = $('#company_imgUrl').val();
 			var company_history = $('#company_history').val();
-			if (!(company_introduction.trim() && company_character.trim() && company_imgUrl.trim() && company_history.trim())) {
+			var company_email = $('#company_email').val();
+			var company_address = $('#company_address').val();
+			var company_qqNumber = $('#company_qqNumber').val();
+			var company_tel = $('#company_tel').val();
+			if (!(company_introduction.trim() && company_character.trim() && company_email.trim() && company_address.trim() && company_imgUrl.trim() && company_history.trim())) {
 				layer.msg("公司信息不能为空哦😯!");
 				return;
 			}
@@ -94,7 +134,11 @@
 					introduction: company_introduction,
 					character: company_character,
 					imgUrl: company_imgUrl,
-					history: company_history
+					history: company_history,
+					email: company_email,
+					address: company_address,
+					qqNumber: company_qqNumber,
+					tel: company_tel
 				}
 			}).done(function (res) {
 				if (res.success === 1) {

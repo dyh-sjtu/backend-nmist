@@ -47,4 +47,20 @@ router.post('/admin/company/save', Auth.requiredLogin, Auth.requiredAdmin, (req,
 	}
 });
 
+router.get('/index/companyInfo', (req, res) => {
+	try {
+		Company.fetch((err, companys) => {
+			if (err) console.log(err);
+			return res.json({
+				success: 1,
+				data: {
+					companyInfo: companys[0]
+				}
+			})
+		})
+	}catch(err) {
+		console.log('err', err);
+	}
+})
+
 module.exports = router;

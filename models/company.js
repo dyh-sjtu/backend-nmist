@@ -4,6 +4,10 @@ const CompanySchema = new mongoose.Schema({
 	character: String,  // 公司特征
 	imgUrl: String,  // 公司封面图片
 	history: String,  // 公司发展历史图片
+	address: String, // 公司地址
+	email: String,  // 公司邮箱
+	qqNumber: String,  // QQ技术交流群
+	tel: String, // 业务咨询电话
 	meta: {
 		createAt: {
 			type: Date,
