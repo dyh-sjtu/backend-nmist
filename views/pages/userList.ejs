@@ -8,7 +8,7 @@
             <h2 class="w100 tc">用户管理</h2>
         </div>
         <hr class="layui-bg-blue pt-5">
-        <div class="backend-content">
+        <div class="backend-content" style="overflow: scroll">
             <table class="layui-table">
                 <colgroup>
                     <col width="80">
@@ -75,7 +75,7 @@
         </div>
     </div>
 </div>
-<div class="layui-form" style="height: 250px" id="select-role">
+<div class="layui-form" style="height: 250px;display: none" id="select-role">
     <div class="layui-form-item" style="padding: 25px 50px">
         <label class="layui-form-label" for="role">权限选择</label>
         <div class="layui-input-block">
@@ -117,7 +117,7 @@
 				})
 			}
 		})
-
+		
 		// 更改用户权限
 		$(".change-role").bind("click", function () {
 			var userId = $(this).data("id");
@@ -151,7 +151,8 @@
 						})
 					},
 					btn2: function (index) {
-						layer.close(index)
+						layer.close(index);
+						$("#select-role").css("display", "none")
 					}
 				})
 			}
