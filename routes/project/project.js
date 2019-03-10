@@ -117,7 +117,7 @@ router.post('/admin/project/save', Auth.requiredLogin, Auth.requiredAdmin, (req,
 });
 
 // 客户案例删除
-router.delete('/admin/project/del', Auth.requiredLogin, Auth.requiredAdmin, (req, res) => {
+router.delete('/admin/projectList/del', Auth.requiredLogin, Auth.requiredAdmin, (req, res) => {
 	try {
 		let projectId = req.query.projectId;
 		if (projectId) {
