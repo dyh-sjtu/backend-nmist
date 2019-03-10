@@ -123,10 +123,10 @@ router.delete('/admin/projectList/del', Auth.requiredLogin, Auth.requiredAdmin, 
 		if (projectId) {
 			
 			// 产品案例删除后，其案例类型下的该案例将删除
-			ProjectCategory.findOne({project: projectId}, (err, projectCategory) => {
+			ProjectCategory.findOne({projects: projectId}, (err, projectCategory) => {
 				if (err) console.log(err);
-				let index = projectCategory.project.indexOf(projectId);
-				projectCategory.project.splice(index, 1);
+				let index = projectCategory.projects.indexOf(projectId);
+				projectCategory.projects.splice(index, 1);
 				projectCategory.save((err, projectCategory) => {
 					if (err) console.log(err);
 				})
