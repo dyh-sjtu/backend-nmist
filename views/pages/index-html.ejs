@@ -176,7 +176,7 @@
                 <% news.forEach(function (newItem, index) { %>
                 <div class="col-lg-6 col-md-6 blog-item mb-40 test-thumb">
                     <div class="blog-wrapper blog-column">
-                        <a href="/news/<%= newItem._id %>" target="_blank">
+                        <a href="/newsDetail?newsId=<%= newItem._id %>">
                             <div class="blog-thumb nmist_img_container">
                                 <img class="nmist_img" src="<%= newItem.src %>" alt="<%= newItem.src %>"/>
                             </div>
@@ -188,11 +188,11 @@
                         </div>
                         <div class="blog-content text-over" style="height: 50px">
                             <h2 class="blog-title">
-                                <a href="/news/<%= newItem._id %>" target="_blank"><%= newItem.title %></a>
+                                <a href="/newsDetail?newsId=<%= newItem._id %>"><%= newItem.title %></a>
                             </h2>
                         </div>
                         <div class="link-box">
-                            <a href="/news/<%= newItem._id %>" target="_blank">查看详情</a>
+                            <a href="/newsDetail?newsId=<%= newItem._id %>">查看详情</a>
                         </div>
                     </div>
                 </div>

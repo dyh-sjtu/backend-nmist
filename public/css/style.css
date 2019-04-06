@@ -2462,3 +2462,69 @@ a#scrollUp:hover{background:  #2154CF;color: #fff}
 .service-wrapper-2:hover {
 	transform: translateY(-10px);
 }
+
+/* + Pagination */
+.ow-pagination {
+	display: inline-block;
+	margin-bottom: 50px;
+	text-align: left;
+	width: 100%;
+}
+
+.ow-pagination ul {
+	padding-left: 0;
+	margin: 0;
+}
+
+.ow-pagination ul li a {
+	display: inline-block;
+}
+
+.ow-pagination ul li {
+	display: inline-block;
+	margin: 0 3px;
+}
+
+.ow-pagination .pagination > li:first-child > a,
+.ow-pagination .pagination > li:last-child > a {
+	background-color: transparent;
+	color: #232323;
+	border-radius: 0;
+	width: 72px;
+}
+
+.ow-pagination ul li a {
+	background-color: transparent;
+	border: 1px solid #888;
+	border-radius: 0;
+	color: #232323;
+	font-size: 13px;
+	font-weight: 700;
+	height: 38px;
+	letter-spacing: 0.52px;
+	line-height: 38px;
+	padding: 0;
+	position: relative;
+	text-align: center;
+	transition: all 1s ease 0s;
+	width: 50px;
+	text-transform: uppercase;
+}
+
+.ow-pagination ul li a:hover {
+	background-color: transparent;
+	border-color: #888;
+	color: #186fbe;
+}
+
+.ow-pagination ul li.active {
+	background-color: #337ab7;
+	border-color: #337ab7;
+}
+
+.ow-pagination ul li.disabled a {
+	cursor: not-allowed;
+	border-color: #ddd;
+	background-color: #fff;
+	color: #777;
+}

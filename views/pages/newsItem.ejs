@@ -22,6 +22,16 @@
                     <div class="news-container">
                         <%- newsItem.content %>
                     </div>
+                    <nav class="ow-pagination tc mt-50">
+                        <ul class="pagination">
+                            <% if(ifPreExist) { %>
+                            <li><a href="/newsDetail/?newsId=<%= newsItem._id %>&status=pre">上一篇</a></li>
+                            <% } %>
+                            <% if(ifNextExist) { %>
+                            <li><a href="/newsDetail/?newsId=<%= newsItem._id %>&status=next">下一篇</a></li>
+                            <% } %>
+                        </ul>
+                    </nav>
                 </div>
             </div>
         </div>

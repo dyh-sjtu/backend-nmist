@@ -26,19 +26,45 @@
 
     <div class="container">
         <% news.forEach(function (item, index) { %>
-        <div class="row mt-50 mb-50">
+        <div class="row mt-50">
             <div class="media">
                 <div class="media-left media-middle tianci-data">
                     <i><%= moment(item.time).get('year') %>年<%= moment(item.time).get('month')+1 %>月</i>
                     <p><%= moment(item.time).get('date') %>日</p>
                 </div>
                 <div class="media-body">
-                    <a href="/news/<%= item._id %>" target="_blank">
+                    <a href="/newsDetail?newsId=<%= item._id %>">
                         <h5 class="media-heading"><%= item.title %></h5>
                     </a>
                 </div>
             </div>
         </div>
        <% }) %>
+        <nav class="ow-pagination mt-50">
+            <ul class="pagination tc">
+                <% if (pageIndex > 0) { %>
+                <li><a href="/news?pageIndex=0">首页</a></li>
+                <% } %>
+                <% if(pageIndex === 0) { %>
+                <li class="disabled"><a href="javascript:;">上一页</a></li>
+                <% } else { %>
+                <li>
+                    <a href="/news?pageIndex=<%= pageIndex - 1 %>">上一页</a>
+                </li>
+                <% } %>
+                <% for(var i = 0; i < totalPage; i++) { %>
+                <% if (i === pageIndex) { %>
+                <li class="active"><a href="/news?pageIndex=<%= i %>"><%= i + 1 %></a></li>
+                <% } else { %>
+                <li><a href="/news?pageIndex=<%= i %>"><%= i + 1 %></a></li>
+                <% } %>
+                <% } %>
+                <% if (pageIndex === totalPage - 1) { %>
+                <li class="disabled"><a href="javascript:;">下一页</a></li>
+                <% } else { %>
+                <li><a href="/news?pageIndex=<%= pageIndex + 1 %>">下一页</a></li>
+                <% } %>
+            </ul>
+        </nav>
     </div>
 </div>
