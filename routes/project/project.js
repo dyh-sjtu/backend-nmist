@@ -8,13 +8,20 @@ const Project = require('../../models/project');
 router.get('/admin/projectList', Auth.requiredLogin, Auth.requiredAdmin, (req, res) => {
 	try {
 		let localUser = res.locals.user;
-		Project.find({}).populate('category', 'name').exec((err, projects) => {
-			res.render('projectList', {
-				title: '产品案例',
-				localUser: localUser,
-				projects: projects
+		let pageIndex = parseInt(Object.keys(req.query).length > 0 && req.query.pageIndex) || 0;
+		let pageSize = 8;
+		Project.find({}).sort({'meta.createAt': -1}).limit(pageSize).skip(pageIndex * pageSize).exec((err, projects) => {
+			Project.count().exec((err, projectNum) => {
+				res.render("projectList", {
+					title: '产品案例',
+					localUser: localUser,
+					projects: projects,
+					pageSize: pageSize,
+					pageIndex: pageIndex,
+					totalPage: Math.ceil(projectNum / pageSize)
+				})
 			})
-		});
+		})
 	} catch (err) {
 		console.log('err', err)
 	}

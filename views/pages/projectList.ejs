@@ -71,6 +71,34 @@
                 <% }) %>
                 </tbody>
             </table>
+            <div class="layui-row">
+                <nav class="ow-pagination">
+                    <ul class="pagination tc">
+                        <% if (pageIndex > 0) { %>
+                        <li><a href="/admin/projectList?pageIndex=0">首页</a></li>
+                        <% } %>
+                        <% if(pageIndex === 0) { %>
+                        <li class="disabled"><a href="javascript:;">上一页</a></li>
+                        <% } else { %>
+                        <li>
+                            <a href="/admin/projectList?pageIndex=<%= pageIndex - 1 %>">上一页</a>
+                        </li>
+                        <% } %>
+                        <% for(var i = 0; i < totalPage; i++) { %>
+                        <% if (i === pageIndex) { %>
+                        <li class="active"><a href="/admin/projectList?pageIndex=<%= i %>"><%= i + 1 %></a></li>
+                        <% } else { %>
+                        <li><a href="/admin/projectList?pageIndex=<%= i %>"><%= i + 1 %></a></li>
+                        <% } %>
+                        <% } %>
+                        <% if (pageIndex === totalPage - 1) { %>
+                        <li class="disabled"><a href="javascript:;">下一页</a></li>
+                        <% } else { %>
+                        <li><a href="/admin/projectList?pageIndex=<%= pageIndex + 1 %>">下一页</a></li>
+                        <% } %>
+                    </ul>
+                </nav>
+            </div>
         </div>
     </div>
 </div>
