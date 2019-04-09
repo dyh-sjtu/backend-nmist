@@ -9,13 +9,13 @@ const DownloadInfo = require('../../models/downloadInfo');
 router.get('/admin/softwareList', Auth.requiredLogin, Auth.requiredAdmin, (req, res) => {
 	try {
 		let localUser = res.locals.user;
-		Software.fetch((err, softwares) => {
-			res.render('softwareList', {
+		Software.find({}).sort({'meta.createAt': -1}).exec((err, softwares) => {
+			res.render("softwareList", {
 				title: '软件列表',
 				localUser: localUser,
-				softwares: softwares
+				softwares: softwares,
 			})
-		});
+		})
 	} catch (err) {
 		console.log('err', err)
 	}
@@ -167,14 +167,22 @@ router.post('/admin/download/count', (req, res) => {
 router.get('/admin/downloadInfoList', Auth.requiredLogin, Auth.requiredAdmin, (req, res) => {
 	try {
 		let localUser = res.locals.user;
-		DownloadInfo.fetch((err, downloadInfos) => {
-			res.render('downloadInfoList', {
-				title: '下载统计',
-				localUser: localUser,
-				keyword: '',
-				downloadInfos: downloadInfos
+		let pageIndex = parseInt(Object.keys(req.query).length > 0 && req.query.pageIndex) || 0;
+		let pageSize = 8;
+		DownloadInfo.find({}).sort({'meta.createAt': -1}).limit(pageSize).skip(pageIndex * pageSize).exec((err, downloadInfos) => {
+			DownloadInfo.count().exec((err, downloadInfoNum) => {
+				res.render("downloadInfoList", {
+					title: '下载统计',
+					localUser: localUser,
+					downloadInfos: downloadInfos,
+					keyword: '',
+					isSearch: false,
+					pageSize: pageSize,
+					pageIndex: pageIndex,
+					totalPage: Math.ceil(downloadInfoNum / pageSize)
+				})
 			})
-		});
+		})
 	} catch (err) {
 		console.log('err', err)
 	}
@@ -208,15 +216,17 @@ router.get('/admin/downloadInfo/search', Auth.requiredLogin, Auth.requiredAdmin,
 					title: '下载统计',
 					localUser: localUser,
 					keyword: keyword,
-					downloadInfos: downloadInfos
+					isSearch: true,
+					downloadInfos: downloadInfos,
 				})
 			})
-		}else {
+		} else {
 			DownloadInfo.fetch((err, downloadInfos) => {
 				res.render('downloadInfoList', {
 					title: '下载统计',
 					localUser: localUser,
 					keyword: '',
+					isSearch: true,
 					downloadInfos: downloadInfos
 				})
 			});

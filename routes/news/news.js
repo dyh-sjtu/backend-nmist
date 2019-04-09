@@ -7,11 +7,18 @@ const News = require('../../models/news');
 router.get('/admin/newsList', Auth.requiredLogin, Auth.requiredAdmin, (req, res) => {
 	try {
 		let localUser = res.locals.user;
-		News.fetch((err, newsList) => {
-			res.render("newsList", {
-				title: '新闻列表',
-				localUser: localUser,
-				newsList: newsList
+		let pageIndex = parseInt(Object.keys(req.query).length > 0 && req.query.pageIndex) || 0;
+		let pageSize = 8;
+		News.find({}).sort({'meta.createAt': -1}).limit(pageSize).skip(pageIndex * pageSize).exec((err, news) => {
+			News.count().exec((err, newsNum) => {
+				res.render("newsList", {
+					title: '新闻列表',
+					localUser: localUser,
+					newsList: news,
+					pageSize: pageSize,
+					pageIndex: pageIndex,
+					totalPage: Math.ceil(newsNum / pageSize)
+				})
 			})
 		})
 	} catch (err) {
@@ -43,13 +50,13 @@ router.post('/admin/news/image/upload', Auth.requiredLogin, Auth.requiredAdmin, 
 					src: req.newFile
 				}
 			})
-		}else {
+		} else {
 			return res.json({
 				code: 1,
 				msg: "上传失败,请重试",
 			})
 		}
-	}catch (err) {
+	} catch (err) {
 		console.log('err', err);
 	}
 });
@@ -68,7 +75,7 @@ router.post('/admin/news/add', Auth.requiredLogin, Auth.requiredAdmin, (req, res
 						})
 					})
 				})
-			}else {
+			} else {
 				let _newsObj = new News({
 					title: newsObj.title,
 					time: newsObj.time,
@@ -83,7 +90,7 @@ router.post('/admin/news/add', Auth.requiredLogin, Auth.requiredAdmin, (req, res
 				})
 			}
 		}
-	}catch(err) {
+	} catch (err) {
 		console.log('err', err);
 	}
 })
@@ -100,7 +107,7 @@ router.delete('/admin/newsList/del', Auth.requiredLogin, Auth.requiredAdmin, (re
 				})
 			})
 		}
-	}catch (err) {
+	} catch (err) {
 		console.log('err', err)
 	}
 })
@@ -112,13 +119,13 @@ router.get('/admin/news/detail/:id', Auth.requiredLogin, Auth.requiredAdmin, (re
 		if (newsId) {
 			News.findById(newsId, (err, news) => {
 				res.render('newsDetail', {
-					title:'新闻列表',
+					title: '新闻列表',
 					localUser: localUser,
 					news: news
 				})
 			})
 		}
-	}catch(err) {
+	} catch (err) {
 		console.log('err', err);
 	}
 })
@@ -136,7 +143,7 @@ router.get('/admin/news/update/:id', Auth.requiredLogin, Auth.requiredAdmin, (re
 				})
 			})
 		}
-	}catch(err) {
+	} catch (err) {
 		console.log('err', err);
 	}
 })

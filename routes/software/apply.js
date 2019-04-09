@@ -9,13 +9,20 @@ const ApplyEmail = require('../../models/applyEmail');
 router.get('/admin/applyList', Auth.requiredLogin, Auth.requiredAdmin, (req, res) => {
 	try {
 		let localUser = res.locals.user;
+		let pageIndex = parseInt(Object.keys(req.query).length > 0 && req.query.pageIndex) || 0;
+		let pageSize = 8;
 		ApplyEmail.fetch((err, applyEmail) => {
-			ApplyUser.fetch((err, applyUsers) => {
-				res.render('applyList', {
-					title: '软件申请',
-					localUser: localUser,
-					applyUsers: applyUsers,
-					email: applyEmail && applyEmail[0]
+			ApplyUser.find({}).sort({'meta.createAt': -1}).limit(pageSize).skip(pageIndex * pageSize).exec((err, applyUsers) => {
+				ApplyUser.count().exec((err, applyUserNum) => {
+					res.render("applyList", {
+						title: '软件申请',
+						localUser: localUser,
+						applyUsers: applyUsers,
+						pageSize: pageSize,
+						pageIndex: pageIndex,
+						totalPage: Math.ceil(applyUserNum / pageSize),
+						email: applyEmail && applyEmail[0]
+					})
 				})
 			})
 		})

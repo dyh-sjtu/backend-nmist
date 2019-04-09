@@ -7,13 +7,20 @@ const Customer = require('../../models/customer');
 router.get('/admin/customerList', Auth.requiredLogin, Auth.requiredAdmin, (req, res) => {
 	try {
 		let localUser = res.locals.user;
-		Customer.fetch((err, customers) => {
-			res.render('customerList', {
-				title: '客户案例',
-				localUser: localUser,
-				customers: customers
+		let pageIndex = parseInt(Object.keys(req.query).length > 0 && req.query.pageIndex) || 0;
+		let pageSize = 8;
+		Customer.find({}).sort({'meta.createAt': -1}).limit(pageSize).skip(pageIndex * pageSize).exec((err, customers) => {
+			Customer.count().exec((err, customerNum) => {
+				res.render("customerList", {
+					title: '客户案例',
+					localUser: localUser,
+					customers: customers,
+					pageSize: pageSize,
+					pageIndex: pageIndex,
+					totalPage: Math.ceil(customerNum / pageSize)
+				})
 			})
-		});
+		})
 	} catch (err) {
 		console.log('err', err)
 	}
@@ -65,7 +72,7 @@ router.post('/admin/customer/save', Auth.requiredLogin, Auth.requiredAdmin, (req
 					})
 				})
 			})
-		}else {
+		} else {
 			let _customerObj = new Customer(customerObj);
 			_customerObj.save((err, customer) => {
 				if (err) console.log(err);
@@ -95,5 +102,22 @@ router.delete('/admin/customerList/del', Auth.requiredLogin, Auth.requiredAdmin,
 		console.log('err', err);
 	}
 });
+
+// // 获取总记录条数
+// router.get('/admin/customerList/count', Auth.requiredLogin, Auth.requiredAdmin, (req, res) => {
+// 	try {
+// 		Customer.count().exec((err, num) => {
+// 			if (err) console.log(err);
+// 			return res.json({
+// 				success: 1,
+// 				data: {
+// 					countNumber: num
+// 				}
+// 			})
+// 		})
+// 	} catch (err) {
+// 		console.log('err', err);
+// 	}
+// });
 
 module.exports = router;
