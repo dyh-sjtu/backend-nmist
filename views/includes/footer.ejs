@@ -90,17 +90,20 @@
 			if (res.success === 1) {
 				var companyInfo = res.data.companyInfo;
 				var htmlStr = '';
-				if (companyInfo && companyInfo.tel) {
-					htmlStr += "<li>业务咨询: " + companyInfo.tel + "</li>"
-				}
+				// if (companyInfo && companyInfo.tel) {
+				// 	htmlStr += "<li>业务咨询: " + companyInfo.tel + "</li>"
+				// }
 				if (companyInfo && companyInfo.email) {
 					htmlStr += "<li>联系邮箱: " + companyInfo.email + "</li>"
 				}
-				if (companyInfo && companyInfo.qqNumber) {
-					htmlStr += "<li>技术交流群: " + companyInfo.qqNumber + "</li>"
-				}
+				// if (companyInfo && companyInfo.qqNumber) {
+				// 	htmlStr += "<li>技术交流群: " + companyInfo.qqNumber + "</li>"
+				// }
 				if (companyInfo && companyInfo.address) {
 					htmlStr += "<li>公司地址: " + companyInfo.address + "</li>"
+				}
+				if (companyInfo && companyInfo.wechatQrCode) {
+					htmlStr += `<li>企业微信: <img width='120' height='120' src='${companyInfo.wechatQrCode}' /></li>`
 				}
 				$(".footerCompanyInfo").html(htmlStr);
 			}

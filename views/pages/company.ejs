@@ -87,6 +87,15 @@
                 </div>
 
                 <div class="layui-form-item">
+                    <label class="layui-form-label" for="company_wechatQrCode">官方微信二维码</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="<%= company && company.wechatQrCode %>"
+                               placeholder="请输入天磁的企业官方微信二维码图片地址"
+                               autocomplete="on" class="layui-input" id="company_wechatQrCode">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
                     <label class="layui-form-label" for="company_note">填写说明</label>
                     <div class="layui-input-block">
                         <textarea id="company_note" style="cursor: not-allowed;color:red"
@@ -120,7 +129,8 @@
 			var company_email = $('#company_email').val();
 			var company_address = $('#company_address').val();
 			var company_qqNumber = $('#company_qqNumber').val();
-			var company_tel = $('#company_tel').val();
+            var company_tel = $('#company_tel').val();
+            var company_wechatQrCode = $('#company_wechatQrCode').val();
 			if (!(company_introduction.trim() && company_character.trim() && company_email.trim() && company_address.trim() && company_imgUrl.trim() && company_history.trim())) {
 				layer.msg("公司信息不能为空哦😯!");
 				return;
@@ -138,7 +148,8 @@
 					email: company_email,
 					address: company_address,
 					qqNumber: company_qqNumber,
-					tel: company_tel
+                    tel: company_tel,
+                    wechatQrCode: company_wechatQrCode
 				}
 			}).done(function (res) {
 				if (res.success === 1) {

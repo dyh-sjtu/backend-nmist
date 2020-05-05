@@ -8,6 +8,7 @@ const CompanySchema = new mongoose.Schema({
 	email: String,  // 公司邮箱
 	qqNumber: String,  // QQ技术交流群
 	tel: String, // 业务咨询电话
+	wechatQrCode: String, // 企业微信二维码图片
 	meta: {
 		createAt: {
 			type: Date,
